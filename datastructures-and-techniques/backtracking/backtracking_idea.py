@@ -1,5 +1,5 @@
 def generateParenthesis(self, n: int) -> List[str]:
-    '''
+    '''Normally it is used when you are faced with a number of options and you have to choose one option. After your choice you have a new set of options (hence recursion). The procedure is repeated over and over until a final state.
     backtracking:
     1. create ans list
     2. do backtracking and add to ans if youre in a leaf
