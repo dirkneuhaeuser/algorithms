@@ -19,11 +19,10 @@ class NumArray:
         self.arr[i-1] += inc
         while i < self.n+1:
             self.tree[i] += inc #tree is 0 indexed-based
-            i += i&-i # adding 1&-1 gets the next right node
+            i += i&-i # adding 1&-1 gets the next right node (LSB)
 
 
     def sumRange(self, i: int, j: int) -> int:
-        pass
         j += 1
         sumj = 0
         sumi = 0

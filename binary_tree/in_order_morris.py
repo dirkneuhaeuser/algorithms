@@ -2,6 +2,10 @@ def inorderTraversalMorris(self, root: TreeNode) -> List[int]:
     '''
     Morris-Traversal restructures Graph according to in-Order traversal.
     For example the root is always after the most right leaf of the left subtree. -> If you have left -> do that
+
+    rekusive in order: easiest
+    iterative in order: fastest
+    morris in order: constant space
     '''
     ret = []
     current = root

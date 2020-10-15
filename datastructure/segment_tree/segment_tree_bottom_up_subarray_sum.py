@@ -1,13 +1,6 @@
 class NumArray:
     '''
-    Segment tree: concrete and classy binary tree. at leaves save the array and each parent saves the sum of its two children.
-    For calculating sum of a subarray which may change over time
-
-    -update and sum query: O(log_2(n))
-    
-    -classical prefix sum:
-        update quiery O(n)
-        sum query O(1)
+    Segment tree: concrete and classy binary tree. at leaves save the array and each parent saves the sum of its two children
     '''
     def __init__(self, nums: List[int]):
         self.n = len(nums)
