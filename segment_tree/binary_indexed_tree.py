@@ -5,9 +5,6 @@ class NumArray:
         1-indexed based
         tree as array saves sum
         update and sum operations work in o(log(n))
-
-
-        Important: Isolate the least signficant bit of a number x: x&-x
         '''
         self.n = len(nums)
         self.tree = [0]*(len(nums)+1)
