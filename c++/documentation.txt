@@ -1,0 +1,2 @@
+to compile a program:
+  g++-10 -o NAME source.cpp
