@@ -1,8 +1,8 @@
 #include"bits/stdc++.h" // using "" instead of <>, so it will search locally for the precompiled version first
 
-#define LL long long
-#define ULL unsigned long long
-#define LD long double
+#define ll long long
+#define ull unsigned long long
+#define ld long double
 #define print(n) cout << n << endl
 #define si(n) scanf("%d",&n)
 #define sf(n) scanf("%f",&n)
