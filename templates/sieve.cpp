@@ -14,7 +14,8 @@ void sieve(long long limit){ // O(N * (1/2, 1/3, 1/5, .., 1/lastPrime)) = O(N * 
 
 bool isPrime(long long number){
     if(number < _sieve_size){ return primes[number]; } // O(1) for small numbers < sieve_size
-    for(int i =0; i<primes.size() && primes[i] * primes[i] <= number; i++){ // works only for primes < sieve_size*sieve_size(10**14, if sieve_size = 10**7)
+    // works only for primes < sieve_size*sieve_size(10**14, if sieve_size = 10**7)
+    for(int i =0; i<primes.size() && primes[i] * primes[i] <= number; i++){ // O(# primes) < O(Sqrt(N))
         if(number%primes[i] == 0){
             return false;
         }
