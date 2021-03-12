@@ -1,8 +1,8 @@
 #include<bits/stdc++.h> 
 
-#define LL long long
-#define ULL unsigned long long
-#define LD long double
+#define ll long long
+#define ull unsigned long long
+#define ld long double
 #define print(n) cout << n << endl
 #define si(n) scanf("%d",&n)
 #define sf(n) scanf("%f",&n)
