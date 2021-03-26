@@ -36,7 +36,7 @@ int main()
     #endif 
     
     int t=1; 
-    cin >> t;
+    //cin >> t;
     while(t--) 
     { 
         solve(); 
@@ -45,7 +45,34 @@ int main()
     cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
     return 0; 
 } 
+int ans =0;
+int W, H;
+vector<bool> seen(16*16, false);
+void dfs(int i, int total, int A, int B){
+    if(A ==0 && B==0){
+         ans++;
+         return;
+    }
+    if(i>= total){return;}
+    if(seen[i]) {return dfs(i+1, total, A, B);}
+    if(B){
+        dfs(i+1, total, A, B-1);
+    }
+    if(A){
+        if(i+1<total && (i+1)%W!=0 &&!seen[i+1]){
+            dfs(i+2, total, A-1, B);
+        }
+        if(i+W<total && !seen[i+W]){
+            seen[i+W] = true;
+            dfs(i+1, total, A-1, B);
+            seen[i+W] = false;
+        }
+    }
+}
 void solve() 
 {
-
+    int A, B;
+    cin >> H >> W >> A >>B;
+    dfs(0, H*W, A, B);
+    cout << ans;
 }

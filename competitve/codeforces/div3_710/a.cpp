@@ -47,5 +47,14 @@ int main()
 } 
 void solve() 
 {
-
+    ll n, m;
+    ll x;
+    cin >> n >> m >> x;
+    x--;
+    ll col = x/n;
+    ll minus = col * n;
+    ll row = x - minus;
+    ll ret = col + row*m + 1;
+    cout << ret;
 }
+

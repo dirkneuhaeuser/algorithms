@@ -1,8 +1,7 @@
 #include"bits/stdc++.h" // using "" instead of <>, so it will search locally for the precompiled version first
 
-// int up to 2*10^9 (2^31-1)
-#define ll long long  // up to 9*10^18 (2^63 -1)
-#define ull unsigned long long // up to 18*10^18 (2^64-1)
+#define ll long long
+#define ull unsigned long long
 #define ld long double
 #define print(n) cout << n << endl
 #define si(n) scanf("%d",&n)
@@ -30,13 +29,12 @@ int main()
     ios_base::sync_with_stdio(false);cin.tie(NULL); 
 
     #ifndef ONLINE_JUDGE 
-    freopen("/Users/dirk/development/algorithms/competitve/input.txt", "r", stdin); 
-    freopen("/Users/dirk/development/algorithms/competitve/error.txt", "w", stderr); 
-    freopen("/Users/dirk/development/algorithms/competitve/output.txt", "w", stdout); 
+    freopen("input.txt", "r", stdin); 
+    freopen("error.txt", "w", stderr); 
+    freopen("output.txt", "w", stdout); 
     #endif 
     
     int t=1; 
-    cin >> t;
     while(t--) 
     { 
         solve(); 
@@ -47,5 +45,43 @@ int main()
 } 
 void solve() 
 {
+    int minW, maxW, goal;
+    cin >> minW >> maxW >> goal;
+
+    goal = goal*1000;
+
+    int amountMin = goal/minW -1;
+    int leftMin = goal - amountMin*minW;
+    if (leftMin == minW){
+        amountMin++;
+        goto mark;
+    }else{
+        for(int i = minW; i<= maxW; i++){
+            for(int j = minW; j<= maxW; j++){
+                if(i+j == leftMin){amountMin+=2;}
+                goto mark;
+            } 
+        }
+    }
+    cout << "UNSATISFIABLE";
+
+    mark:
+
+
+
+    if(minRet == -1){
+        cout << "UNSATISFIABLE";
+    }else{
+        cout << minRet << " " << maxRet;
+    }
+
+
+
+
+    
+
+
+
 
 }
+

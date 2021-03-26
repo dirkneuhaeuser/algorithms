@@ -36,7 +36,6 @@ int main()
     #endif 
     
     int t=1; 
-    cin >> t;
     while(t--) 
     { 
         solve(); 
@@ -47,5 +46,58 @@ int main()
 } 
 void solve() 
 {
+    // you can formulte f_i as:
+    // f_i = min(b, max(c, x+d2))
+    // if t==1: d2=a, b=inf, x=-inf, ...
+    //
+    //
+    // f = min(b2, max(c2, x+d2))
+    // g = min(b1, max(c1, x+d1))
+    //
+    // then composition has the same form
+    // f(g(x)) = min(min(b2, max(c2, b+2)), max(max(c2, c+d2), x + d + d2))
+    //
+    // (archived by getting rid of double max-max or min-min input to x..
+    // useful:
+    // max(a, max(b, x)) = max(max(a, b), x)   (moving 'a' to the inner left part)
+    // min(a, min(b, x)) = min(min(a, b), x)   
+    //
+    // max(a, min(b, c)) = min(max(a, b), max(a, c)) (moving a into both)
+    //
+    int N; cin >> N;
+    ll INF = 1ll << 62;
+    ll NINF = 3ll << 62;
+    ll b = INF, c = NINF, d = 0;
+    for(int i =0; i<N; ++i){
+        ll a, t;
+        cin >> a >> t;
+        ll b2, c2, d2;
+        //cout << a << " " << t << endl;
+        if(t == 1){
+            b2 = INF;
+            c2 = NINF;
+            d2 = a;
+        }else if (t ==2){
+            b2 = INF;
+            c2 = a;
+            d2 = 0;
+        } else{
+            b2 = a;
+            c2 = NINF;
+            d2 = 0;
+        }
+        b = min(b2, max(c2, b+ d2));
+        c = max(c2, c+d2);
+        d = d+d2;
+    }
+    int q;
+    cin >> q;
+    for(int i=0;i<q;++i){
+        ll x; cin >>x;
+        ll ret = min(b, max(c, x+d));
+        cout << ret << endl;
+    }
 
-}
+}   
+
+

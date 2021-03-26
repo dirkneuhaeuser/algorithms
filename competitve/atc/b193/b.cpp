@@ -1,9 +1,8 @@
-#include"bits/stdc++.h" // using "" instead of <>, so it will search locally for the precompiled version first
+#include<bits/stdc++.h> 
 
-// int up to 2*10^9 (2^31-1)
-#define ll long long  // up to 9*10^18 (2^63 -1)
-#define ull unsigned long long // up to 18*10^18 (2^64-1)
-#define ld long double
+#define LL long long
+#define ULL unsigned long long
+#define LD long double
 #define print(n) cout << n << endl
 #define si(n) scanf("%d",&n)
 #define sf(n) scanf("%f",&n)
@@ -18,7 +17,7 @@
 #define FORS(i, n) for(i; i<n; i++)
 #define FORI(i, a, b) for(int i = a; i<b; i++)
 #ifndef ONLINE_JUDGE
-#include "/Users/dirk/development/algorithms/templates/debug.h"
+#include "debug.h"
 #endif
 
 const int MOD = 1000000007;
@@ -30,13 +29,12 @@ int main()
     ios_base::sync_with_stdio(false);cin.tie(NULL); 
 
     #ifndef ONLINE_JUDGE 
-    freopen("/Users/dirk/development/algorithms/competitve/input.txt", "r", stdin); 
-    freopen("/Users/dirk/development/algorithms/competitve/error.txt", "w", stderr); 
-    freopen("/Users/dirk/development/algorithms/competitve/output.txt", "w", stdout); 
+    freopen("input.txt", "r", stdin); 
+    freopen("error.txt", "w", stderr); 
+    freopen("output.txt", "w", stdout); 
     #endif 
     
     int t=1; 
-    cin >> t;
     while(t--) 
     { 
         solve(); 
@@ -47,5 +45,18 @@ int main()
 } 
 void solve() 
 {
+    int N;
+    cin >> N;
+    int ret = 1 <<30;
+    for(int i=0; i<N; i++){
+        int A, P, X;
+        cin >> A >> P >> X;
+        if(A < X){
+            ret = min(ret, P);
+        }
+    }
+    ret = ret == (1<< 30) ? -1 : ret;
+    cout << ret;
 
 }
+

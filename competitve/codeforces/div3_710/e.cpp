@@ -47,5 +47,57 @@ int main()
 } 
 void solve() 
 {
+    int n; cin >> n;
+    vector<int>q, pmax, pmin;
+    vector<bool>toChange;
+    int current = 0;
+    for(int i=0;i<n;++i){
+        int num; cin  >> num;
+        q.push_back(num);
+        if(q.back() == current){
+            toChange.push_back(true);
+        }else{
+            current = q.back();
+            toChange.push_back(false);
+        }
+
+
+    }
+    int maxE = n;
+
+    pmax = q;
+    pmin = q;
+    deque<int> todo;
+
+   
+    int lastE = 1;
+    for(int i =0; i<n; ++i){
+        if(!toChange[i]){
+            for(;lastE < pmin[i];++lastE)
+                todo.push_back(lastE);
+            lastE = pmin[i]+1;
+        }else{
+            int ans = todo.front();
+            todo.pop_front();
+            pmin[i] = ans; 
+        }
+        cout << pmin[i] << " ";
+    }
+    lastE = 1;
+    cout << endl;
+    for(int i =0; i<n; ++i){
+        if(!toChange[i]){
+            for(;lastE < pmax[i];++lastE)
+                todo.push_back(lastE);
+            lastE = pmax[i]+1;
+        }else{
+            int ans = todo.back();
+            todo.pop_back();
+            pmax[i] = ans; 
+        }
+        cout << pmax[i] << " ";
+    }
+
 
 }
+

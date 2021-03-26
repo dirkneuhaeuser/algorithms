@@ -1,8 +1,7 @@
 #include"bits/stdc++.h" // using "" instead of <>, so it will search locally for the precompiled version first
 
-// int up to 2*10^9 (2^31-1)
-#define ll long long  // up to 9*10^18 (2^63 -1)
-#define ull unsigned long long // up to 18*10^18 (2^64-1)
+#define ll long long
+#define ull unsigned long long
 #define ld long double
 #define print(n) cout << n << endl
 #define si(n) scanf("%d",&n)
@@ -30,13 +29,12 @@ int main()
     ios_base::sync_with_stdio(false);cin.tie(NULL); 
 
     #ifndef ONLINE_JUDGE 
-    freopen("/Users/dirk/development/algorithms/competitve/input.txt", "r", stdin); 
-    freopen("/Users/dirk/development/algorithms/competitve/error.txt", "w", stderr); 
-    freopen("/Users/dirk/development/algorithms/competitve/output.txt", "w", stdout); 
+    freopen("input.txt", "r", stdin); 
+    freopen("error.txt", "w", stderr); 
+    freopen("output.txt", "w", stdout); 
     #endif 
-    
-    int t=1; 
-    cin >> t;
+    int t =1; 
+    //cin >> t;
     while(t--) 
     { 
         solve(); 
@@ -47,5 +45,32 @@ int main()
 } 
 void solve() 
 {
+// N < 1 000: 0
+// N < 1 000 000: 1
+// N < 1 000 000 000: 2
+// N < 10^12: 3
+// N < 10^15: 4
+    ll N;
+    ll f = 1000000000000000;
+    ll t = 1000000000000;
+    ll n = 1000000000;
+    ll s = 1000000;
+    ll th = 1000;
+    cin >> N;
+    if(N == 1e15){
+        cout << 5 + (f - t) * 4 + (t - n) * 3 + (n - s) * 2 +  (s - th) * 1;
+    }else if(N>= t){
+        cout << (N - t + 1) * 4 + (t - n) * 3 + (n - s) * 2 +  (s - th) * 1;
+    } else if(N >= n){
+        cout << (N - n + 1) * 3 + (n - s) * 2 +  (s - th) * 1;
+    }else if(N >= s){
+        cout << (N - s + 1) * 2 +  (s - th) * 1;
+    }else if(N >= th){
+        cout << (N - th + 1) * 1;
+    } else {
+        cout << 0;
+    }
+
 
 }
+

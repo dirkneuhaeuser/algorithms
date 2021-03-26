@@ -1,8 +1,7 @@
 #include"bits/stdc++.h" // using "" instead of <>, so it will search locally for the precompiled version first
 
-// int up to 2*10^9 (2^31-1)
-#define ll long long  // up to 9*10^18 (2^63 -1)
-#define ull unsigned long long // up to 18*10^18 (2^64-1)
+#define ll long long
+#define ull unsigned long long
 #define ld long double
 #define print(n) cout << n << endl
 #define si(n) scanf("%d",&n)
@@ -30,9 +29,9 @@ int main()
     ios_base::sync_with_stdio(false);cin.tie(NULL); 
 
     #ifndef ONLINE_JUDGE 
-    freopen("/Users/dirk/development/algorithms/competitve/input.txt", "r", stdin); 
-    freopen("/Users/dirk/development/algorithms/competitve/error.txt", "w", stderr); 
-    freopen("/Users/dirk/development/algorithms/competitve/output.txt", "w", stdout); 
+    freopen("input.txt", "r", stdin); 
+    freopen("error.txt", "w", stderr); 
+    freopen("output.txt", "w", stdout); 
     #endif 
     
     int t=1; 
@@ -45,7 +44,56 @@ int main()
     cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
     return 0; 
 } 
+
+
+
+
+
+
 void solve() 
 {
+    int n, m;
+    cin >> n >> m;
+    vector<ll> a;
+    for(int i=0;i<n;i++){
+        ll num;
+        cin >> num;
+        a.push_back(num);
+    }
+    vector<ll> rem(m, 0);
+    for(int i=0;i<n;i++){
+
+        rem[a[i]%m]++;
+    }
+
+
+    ll ret = 0;
+    for(int i=0;i<m;i++){
+        int according = (m - i) % m;
+        if (rem[i] == 0){
+            continue;
+        }
+        if(according == i){
+            ret++;
+            rem[i] = 0;
+        }else{
+            ll minE = min(rem[i], rem[according]);
+            rem[i]-= minE;
+            rem[according] -= minE;
+            if(minE){
+                ret++;
+            }
+            ll remL = max(rem[i], rem[according]);
+            if(minE){
+                ret += max(remL-1,(ll)0);
+            }else{
+                ret += max(remL,(ll)0);
+            }
+            rem[i] = 0;
+            rem[according] = 0;
+        }
+    }
+    cout << ret;
 
 }
+

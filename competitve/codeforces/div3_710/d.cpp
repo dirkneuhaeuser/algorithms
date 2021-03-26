@@ -47,5 +47,27 @@ int main()
 } 
 void solve() 
 {
+    int n;
+    cin >> n;
+    vector<ll> nums;
+    for(int i =0; i<n;++i){
+        ll num;
+        cin >> num;
+        nums.push_back(num);
+    }
+    sort(nums.begin(), nums.end());
+    ll ret = 0;
+    int offset = 0;
+    if(nums.size()&1){
+        ret++;
+        offset =1;
+    }
+    for(int i =0; i<n/2;++i){
+        ret += 2*(nums[i] == nums[n/2 + offset + i]);
+    }
+    cout << ret; 
+
+
 
 }
+

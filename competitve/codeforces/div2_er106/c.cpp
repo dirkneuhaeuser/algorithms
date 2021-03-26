@@ -1,8 +1,7 @@
 #include"bits/stdc++.h" // using "" instead of <>, so it will search locally for the precompiled version first
 
-// int up to 2*10^9 (2^31-1)
-#define ll long long  // up to 9*10^18 (2^63 -1)
-#define ull unsigned long long // up to 18*10^18 (2^64-1)
+#define ll long long
+#define ull unsigned long long
 #define ld long double
 #define print(n) cout << n << endl
 #define si(n) scanf("%d",&n)
@@ -30,9 +29,9 @@ int main()
     ios_base::sync_with_stdio(false);cin.tie(NULL); 
 
     #ifndef ONLINE_JUDGE 
-    freopen("/Users/dirk/development/algorithms/competitve/input.txt", "r", stdin); 
-    freopen("/Users/dirk/development/algorithms/competitve/error.txt", "w", stderr); 
-    freopen("/Users/dirk/development/algorithms/competitve/output.txt", "w", stdout); 
+    freopen("input.txt", "r", stdin); 
+    freopen("error.txt", "w", stderr); 
+    freopen("output.txt", "w", stdout); 
     #endif 
     
     int t=1; 
@@ -47,5 +46,49 @@ int main()
 } 
 void solve() 
 {
+    int n;
+    vector<int64_t> c;
+    cin >> n;
+    for(int i=0;i<n;++i){
+        ll num;
+        cin >> num;
+        //cout << i << " "<< num << endl;
+        c.push_back(num);
+    }
+
+    //dbg(c);
+
+    int64_t ret = 1ll << 60;
+    int64_t counter = 0;
+    int64_t steps = 0;
+    int64_t minX = 1ll << 60;
+    int64_t minY = 1ll << 60;
+    int64_t stepx = 0;
+    int64_t stepy = 0;
+    for(int i=0;i<n;i++){
+        if (i&1){
+            stepx++;
+            minX = min(minX, c[i]);
+        }else{
+            stepy++;
+            minY = min(minY, c[i]);
+        }
+        int64_t leftx = (ll)n-stepx;
+        int64_t lefty = (ll)n-stepy;
+        counter+= c[i];
+        if(i>=1){
+            ret = min(ret, counter + leftx*minX + lefty*minY);
+        }
+    }
+
+
+
+    // counter 
+    //ll test = 100000ll * 1000000000ll;
+    //cout << test << endl; 
+    cout << ret;
+
+
 
 }
+

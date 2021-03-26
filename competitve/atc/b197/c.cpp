@@ -36,7 +36,7 @@ int main()
     #endif 
     
     int t=1; 
-    cin >> t;
+    //cin >> t;
     while(t--) 
     { 
         solve(); 
@@ -47,5 +47,26 @@ int main()
 } 
 void solve() 
 {
-
+    ll N;
+    cin >> N;
+    string num = to_string(N);
+    if(num.size()<= 1){
+        cout << 0;
+        return;
+    }
+    if(num.size()&1){
+        int half = num.size() >> 1;
+        for(int i=0;i<half;++i){
+            cout << 9;
+        }
+        return;
+    }
+    ull fst = stoul(num.substr(0, num.size() >> 1));
+    ull snd = stoul(num.substr(num.size() >> 1));
+    if (fst > snd){
+        cout << fst -1;
+    }else{
+        cout << fst;
+    }
 }
+

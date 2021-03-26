@@ -1,8 +1,7 @@
-#include"bits/stdc++.h" // using "" instead of <>, so it will search locally for the precompiled version first
+#include<bits/stdc++.h> 
 
-// int up to 2*10^9 (2^31-1)
-#define ll long long  // up to 9*10^18 (2^63 -1)
-#define ull unsigned long long // up to 18*10^18 (2^64-1)
+#define ll long long
+#define ull unsigned long long
 #define ld long double
 #define print(n) cout << n << endl
 #define si(n) scanf("%d",&n)
@@ -21,31 +20,16 @@
 #include "/Users/dirk/development/algorithms/templates/debug.h"
 #endif
 
+
 const int MOD = 1000000007;
 
 using namespace std; 
-void solve(); 
+
 int main() 
 {
-    ios_base::sync_with_stdio(false);cin.tie(NULL); 
+    ll test = 1
 
-    #ifndef ONLINE_JUDGE 
-    freopen("/Users/dirk/development/algorithms/competitve/input.txt", "r", stdin); 
-    freopen("/Users/dirk/development/algorithms/competitve/error.txt", "w", stderr); 
-    freopen("/Users/dirk/development/algorithms/competitve/output.txt", "w", stdout); 
-    #endif 
-    
-    int t=1; 
-    cin >> t;
-    while(t--) 
-    { 
-        solve(); 
-        cout<<"\n";    
-    }
-    cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
     return 0; 
 } 
-void solve() 
-{
 
-}
+

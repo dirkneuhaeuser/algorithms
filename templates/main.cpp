@@ -16,9 +16,10 @@
 #define FOR(i, n) for(int i = 0; i<n; i++)
 #define FORS(i, n) for(i; i<n; i++)
 #define FORI(i, a, b) for(int i = a; i<b; i++)
-// #ifndef ONLINE_JUDGE
-// #include "debug.h"
-// #endif
+#ifndef ONLINE_JUDGE
+#include "/Users/dirk/development/algorithms/templates/debug.h"
+#endif
+
 
 const int MOD = 1000000007;
 

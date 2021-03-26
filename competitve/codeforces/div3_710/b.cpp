@@ -47,5 +47,39 @@ int main()
 } 
 void solve() 
 {
+    int n, k; cin >> n >> k;
+    string s; cin >> s;
+    int idxF = 0, idxL = s.size()-1;
+    int i = 0;
+    while(idxF <= idxL){
+        if (s[idxF]=='*'){
+            break;
+        }
+        idxF++;
+    }
+    while(idxL >= idxF){
+        if (s[idxL]=='*'){
+            break;
+        }
+        idxL--;
+    }
+    if(idxL == idxF){
+        cout << 1;
+        return;
+    }
+    ll ans = 1;
+    idxF += k;
+    while(idxF<idxL){
+        for(int k1=0; k1<k;k1++){
+            if(s[idxF-k1] == '*'){
+                ans ++;
+                idxF = idxF -k1 +k;
+                break;
+            }
+        }
+
+    }
+    cout << ans+1;
 
 }
+

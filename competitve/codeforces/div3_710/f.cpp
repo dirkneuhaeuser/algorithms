@@ -47,5 +47,48 @@ int main()
 } 
 void solve() 
 {
+    int n; cin >>n;
+    vector<ll> a,b;
+    FOR(i,n){
+        ll num; cin >> num;
+        a.push_back(num);
+    }
+    FOR(i,n){
+        ll num; cin >> num;
+        b.push_back(num);
+    }
+    vector<pair<ll,ll>> c;
+
+    FOR(i,n){
+        c.emplace_back(a[i],b[i]);
+    }
+    sort(c.begin(), c.end());
+    ll lastLevel = 0;
+    ll lastSecond = 1;
+    ll lastFirst = 1;
+    ll ret = 0;
+    FOR(i, n){
+        ll curLevel = c[i].first - c[i].second;
+        //cout << curLevel << " " << lastLevel << endl;
+        if(lastLevel == curLevel){
+            if(!(lastLevel&1)){
+                ret+= c[i].second - lastSecond;
+            }
+        }else{
+            if((lastLevel&1)==0){
+                lastLevel++;
+            }
+            ret += (curLevel +1- lastLevel) >>1;
+        }
+        lastLevel = curLevel;
+        lastSecond = c[i].second;
+
+        
+    }
+    cout << ret;
+
+    
+
 
 }
+

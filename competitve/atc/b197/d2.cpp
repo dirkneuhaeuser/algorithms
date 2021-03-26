@@ -47,5 +47,22 @@ int main()
 } 
 void solve() 
 {
+    int H, W, A, B;
+    cin >> H >> W >>A >>B;
+    vector<vector<vector<int>>> dp(H+1, vector<vector<int>> (W+1, vector<int>(A+1, 1)));
+    for(int i=H-1; i>=0; --i){
+        for(int j=W-1; j>=0; --j){
+            for(int k=1; k<=A; ++k){
+                dp[i][j][k] = dp[i+1][j][k-1] + dp[i][j+1][k-1];
+                if(i+1 < H && j+1 < W) dp[i][j][k] -= dp[i+1][j+1][k];
+            }
+        }
+
+    }
+
+
+
+
 
 }
+

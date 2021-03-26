@@ -45,7 +45,46 @@ int main()
     cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
     return 0; 
 } 
+
+
+int kl=0;
 void solve() 
 {
+    kl++;
+    string s;
+    cin >> s;
+    vector<int> counter (26,0);
 
+
+
+    for(int l=0;l<s.size();++l){
+        counter[s[l]-'a']++;
+    }
+    int last = 0;
+    vector<bool> alr(26, false);
+    for(int l=0;l<s.size();++l){
+        counter[s[l]-'a']--;
+        if(!alr[s[l]-'a'] && counter[s[l]-'a'] == 0){
+            //cout << l << endl;
+            //cout << last << " - " << l << endl;
+            int goal = s[l]-'a';
+            for(int c=25;c>=goal;--c){
+                if(alr[c]==true)continue;
+                for(int z = last;z<=l;++z){
+                    if(s[z] == 'a'+c){
+                        last = z+1;
+                        alr[c] = true;
+                        cout << s[z];
+                        break;
+                    }
+                }
+            }
+            //last=l+1;
+            //cout << endl;
+            
+        }
+    }
+
+    
 }
+

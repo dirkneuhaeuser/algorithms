@@ -1,8 +1,7 @@
 #include"bits/stdc++.h" // using "" instead of <>, so it will search locally for the precompiled version first
 
-// int up to 2*10^9 (2^31-1)
-#define ll long long  // up to 9*10^18 (2^63 -1)
-#define ull unsigned long long // up to 18*10^18 (2^64-1)
+#define ll long long
+#define ull unsigned long long
 #define ld long double
 #define print(n) cout << n << endl
 #define si(n) scanf("%d",&n)
@@ -30,9 +29,9 @@ int main()
     ios_base::sync_with_stdio(false);cin.tie(NULL); 
 
     #ifndef ONLINE_JUDGE 
-    freopen("/Users/dirk/development/algorithms/competitve/input.txt", "r", stdin); 
-    freopen("/Users/dirk/development/algorithms/competitve/error.txt", "w", stderr); 
-    freopen("/Users/dirk/development/algorithms/competitve/output.txt", "w", stdout); 
+    freopen("input.txt", "r", stdin); 
+    freopen("error.txt", "w", stderr); 
+    freopen("output.txt", "w", stdout); 
     #endif 
     
     int t=1; 
@@ -47,5 +46,25 @@ int main()
 } 
 void solve() 
 {
+    string bin;
+    cin >> bin;
+    bool check = false;
+    int n = bin.size();
+    for(int i=1;i<n; ++i){
+        if(!check){
+            if (bin[i]=='1' && bin[i-1] =='1'){
+                check = true;
+            }
+        }else if(check){
+            if (bin[i]=='0' && bin[i-1] =='0'){
+                cout << "NO";
+                return;
+            }
+        }
+
+
+    }
+    cout << "YES";
 
 }
+

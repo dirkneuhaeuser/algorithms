@@ -1,8 +1,7 @@
 #include"bits/stdc++.h" // using "" instead of <>, so it will search locally for the precompiled version first
 
-// int up to 2*10^9 (2^31-1)
-#define ll long long  // up to 9*10^18 (2^63 -1)
-#define ull unsigned long long // up to 18*10^18 (2^64-1)
+#define ll long long
+#define ull unsigned long long
 #define ld long double
 #define print(n) cout << n << endl
 #define si(n) scanf("%d",&n)
@@ -36,7 +35,6 @@ int main()
     #endif 
     
     int t=1; 
-    cin >> t;
     while(t--) 
     { 
         solve(); 
@@ -48,4 +46,8 @@ int main()
 void solve() 
 {
 
+    int a, b, c, d;
+    cin >> a >> b >> c >>d;
+    cout << b-c;
 }
+

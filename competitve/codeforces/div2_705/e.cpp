@@ -1,8 +1,7 @@
 #include"bits/stdc++.h" // using "" instead of <>, so it will search locally for the precompiled version first
 
-// int up to 2*10^9 (2^31-1)
-#define ll long long  // up to 9*10^18 (2^63 -1)
-#define ull unsigned long long // up to 18*10^18 (2^64-1)
+#define ll long long
+#define ull unsigned long long
 #define ld long double
 #define print(n) cout << n << endl
 #define si(n) scanf("%d",&n)
@@ -30,13 +29,12 @@ int main()
     ios_base::sync_with_stdio(false);cin.tie(NULL); 
 
     #ifndef ONLINE_JUDGE 
-    freopen("/Users/dirk/development/algorithms/competitve/input.txt", "r", stdin); 
-    freopen("/Users/dirk/development/algorithms/competitve/error.txt", "w", stderr); 
-    freopen("/Users/dirk/development/algorithms/competitve/output.txt", "w", stdout); 
+    freopen("input.txt", "r", stdin); 
+    freopen("error.txt", "w", stderr); 
+    freopen("output.txt", "w", stdout); 
     #endif 
     
     int t=1; 
-    cin >> t;
     while(t--) 
     { 
         solve(); 
@@ -47,5 +45,40 @@ int main()
 } 
 void solve() 
 {
-
+    int n;
+    cin >> n;
+    string l, r;
+    cin >> l >> r;
+ 
+    if (l[0] != r[0]) {
+        for (int i = 0; i < n; ++i)
+            cout << '1';
+        cout << endl;
+        exit(0);
+    }
+    cout << "nt" << endl;
+ 
+    auto get_next = [&] (string s) {
+        int i = n - 1;
+        while (s[i] == '1') {
+            s[i] = '0';
+            i--;
+        }
+        s[i] = '1';
+        return s;
+    };
+ 
+    if (r.back() == '1') {
+        cout << r << endl;
+        exit(0);
+    }
+ 
+    if (l == r || get_next(l) == r) {
+        cout << r << endl;
+    }
+    else {
+        r.back() ^= 1;
+        cout << r << endl;
+    }
 }
+

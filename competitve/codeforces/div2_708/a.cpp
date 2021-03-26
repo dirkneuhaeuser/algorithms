@@ -1,8 +1,7 @@
 #include"bits/stdc++.h" // using "" instead of <>, so it will search locally for the precompiled version first
 
-// int up to 2*10^9 (2^31-1)
-#define ll long long  // up to 9*10^18 (2^63 -1)
-#define ull unsigned long long // up to 18*10^18 (2^64-1)
+#define ll long long
+#define ull unsigned long long
 #define ld long double
 #define print(n) cout << n << endl
 #define si(n) scanf("%d",&n)
@@ -30,9 +29,9 @@ int main()
     ios_base::sync_with_stdio(false);cin.tie(NULL); 
 
     #ifndef ONLINE_JUDGE 
-    freopen("/Users/dirk/development/algorithms/competitve/input.txt", "r", stdin); 
-    freopen("/Users/dirk/development/algorithms/competitve/error.txt", "w", stderr); 
-    freopen("/Users/dirk/development/algorithms/competitve/output.txt", "w", stdout); 
+    freopen("input.txt", "r", stdin); 
+    freopen("error.txt", "w", stderr); 
+    freopen("output.txt", "w", stdout); 
     #endif 
     
     int t=1; 
@@ -48,4 +47,30 @@ int main()
 void solve() 
 {
 
+    int n; cin >> n;
+    vector<int> arr(101,0);
+
+    for(int i=0;i <n;i++){
+        int num;
+        cin >> num;
+        arr[num]++;
+    }
+    vector<int> ret1, ret2;
+    for(int i =0; i<101; i++){
+        if (arr[i]){
+            ret1.push_back(i);
+            arr[i]--;
+        }
+        while(arr[i]){
+            arr[i]--;
+            ret2.push_back(i);
+        }
+
+    }
+    ret1.insert(ret1.end(), ret2.begin(), ret2.end());
+    for(int i=0;i <n;i++){
+        cout << ret1[i] << " ";
+    }
+
 }
+

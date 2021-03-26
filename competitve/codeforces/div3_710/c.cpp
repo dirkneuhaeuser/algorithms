@@ -47,5 +47,27 @@ int main()
 } 
 void solve() 
 {
+    string a,b;
+    cin >> a >> b;
+    int ret = a.size() + b.size();
+    for(int i =0; i<a.size();++i){
+        for(int j =i; j<a.size();++j){
+            int cur = i + a.size()-1-j;
+            if(cur >= ret) continue;
+            string newa = a.substr(i, j-i+1);
+            //cout << a << " " << newa << " " << i << " " << j << endl;
+            for(int k =0; k<b.size();++k){
+                for(int l =k; l<b.size();++l){
+                    string newb = b.substr(k, l-k+1);
+                    int curB = k + b.size() -1 -l;
+                    if(newa == newb){
+                        ret = min(ret, cur + curB);
+                    }
+                }
+            }
 
+        }
+    }
+    cout << ret;
 }
+
