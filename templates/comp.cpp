@@ -28,8 +28,10 @@ int main()
     
     int t=1; 
     cin >> t;
+    int count = 1;
     while(t--) 
     { 
+        //cout<<"Case #" << count++ << ": ";
         solve(); 
         cout<<"\n";    
     }
