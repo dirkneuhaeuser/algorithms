@@ -1,6 +1,23 @@
 using namespace std;
 #include<bits/stdc++.h>  // this includes all standard libraries!!
 
+// python split in c++
+vector<string> tokenize(string s, string del = " "){
+    int start = 0;
+    int end = s.find(del);
+    vector<string> ret;
+    while (end != -1) {
+        ret.push_back(s.substr(start, end - start));
+        start = end + del.size();
+        end = s.find(del, start);
+    }
+    if(s.substr(start, end - start).size()>0){
+        ret.push_back(s.substr(start, end - start));
+    }
+    return ret;
+}    
+
+
 int main(){
     auto keywordTest = "blabla";
     //std::cout << keywordTest << "\n";
@@ -35,8 +52,6 @@ int main(){
     unsigned long long x1 = stoul(stringOf3);
     long long x2 = stoll(stringOf3);
     int x3 = stoi(stringOf3);
-
-
 
 
     // bitsets and binary operations

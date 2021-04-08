@@ -27,7 +27,7 @@ int main()
     #endif 
     
     int t=1; 
-    cin >> t;
+    //cin >> t;
     while(t--) 
     { 
         solve(); 
@@ -38,5 +38,9 @@ int main()
 } 
 void solve() 
 {
+    string s;
+    cin >> s;
+    cout << "YES";
 
 }
+

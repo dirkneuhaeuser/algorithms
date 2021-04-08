@@ -38,5 +38,27 @@ int main()
 } 
 void solve() 
 {
+    string s;
+    cin >> s;
+    int n = s.size();
+        
+    for(int i =0;i<((n+1)/2);i++){
+        if(s[i] != 'a'){
+            int correspond = n - i-1;
+            string newS = s.substr(0,correspond+1) + 'a' + s.substr(correspond+1);
+            cout << "YES" << endl;
+            cout << newS;
+            return;
+        }
+        if(s[n-1-i] !='a'){
+            string newS = s.substr(0,i) + 'a' + s.substr(i);
+            cout << "YES" << endl;
+            cout << newS;
+            return;
+        }
+
+    }
+    cout << "NO";
 
 }
+

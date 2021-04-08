@@ -38,5 +38,49 @@ int main()
 } 
 void solve() 
 {
+    vector<int> s,t;
+    vector<bool>check;
+    int n;
+    cin >> n;
+    string a, b;
+    cin >> a >> b;
+    for(int i=0;i<n;++i){
+        int num = a[i] - '0';
+        s.push_back(num);
+    }
+    for(int i=0;i<n;++i){
+        int num = b[i] - '0';
+        t.push_back(num);
+    }
+    int c1 = 0, c0 =0;
+    FOR(i,n){
+        if(s[i] == 0) c0++;
+        if(s[i] == 1) c1++;
+        if(c0 == c1){
+            check.push_back(true);
+        }else{
+            check.push_back(false);
+        }
+
+    }
+    //dbg(s);
+    //dbg(t);
+    //dbg(check);
+    bool flip = false;
+    for(int i =n-1; i>=0; --i){
+        if(s[i] ^ flip == t[i]) continue;
+        else{
+            if(check[i]){flip =  !flip;}
+            else{
+                cout << "NO";
+                return;
+            }
+        }
+
+    }
+
+    cout << "YES";
+
 
 }
+

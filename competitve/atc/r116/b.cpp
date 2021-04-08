@@ -10,7 +10,7 @@
 #include "/Users/dirk/development/algorithms/templates/debug.h"
 #endif
 
-const int MOD = 1000000007;
+const int MOD = 998244353;
 using namespace std; 
 
 
@@ -27,7 +27,6 @@ int main()
     #endif 
     
     int t=1; 
-    cin >> t;
     while(t--) 
     { 
         solve(); 
@@ -38,5 +37,50 @@ int main()
 } 
 void solve() 
 {
+    int N;
+    cin >> N;
+    ll val = 3ll << 62;
+    ll added = 0;
+    ll ret = 0;
+    vector<ll> nums;
+    FOR(i, N){
+        ll num;
+        cin >> num;
+        nums.push_back(num);
+    }
+    sort(nums.begin(), nums.end());
+    ll factor = 0;
+    ll prevFactor = 0;
+    ll addup = 0;
+    ll offset = 0;
+    FOR(i, N){
+        nums[i] = nums[i]%MOD;
+
+        if(i >=2){
+            prevFactor += nums[i-2];
+            factor += prevFactor;
+            prevFactor *=2; 
+        }
+        factor+=nums[i];
+        ret += factor*nums[i];
+        //ret += nums[i]*nums[i];
+
+
+        //cout << factor << endl;
+        
+
+        //factor += nums[i];
+        //ret += nums[i] * factor;
+        //factor += addup;
+        //addup += nums[i];
+
+        prevFactor = prevFactor%MOD;
+        factor = factor%MOD;
+        addup = addup%MOD;
+        ret = ret%MOD;
+
+    }
+    cout << ret;
 
 }
+

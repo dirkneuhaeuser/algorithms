@@ -27,7 +27,7 @@ int main()
     #endif 
     
     int t=1; 
-    cin >> t;
+    //cin >> t;
     while(t--) 
     { 
         solve(); 
@@ -38,5 +38,11 @@ int main()
 } 
 void solve() 
 {
+    int N, M;
+    cin >> N >> M;
+    vector<vector<ll>> dp(n+1, vector<ll>(m+1, 0));
+    vector<vector<ll>> dpx(n+1, vector<ll>(m+1, 0));
+    FOR(i, n)
 
 }
+

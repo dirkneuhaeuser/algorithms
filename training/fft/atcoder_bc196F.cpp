@@ -1,3 +1,18 @@
+#include"bits/stdc++.h" // using "" instead of <>, so it will search locally for the precompiled version first
+
+// int up to 2*10^9 (2^31-1)
+#define ll long long  // up to 9*10^18 (2^63 -1)
+#define ull unsigned long long // up to 18*10^18 (2^64-1)
+#define ld long double
+#define FOR(i, n) for(int i=0; i<n; i++)
+#define FORS(i, n) for(; i<n; i++)
+#ifdef DIRK
+#include "/Users/dirk/development/algorithms/templates/debug.h"
+#endif
+
+const int MOD = 1000000007;
+using namespace std; 
+
 typedef complex<double> cd;
 const double PI = acos(-1.0);
 
@@ -210,3 +225,49 @@ vector<ll> stringMatching(string a, string query){
 //vector<ll> matching = stringMatching(str, pattern); // [0, 0, 1, 2, 2, 2, 3, 2, 2, 2, 1, 0, 0] at position 6 str[6] = g the "efg" is matched
 //string pattern2 = "e?g";
 //vector<ll> matching = stringMatching(str, pattern2); // [0, 0, 1, 1, 1, 1, 2, 1, 1, 1, 1, 0, 0] at position 6 str[6] = g the "e?g" is matched
+
+
+
+void solve(); 
+int main() 
+{
+    ios_base::sync_with_stdio(false);cin.tie(NULL); 
+
+    #ifdef DIRK 
+    freopen("/Users/dirk/development/algorithms/competitve/input.txt", "r", stdin); 
+    freopen("/Users/dirk/development/algorithms/competitve/error.txt", "w", stderr); 
+    freopen("/Users/dirk/development/algorithms/competitve/output.txt", "w", stdout); 
+    #endif 
+    
+    int t=1; 
+    //cin >> t;
+    while(t--) 
+    { 
+        solve(); 
+        cout<<"\n";    
+    }
+    cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
+    return 0; 
+} 
+void solve() 
+{
+    // Idea match (1 and 1) and (0 and 0). 1 and 1 is easily matched by just the actual number 1. The multiplication then just add up to 1. For 0:0 we have to flip it and do it again
+    // Note: this is barely AC with this code
+    string S, T;
+    cin >> S >> T;
+    reverse(T.begin(), T.end());
+    int N = S.size(), M=T.size();
+    vector<ll> sv(N,0), tv(M,0), svF(N,0), tvF(M,0);
+    for(int i = 0; i < N; i++) (S[i] == '0' ? svF : sv)[i] = 1;
+    for(int i = 0; i < M; i++) (T[i] == '0' ? tvF : tv)[i] = 1;
+    vector<ll> conv = multiply(sv, tv);
+    vector<ll> conv2 = multiply(svF, tvF); // flipped version
+    vector<ll> ret;
+    ll ans = 0;
+    for(int i=T.size()-1; i<S.size(); ++i){
+        ans = max(ans, conv[i] + conv2[i]);
+    }
+    cout << T.size() - ans;
+
+}
+

@@ -27,7 +27,7 @@ int main()
     #endif 
     
     int t=1; 
-    cin >> t;
+    //cin >> t;
     while(t--) 
     { 
         solve(); 
@@ -38,5 +38,11 @@ int main()
 } 
 void solve() 
 {
+    string question;
+    while(getline(cin, question)){
+        if(question == "") break;
+        cout << "No" << endl;;
+    }
 
 }
+

@@ -27,7 +27,7 @@ int main()
     #endif 
     
     int t=1; 
-    cin >> t;
+    //cin >> t;
     while(t--) 
     { 
         solve(); 
@@ -38,5 +38,10 @@ int main()
 } 
 void solve() 
 {
+    int num;
+    cin >> num;
+    cout << sqrt(num);
+
 
 }
+
