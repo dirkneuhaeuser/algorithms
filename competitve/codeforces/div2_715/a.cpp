@@ -1,25 +1,9 @@
 #include"bits/stdc++.h" // using "" instead of <>, so it will search locally for the precompiled version first
-using namespace std; 
 
-// 2**6 =  64
-// 2**8 =  256
-// 2**10 = 1,024
-// 2**15 = 32,768
-// 2**20 = 1,048,576
-// 2**25 = 33,554,432
-// 2**30 = 1,073,741,824
-// 2**32 = 4,294,967,296
-
-// int up to  2*10^9 (2^31-1)
-// ll up to   9*10^18 (2^63 -1)
-// ull up to 18*10^18 (2^64-1)/
-
-typedef long long ll;
-typedef unsigned long long ull;
-typedef long double ld;
-typedef pair<long, long> pll;
-typedef pair<int, int> pii;
-
+// int up to 2*10^9 (2^31-1)
+#define ll long long  // up to 9*10^18 (2^63 -1)
+#define ull unsigned long long // up to 18*10^18 (2^64-1)
+#define ld long double
 #define FOR(i, n) for(int i=0; i<n; i++)
 #define FORS(i, n) for(; i<n; i++)
 #ifdef DIRK
@@ -27,6 +11,7 @@ typedef pair<int, int> pii;
 #endif
 
 const int MOD = 1000000007;
+using namespace std; 
 
 
 
@@ -55,5 +40,24 @@ int main()
 } 
 void solve() 
 {
+    int n; cin >> n;
+    vector<int> e, o;
+    while(n){
+        int num; cin >> num;
+        if(num&1){
+            o.push_back(num);
+        }else{
+            e.push_back(num);
+        }
+        n--;
+    }
+    FOR(i, o.size()){
+        cout << o[i] << " ";
+    }
+    FOR(i, e.size()){
+        cout << e[i] << " ";
+    }
+
 
 }
+

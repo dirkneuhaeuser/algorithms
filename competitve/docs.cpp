@@ -19,7 +19,10 @@ vector<string> tokenize(string s, string del = " "){
 
 
 int main(){
+
+
     auto keywordTest = "blabla";
+    std::transform(keywordTest.begin(), keywordTest.end(), keywordTest.begin(), ::tolower);
     //std::cout << keywordTest << "\n";
 
     // manipulating a string

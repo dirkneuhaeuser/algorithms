@@ -1,5 +1,4 @@
 #include"bits/stdc++.h" // using "" instead of <>, so it will search locally for the precompiled version first
-using namespace std; 
 
 // 2**6 =  64
 // 2**8 =  256
@@ -13,13 +12,9 @@ using namespace std;
 // int up to  2*10^9 (2^31-1)
 // ll up to   9*10^18 (2^63 -1)
 // ull up to 18*10^18 (2^64-1)/
-
-typedef long long ll;
-typedef unsigned long long ull;
-typedef long double ld;
-typedef pair<long, long> pll;
-typedef pair<int, int> pii;
-
+#define ll long long  
+#define ull unsigned long long 
+#define ld long double
 #define FOR(i, n) for(int i=0; i<n; i++)
 #define FORS(i, n) for(; i<n; i++)
 #ifdef DIRK
@@ -27,6 +22,29 @@ typedef pair<int, int> pii;
 #endif
 
 const int MOD = 1000000007;
+using namespace std; 
+
+const int s =1<<20;
+bitset<s>p;
+void sieve(){
+    p.set();
+    for(ll i=2;i<s;++i){
+        if(p[i]){
+            for(ll j=i*i;j<s; j+=i){
+                p[j]=0;
+            }
+        }
+    }
+}
+
+int reverse(int x){
+    int ans = 0;
+    while(x){
+        ans = ans*10 + x%10;
+        x/=10;
+    }
+    return ans;
+}
 
 
 
@@ -40,20 +58,33 @@ int main()
     freopen("/Users/dirk/development/algorithms/competitve/error.txt", "w", stderr); 
     freopen("/Users/dirk/development/algorithms/competitve/output.txt", "w", stdout); 
     #endif 
+    sieve();
     
     int t=1; 
-    cin >> t;
+    //cin >> t;
     //int count = 1;
     while(t--) 
     { 
         //cout<<"Case #" << count++ << ": ";
         solve(); 
-        cout<<"\n";    
+        //cout<<"\n";    
     }
     cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
     return 0; 
 } 
 void solve() 
 {
+    int n;
+    while(cin >> n){
+        if(!p[n]){
+            cout << n << " is not prime."<<endl;
+        }else if(reverse(n) != n && p[reverse(n)]){
+            cout << n << " is emirp."<<endl;
+        }else{
+            cout << n << " is prime."<<endl;
+        }
+
+    }
 
 }
+

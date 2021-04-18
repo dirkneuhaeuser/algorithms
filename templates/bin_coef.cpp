@@ -1,41 +1,43 @@
-ull pow_mod (ull a, ull b, ull n){
-    // returns pow(a,b) % n
-    ull x=1, y=a; 
-    while (b > 0) {
-        if (b%2 == 1) {
-            x = (x*y) % n; // multiplying with base
-        }
-        y = (y*y) % n; // squaring the base
-        b /= 2;
-    }
-    return x % n;
+long long save_mod(long long a, long m){
+    // makes sure that the number is positive
+    return ((a%m) + m) % m;
 }
 
-ll mod(ll a, ll m){
-    return ((a%m)+m) % m;
-}
-
-
-ll modPow(int b, int p, int m){
+long long modPow(long long b, long long p, long long m){ // O(log p)
+    // D&C:
+    // b**0 = 1 (basecase)
+    // if p even: b**p = b**(p/2) * b**(p/2) 
+    // if p odd: b**p = b**(p/2) * b**(p/2) * b
     if(p == 0){
         return 1;
     }
-    ll ans = modPow(b, p/2, m);
-    ans = mod(ans*ans, m);
-    if (p&1) ans = mod(ans*b, m);
+    long long ans = modPow(b, p/2, m);
+    ans = save_mod(ans*ans, m);
+    if (p&1) ans = save_mod(ans*b, m);
     return ans;
 }
 
 
-ull inv(ull a){
-    return modPow(a, MOD-2, MOD);
+long long inv(long long a, long long m){
+    // Fermats little theorem
+    // a**(m-2) = a**(-1) (mod m)
+    // REQUIREMENT m is prime (note: eea only requires gcd(a,m) = 1
+    return modPow(a, m-2, m);
 }
 
-ull fact[217001];
+long long fact[100001];
 
-ull C(ll n, ll k){
+long long C(long long n, long long k, long long m){
+    // binomial coeffiecents with modulo m
+    // n! / ((n-k)! k!) 
+    // to use the modular arithmetic, we need to finde the inverse of (n-k)! and k! 
+    // factorials need to be precalculated and taken modulo
     if(n < k) return 0;
-    //cout << n << " " << k << endl;
-    return (((fact[n] * inv(fact[k])) % MOD) * inv(fact[n-k])) % MOD;
+    return (((fact[n] * inv(fact[k], m)) % m) * inv(fact[n-k], m)) % m;
 }
 
+//fact[0]=1;
+//for(int i=1; i<100001;++i){
+//    fact[i] = (fact[i-1]*i)%MOD;
+//}
+//long long ret = C(100000, 50000, MOD);  // (100000 choose 50000)%1000000007 = 149033233

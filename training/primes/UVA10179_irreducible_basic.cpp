@@ -28,6 +28,32 @@ typedef pair<int, int> pii;
 
 const int MOD = 1000000007;
 
+const int s=31623;
+vector<int>primes;
+bitset<s>p;
+void sieve(){
+    p.set();
+    for(ll i =2;i<s;++i){
+        if(p[i]){
+            primes.push_back(i);
+            for(ll j=i*i; j<s; j+=i){
+                p[j]=0;
+            }
+        }
+    }
+}
+int eulerPhi(int n){
+    // totient euler function gets the numbers 1..n-1 which are coprime to n
+    ll ret = n;
+    for(int i = 0; i<primes.size() && primes[i]*primes[i]<= n; ++i){
+        if(n%primes[i]==0){
+            ret-=ret/primes[i];
+            while(n%primes[i]==0) n/=primes[i];
+        }
+    }
+    if(n>1) ret-=ret/n;
+    return ret;
+} 
 
 
 void solve(); 
@@ -40,20 +66,27 @@ int main()
     freopen("/Users/dirk/development/algorithms/competitve/error.txt", "w", stderr); 
     freopen("/Users/dirk/development/algorithms/competitve/output.txt", "w", stdout); 
     #endif 
+    sieve();
     
     int t=1; 
-    cin >> t;
+    //cin >> t;
     //int count = 1;
     while(t--) 
     { 
         //cout<<"Case #" << count++ << ": ";
         solve(); 
-        cout<<"\n";    
+        //cout<<"\n";    
     }
     cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
     return 0; 
 } 
 void solve() 
 {
+    int n;
+    while(cin>>n){
+        if(n==0)return;
+        cout << eulerPhi(n) << endl;
+    }
 
 }
+

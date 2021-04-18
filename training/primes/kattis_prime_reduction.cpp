@@ -28,6 +28,31 @@ typedef pair<int, int> pii;
 
 const int MOD = 1000000007;
 
+const int s  = 1<<15;
+bitset<s> p;
+vector<int>primes;
+void sieve(){
+    p[0]=0;
+    p[1]=0;
+    p.set();
+    for(ll i = 2; i<s; ++i){
+        if(p[i]){
+            primes.push_back(i);
+            for(ll j = i*i; j<s; j+=i){
+                p[j]=0;
+            }
+        }
+        
+    }
+}
+
+bool isPrime(int x){
+    if(x<s)return p[x];
+    for(int i =0; i<primes.size() && (primes[i]*primes[i]<=x); ++i){
+        if(x%primes[i]==0)return false;
+    }
+    return true;
+}
 
 
 void solve(); 
@@ -40,20 +65,45 @@ int main()
     freopen("/Users/dirk/development/algorithms/competitve/error.txt", "w", stderr); 
     freopen("/Users/dirk/development/algorithms/competitve/output.txt", "w", stdout); 
     #endif 
+
+    sieve();
     
     int t=1; 
-    cin >> t;
+    //cin >> t;
     //int count = 1;
     while(t--) 
     { 
         //cout<<"Case #" << count++ << ": ";
         solve(); 
-        cout<<"\n";    
+        //cout<<"\n";    
     }
     cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
     return 0; 
 } 
 void solve() 
 {
+    int n;
+    while(cin >> n){
+        if(n==4)return;
+        int cnt = 1;
+        int c = 10;
+        while(!isPrime(n)){
+            cnt++;
+            int newN = 0;
+            for(int i=0;i<primes.size() && primes[i]*primes[i]<=n; ++i){
+                while(n%primes[i] == 0){
+                    n/=primes[i];
+                    newN += primes[i];
+                }
+            }
+            if(n>1){
+                newN += n;
+            }
+            n = newN;
+        }
+
+        cout << n << " " << cnt <<endl;
+    }
 
 }
+

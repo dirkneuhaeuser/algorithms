@@ -42,7 +42,7 @@ int main()
     #endif 
     
     int t=1; 
-    cin >> t;
+    //cin >> t;
     //int count = 1;
     while(t--) 
     { 
@@ -55,5 +55,24 @@ int main()
 } 
 void solve() 
 {
+    int n; cin >> n;
+    int bd = 1;
+    int num = n;
+    // find lowest pf
+    for(int i=2; i*i<=n; ++i){
+        if(n%i==0){
+            bd = n/i;
+            n/=i;
+            break;
+            
+        }
+    }
+    if(n==num){// num is prime
+        cout << num -1;
+    }else{
+        cout << num-bd;
+    }
+
 
 }
+

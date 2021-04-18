@@ -3,3 +3,4 @@
 input.txt
 output.txt
 error.txt
+*.dSYM

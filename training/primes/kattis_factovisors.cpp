@@ -1,10 +1,24 @@
+#include"bits/stdc++.h" // using "" instead of <>, so it will search locally for the precompiled version first
+
+// int up to 2*10^9 (2^31-1)
+#define ll long long  // up to 9*10^18 (2^63 -1)
+#define ull unsigned long long // up to 18*10^18 (2^64-1)
+#define ld long double
+#define FOR(i, n) for(int i=0; i<n; i++)
+#define FORS(i, n) for(; i<n; i++)
+#ifdef DIRK
+#include "/Users/dirk/development/algorithms/templates/debug.h"
+#endif
+
+const int MOD = 1000000007;
+using namespace std; 
+
 long long _sieve_size;
 bitset<10000010> bs; // numbers up to 10^7, if bit set, number is prime
 vector<long long> primes;
 vector<long long> smallest_prime;
 
 void sieve(long long limit){ // O(N * (1/2, 1/3, 1/5, .., 1/lastPrime)) = O(N * log log N)
-    // after 2**25 = 33554432 it slows down
     _sieve_size = limit + 1;
     smallest_prime = vector<long long>(_sieve_size, -1);
     bs.set(); // assume all numbers are prime
@@ -148,6 +162,66 @@ long long legendre(long long pf, long long n){
     //dbg(support);
     return support;
 }
-// m might be very larger -> DONT USE SIEVE: go pf from 2 up tp pf*pf <= m (or until tmp == 1), for each pf check its power in m and its support in n with legendre
+// don't use sieve! as m might be very large: go pf from 2 up tp pf*pf <= m (or until tmp == 1), for each pf check its power in m and its support in n with legendre
 // check afterwards if tmp > 1(temp itself is prime),
+
+
+
+void solve(); 
+int main() 
+{
+    ios_base::sync_with_stdio(false);cin.tie(NULL); 
+
+    #ifdef DIRK 
+    freopen("/Users/dirk/development/algorithms/competitve/input.txt", "r", stdin); 
+    freopen("/Users/dirk/development/algorithms/competitve/error.txt", "w", stderr); 
+    freopen("/Users/dirk/development/algorithms/competitve/output.txt", "w", stdout); 
+    #endif 
+    
+    int t=1; 
+    //cin >> t;
+    //int count = 1;
+    while(t--) 
+    { 
+        //cout<<"Case #" << count++ << ": ";
+        solve(); 
+        //cout<<"\n";    
+    }
+    cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
+    return 0; 
+} 
+void solve(){
+    ll n, m;
+    while (scanf("%lld %lld", &n, &m) != EOF) {
+        bool possible;
+        if(m == 0){
+            possible = false;
+        }
+        else if(m <= n){
+            possible = true;
+        }else{
+            possible = true;
+            ll pf = 2;
+            ll tmp = m;
+            while(possible && tmp != 1 && pf*pf <= m){
+                ll cnt = 0;
+                while(tmp % pf == 0){
+                    cnt++;
+                    tmp /= pf;
+                }
+                if(cnt && cnt > legendre(pf, n)){
+                    possible = false;
+                }
+                pf++;
+            }
+            if(possible && tmp > 1){
+                // tmp is prime it self
+                possible = legendre(tmp, n)>=1;
+            }
+
+        }
+        printf("%lld %s %lld!\n", m, possible ? "divides" : "does not divide", n);
+    }
+
+}
 

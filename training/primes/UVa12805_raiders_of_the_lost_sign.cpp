@@ -27,6 +27,20 @@ typedef pair<int, int> pii;
 #endif
 
 const int MOD = 1000000007;
+const int s = 100001;
+bitset<s>p;
+vector<int>primes;
+void sieve(){
+    p.set();
+    for(ll i =2;i<s; ++i){
+        if(p[i]){
+            primes.push_back(i);
+            for(ll j = i*i; j<s; j+=i){
+                p[j]=0;
+            }
+        }
+    }
+}
 
 
 
@@ -40,6 +54,8 @@ int main()
     freopen("/Users/dirk/development/algorithms/competitve/error.txt", "w", stderr); 
     freopen("/Users/dirk/development/algorithms/competitve/output.txt", "w", stdout); 
     #endif 
+
+    //sieve();
     
     int t=1; 
     cin >> t;
@@ -55,5 +71,39 @@ int main()
 } 
 void solve() 
 {
+    int num; cin >> num;
+    vector<int> pf;
+    for(int i=2; i*i<=num; i++){
+        while(num%i==0){
+            num/=i;
+            pf.push_back(i);
+        }
+    }
+    if(num!=1)
+        pf.push_back(num);
+    
+    //for(int i=0; primes[i]*primes[i]<=num; i++){
+    //    while(num%primes[i]==0){
+    //        num/=primes[i];
+    //        pf.push_back(primes[i]);
+    //    }
+    //}
+    //if(num!=1)
+    //    pf.push_back(num);
+    
+    int ret = 1;
+    for(int primef:pf){
+        if(primef!=2){
+            if(primef%4==1){
+                ret *= -1;
+            }
 
+        }
+    }
+    if(ret<0){
+        cout << "-";
+    }else{
+        cout << "+";
+    }
 }
+

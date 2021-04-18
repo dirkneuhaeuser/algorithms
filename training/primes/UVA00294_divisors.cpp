@@ -28,6 +28,36 @@ typedef pair<int, int> pii;
 
 const int MOD = 1000000007;
 
+const int s = 31623;
+vector<int>primes;
+bitset<s>p;
+void sieve(){
+    p.set();
+    for(ll i =2; i<s;++i){
+        if(p[i]){
+            primes.push_back(i);
+            for(ll j=i*i; j<s; j+=i){
+                p[j]=0;
+            }
+        }
+    }
+}
+
+ll numDiv(int x){
+    ll ret = 1;
+    for(int i=0; i<primes.size() && primes[i]*primes[i]<=x; ++i){
+        ll total = 1;
+        while(x%primes[i]==0){
+            x/=primes[i];
+            total++;
+            //cout << x << " " << total <<endl;
+        }
+        ret *= total;
+    }
+    if(x!=1) ret *= (2);
+    return ret;
+}
+
 
 
 void solve(); 
@@ -41,6 +71,7 @@ int main()
     freopen("/Users/dirk/development/algorithms/competitve/output.txt", "w", stdout); 
     #endif 
     
+    sieve();
     int t=1; 
     cin >> t;
     //int count = 1;
@@ -55,5 +86,19 @@ int main()
 } 
 void solve() 
 {
+    int l, u;
+    cin >> l >> u;
+
+    int lc = l;
+    int maxN = 1, numD=0;
+    for(;l<=u;++l){
+        ll num = numDiv(l);
+        if(num>numD){
+            maxN=l;
+            numD = num;
+        }
+    }
+    cout << "Between " << lc<<" and " << u << ", " << maxN << " has a maximum of " << numD << " divisors."; 
 
 }
+

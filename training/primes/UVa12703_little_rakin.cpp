@@ -29,7 +29,6 @@ typedef pair<int, int> pii;
 const int MOD = 1000000007;
 
 
-
 void solve(); 
 int main() 
 {
@@ -55,5 +54,41 @@ int main()
 } 
 void solve() 
 {
+    int a, b, n;
+    cin >> n >> a >> b;
+    vector<int> apf(1001, 0), bpf(1001, 0), rpf(1001, 0);
+    for(int i =2; i*i<=a; ++i){
+        while(a%i==0){
+            //cout << a << " " << i << endl;
+            a/=i;
+            apf[i]++;
+        }
+    }
+    if(a!=1) apf[a]++;
+    for(int i =2; i*i<=b; ++i){
+        while(b%i==0){
+            b/=i;
+            bpf[i]++;
+        }
+    }
+    if(b!=1) bpf[b]++;
+    n--;
+    while(n){
+        for(int i=0; i<1001; ++i){
+            rpf[i]=apf[i]+bpf[i];
+        }
+        apf = bpf;
+        bpf = rpf;
+        rpf = vector<int>(1001,0);
+        n--;
 
+    }
+    //dbg(bpf);
+
+    for(int i=0; i<1001; ++i){
+        if(bpf[i]){
+            cout << i << " " << bpf[i] << endl;
+        }
+    }
 }
+

@@ -27,6 +27,42 @@ typedef pair<int, int> pii;
 #endif
 
 const int MOD = 1000000007;
+const int s = 1415;
+vector<int>primes;
+bitset<s>p;
+void sieve(){
+    p.set();
+    for(ll i =2; i<s; ++i){
+        if(p[i]){
+            primes.push_back(i);
+            for(ll j = i*i; j<s; j+=i){
+                p[j]=0;
+            }
+        }
+    }
+}
+int numPf(int x){
+    int ret = 0;
+    for(int i=0; i<primes.size() && primes[i]*primes[i]<=x; i++){
+        while(x%primes[i]==0){
+            ret++;
+            x/=primes[i];
+        }
+    }
+    if(x>1)ret++;
+    return ret;
+}
+
+vector<pii> pfs(2000000,{0,0});
+
+void sortMe(){
+    sieve();
+    for(int i=1;i<pfs.size()+1;++i){
+        pfs[i-1]={numPf(i),i};
+    }
+    sort(pfs.begin(), pfs.end());
+    //dbg(pfs);
+}
 
 
 
@@ -40,15 +76,18 @@ int main()
     freopen("/Users/dirk/development/algorithms/competitve/error.txt", "w", stderr); 
     freopen("/Users/dirk/development/algorithms/competitve/output.txt", "w", stdout); 
     #endif 
+
+    sortMe();
+
     
     int t=1; 
-    cin >> t;
+    //cin >> t;
     //int count = 1;
     while(t--) 
     { 
         //cout<<"Case #" << count++ << ": ";
         solve(); 
-        cout<<"\n";    
+        //cout<<"\n";    
     }
     cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
     return 0; 
@@ -56,4 +95,12 @@ int main()
 void solve() 
 {
 
+    int n; 
+    int count = 1;
+    while(cin >> n){
+        if(!n)return;
+        cout<<"Case " << count++ << ": ";
+        cout << pfs[n-1].second << endl;
+    }
 }
+

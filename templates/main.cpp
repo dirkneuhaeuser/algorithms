@@ -20,10 +20,10 @@
 #include "/Users/dirk/development/algorithms/templates/debug.h"
 #endif
 
-
 const int MOD = 1000000007;
-
 using namespace std; 
+
+
 
 int main() 
 {

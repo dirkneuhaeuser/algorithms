@@ -1,5 +1,4 @@
 #include"bits/stdc++.h" // using "" instead of <>, so it will search locally for the precompiled version first
-using namespace std; 
 
 // 2**6 =  64
 // 2**8 =  256
@@ -13,13 +12,9 @@ using namespace std;
 // int up to  2*10^9 (2^31-1)
 // ll up to   9*10^18 (2^63 -1)
 // ull up to 18*10^18 (2^64-1)/
-
-typedef long long ll;
-typedef unsigned long long ull;
-typedef long double ld;
-typedef pair<long, long> pll;
-typedef pair<int, int> pii;
-
+#define ll long long  
+#define ull unsigned long long 
+#define ld long double
 #define FOR(i, n) for(int i=0; i<n; i++)
 #define FORS(i, n) for(; i<n; i++)
 #ifdef DIRK
@@ -27,6 +22,24 @@ typedef pair<int, int> pii;
 #endif
 
 const int MOD = 1000000007;
+using namespace std; 
+
+const int s=20001;
+bitset<s> p;
+vector<int> primes(1,0);
+void sieve(){
+    p.set();
+    p[1]=0;
+    for(ll i=2;i<s;++i){
+        if(p[i]){
+            primes.push_back(i);
+            for(ll j=i*i; j<s; j+=i){
+                p[j]=0;
+            }
+        }
+    }
+}
+
 
 
 
@@ -41,6 +54,7 @@ int main()
     freopen("/Users/dirk/development/algorithms/competitve/output.txt", "w", stdout); 
     #endif 
     
+    sieve();
     int t=1; 
     cin >> t;
     //int count = 1;
@@ -53,7 +67,37 @@ int main()
     cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
     return 0; 
 } 
+ld getdist(ld x, ld y, ld xn, ld yn) {
+    //return sqrt(pow(x-xn,2) + pow(y-yn,2));
+    long double diff = sqrt((long double)(pow(abs(xn-x),2) + pow(abs(yn-y),2)));
+    return diff;
+    //return sqrt((pow(abs(xn-x),2) + pow(abs(yn-y),2)));
+}
 void solve() 
 {
+    int N;cin >> N; 
+    ld D;cin >> D;
 
+    ll ret =0;
+    ll count = 0;
+    ld dis=0;
+
+    int x = 0, y=0;
+    while(N){
+        int xn, yn;
+        cin >> xn >> yn;
+        long double diff = getdist(x, y, xn, yn);
+        x = xn;
+        y = yn;
+        dis += diff;
+        if(dis <= D){
+            count++;
+            if(p[count]){
+                ret = count;
+            }
+        };
+        N--;
+    }
+    cout << ret;
 }
+
