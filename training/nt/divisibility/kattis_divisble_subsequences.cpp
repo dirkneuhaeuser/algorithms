@@ -57,5 +57,19 @@ int main()
 } 
 void solve() 
 {
+    int div, n; cin >> div >> n;
+    unordered_map<int, int> remCount= {{0,1}};
+    ll ret =0;
+    int sum = 0;
+    for(int i=0; i<n; ++i){
+        int num; cin >> num;
+        sum += num;
+        sum %= div;
+        ret += remCount[sum];
+        //cout << num <<  " " << sum  << " " << ret << " " << div- sum  << " " << div << endl;
+        remCount[sum]++;
+    }
+    cout << ret;
 
 }
+

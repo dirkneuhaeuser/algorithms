@@ -44,18 +44,51 @@ int main()
     #endif 
     
     int t=1; 
-    cin >> t;
+    //cin >> t;
     //int count = 1;
     while(t--) 
     { 
         //cout<<"Case #" << count++ << ": ";
         solve(); 
-        cout<<"\n";    
+        //cout<<"\n";    
     }
     cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
     return 0; 
 } 
 void solve() 
 {
+    ll num;
+    while(cin >> num){
+        vector<int> digs;
+        while(num){
+            digs.push_back(num%10);
+            num/=10;
+        }
+        sort(digs.begin(), digs.end());
+        ll minE=0;
+        ll maxE = 0;
+        int zeros = 0;
+        for(int i=0;i<digs.size();++i){
+            if(digs[i] == 0 && minE==0){
+                zeros++;
+            }
+            while(minE && zeros){
+                minE*=10;
+                zeros--;
+            }
+            minE*=10;
+            minE+= digs[i];
+        }
+        while(minE && zeros){
+            minE*=10;
+            zeros--;
+        }
+        for(int i=digs.size()-1;i>=0;--i){
+            maxE*=10;
+            maxE+= digs[i];
+        }
+        cout << maxE << " - " << minE << " = " << maxE-minE << " = 9 * " << (maxE-minE)/9 << endl;
+    }
 
 }
+

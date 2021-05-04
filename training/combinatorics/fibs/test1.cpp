@@ -44,18 +44,56 @@ int main()
     #endif 
     
     int t=1; 
-    cin >> t;
+    //cin >> t;
     //int count = 1;
     while(t--) 
     { 
         //cout<<"Case #" << count++ << ": ";
         solve(); 
-        cout<<"\n";    
+        //cout<<"\n";    
     }
     cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
     return 0; 
 } 
+int f[46],t;
+
 void solve() 
 {
+    f[2] = f[1] = 1;
+    for(int i = 3; i < 46; ++i){
+        f[i] = f[i-1]+f[i-2];
+    }
+    cin>>t;
+    while(t--)
+    {
+        ll n;
+        cin>>n;
+        ll A = 1e9,B = 1e9;
+        for(int i = 3; i <= 45; ++i){
+            ll a = f[i-2], b = f[i-1], s, t;
+            ll d=  eea(a,b,s,t);
+            if(n%d) continue;// Determine whether there is a solution
 
+            s *= n, t *= n;
+            ll left = b/d;
+            ll right = a/d;
+            //a /= d, b /= d;
+            ll k = (t-s)/(left+right);//The essential
+            s += k*left;
+            t -= k*right;
+            if(s>t){
+                t += right;
+                s -= left;
+            }
+            if(s<=0||t<=0)
+                continue;
+            cout <<s << " " << t << " " << f[i-2] << " " << f[i-1] << " " << d << " " << left << " " << right<< endl;
+            if(s<=t&&s<=A&&t<=B){
+                A = s;
+                B = t;
+            }
+        }
+        cout<<A<<' '<<B<<endl;
+    }
 }
+

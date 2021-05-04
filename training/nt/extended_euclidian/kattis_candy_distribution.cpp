@@ -55,7 +55,46 @@ int main()
     cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
     return 0; 
 } 
+ll limit = 1000000000;
 void solve() 
 {
+    ll k, c;
+    cin >> k >> c;
+
+
+    // c*s - K* t = 1
+    // goal find: c**-1 (mod k)
+    if (k == 1) { // edge-case: can never be found
+      if (c > 1) {
+        cout << "1";
+      } else {
+        cout << "2";
+      }
+    } else if (c == 1) { // edge cases
+      cout << k + 1;
+    }else{
+        ll d = __gcd(k,c);
+        if(d!=1){
+            cout << "IMPOSSIBLE";
+            return;
+        }
+        ll invC = invEea(c, k);
+        //
+        // c*s - K* t = 1
+        // c*s = 1 (mod k)
+        // s = c**-1 (mod k)
+        // c* invC - k*t = 1
+        //
+        //
+        //Note: t>=1  ->
+        // c*invC >= k+1
+        // 
+        if(invC > limit || (invC*c - 1)<k || invC <=0){
+            cout << "IMPOSSIBLE";
+            return;
+        }
+        cout << invC;
+    }
 
 }
+

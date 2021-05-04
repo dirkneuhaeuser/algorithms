@@ -32,6 +32,18 @@ ll invEea(ll b, ll m){ll s, t; ll d = eea(b, m, s, t); if(d!=1) return -1; retur
 const int MOD = 1000000007;
 
 
+
+
+
+ull newPow(ull a, ull t){
+    if(t==0) return 1ull;
+    ull ans = newPow(a, t>>1);
+    ans = ans*ans;
+    if(t&1) ans *= a;
+    return ans;
+}
+
+
 void solve(); 
 int main() 
 {
@@ -44,18 +56,31 @@ int main()
     #endif 
     
     int t=1; 
-    cin >> t;
+    //cin >> t;
     //int count = 1;
     while(t--) 
     { 
         //cout<<"Case #" << count++ << ": ";
         solve(); 
-        cout<<"\n";    
+        //cout<<"\n";    
     }
     cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
     return 0; 
 } 
 void solve() 
 {
+    ull num; cin >> num;
+    ull cnt =1;
+    ull ret = 1; 
+    while(cnt<=129){
+        ull p = newPow(cnt, 9);
+        //cout << p << endl;
+        if(num%p==0){
+            ret = cnt;
+        }
+        cnt++;
+    }
+    cout << ret;
 
 }
+

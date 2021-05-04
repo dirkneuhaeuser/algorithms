@@ -57,5 +57,23 @@ int main()
 } 
 void solve() 
 {
+    int n, m, b;
+    cin >> n >> m >> b;
+    int minE;
+    int maxE;
+    if(n>m){
+        minE = n-1 + n*(m - 1);
+        maxE = m-1 + (n-1)*m;
+    }else{
+        minE = m-1 + m*(n - 1);
+        maxE = n-1 + (m-1)*n;
+    }
+    //dbg(minE); dbg(maxE);
+    if(b>=minE && b<= maxE){
+        cout << "YES";
+    }else{
+        cout << "NO";
+    }
 
 }
+

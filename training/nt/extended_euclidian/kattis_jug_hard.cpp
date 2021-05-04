@@ -57,5 +57,13 @@ int main()
 } 
 void solve() 
 {
+    ll a,b,c;
+    cin >> a >> b >> c;
+    if(c%__gcd(a,b)==0){
+        cout << "Yes";
+    }else{
+        cout << "No";
+    }
 
 }
+

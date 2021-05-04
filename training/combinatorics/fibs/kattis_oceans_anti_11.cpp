@@ -32,6 +32,9 @@ ll invEea(ll b, ll m){ll s, t; ll d = eea(b, m, s, t); if(d!=1) return -1; retur
 const int MOD = 1000000007;
 
 
+vector<int>fibs = {0, 1};
+
+
 void solve(); 
 int main() 
 {
@@ -42,6 +45,10 @@ int main()
     freopen("/Users/dirk/development/algorithms/competitve/error.txt", "w", stderr); 
     freopen("/Users/dirk/development/algorithms/competitve/output.txt", "w", stdout); 
     #endif 
+
+    for(int i= 2; i<10003;++i){
+        fibs.push_back((fibs[i-2] + fibs[i-1])%MOD);
+    }
     
     int t=1; 
     cin >> t;
@@ -57,5 +64,10 @@ int main()
 } 
 void solve() 
 {
+    int n;
+    cin >> n;
+    cout << fibs[n+2];
+
 
 }
+

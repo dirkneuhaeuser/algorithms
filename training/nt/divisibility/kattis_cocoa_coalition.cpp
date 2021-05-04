@@ -44,18 +44,69 @@ int main()
     #endif 
     
     int t=1; 
-    cin >> t;
+    //cin >> t;
     //int count = 1;
     while(t--) 
     { 
         //cout<<"Case #" << count++ << ": ";
         solve(); 
-        cout<<"\n";    
+        //cout<<"\n";    
     }
     cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
     return 0; 
 } 
 void solve() 
 {
+    ll n, m, a, b;
+    cin >> n >> m >> a;
+    b = n*m - a;
+    if(a==n*m || a==0){
+        cout << 0;
+        return;
+    }
+    if(a%n==0 || a%m==0 || b%n==0 || b%m==0){
+        cout << 1;
+        return;
+    }
+    for(int j=0; j<m; ++j){
+        ll alr = j*n;
+        if(alr>a){
+            ll over = alr-a;
+            if(over%j==0){
+                cout << 2;
+                return;
+            }
+        }else{
+            ll left = a-alr;
+            if(left%(m-j)==0){
+                cout << 2;
+                return;
+            }
+        }
+    }
+    for(int i=0; i<n; ++i){
+        ll alr = i*m;
+        if(alr>a){
+            ll over = alr-a;
+            if(over%i==0){
+                cout << 2;
+                return;
+            }
+        }else{
+            ll left = a-alr;
+            if(left%(n-i)==0){
+                cout << 2;
+                return;
+            }
+        }
+    }
+    cout << 3;
+
+
+
+
+
+
 
 }
+

@@ -44,18 +44,45 @@ int main()
     #endif 
     
     int t=1; 
-    cin >> t;
+    //cin >> t;
     //int count = 1;
     while(t--) 
     { 
         //cout<<"Case #" << count++ << ": ";
         solve(); 
-        cout<<"\n";    
+        //cout<<"\n";    
     }
     cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
     return 0; 
 } 
 void solve() 
 {
+    string s;
+    while(cin >>s && s!="0"){
+        ll sum=0;
+        for(int i=0; i<s.size(); ++i){
+            sum += (s[i] - '0');
+        }
+        if(sum%9!=0){
+            cout << s << " is not a multiple of 9." << endl;
+            continue;
+        }
+        int times = 1;
+        //cout << sum << endl;
+        while(sum>9 && sum%9==0){
+            ll cur =0;
+            while(sum){
+                cur +=  sum%10;
+                sum/=10;
+            }
+            //cout << sum << " " << cur<< endl;
+            sum = cur;
+            times++;
+        }
+        cout << s  << " is a multiple of 9 and has 9-degree " << times << "." << endl;
+
+
+    }
 
 }
+

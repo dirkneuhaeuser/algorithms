@@ -32,6 +32,9 @@ ll invEea(ll b, ll m){ll s, t; ll d = eea(b, m, s, t); if(d!=1) return -1; retur
 const int MOD = 1000000007;
 
 
+vector<vector<int>> C(101, vector<int>(101,1));
+
+
 void solve(); 
 int main() 
 {
@@ -43,19 +46,38 @@ int main()
     freopen("/Users/dirk/development/algorithms/competitve/output.txt", "w", stdout); 
     #endif 
     
+    for(int n=1; n<101; ++n){
+        for(int m =1; m<n; ++m){
+            if(n==m)C[n][m] = 1;
+            else{
+                C[n][m] = C[n-1][m] + C[n-1][m-1];
+            }
+
+        }
+    }
+
+
+    
     int t=1; 
-    cin >> t;
+    //cin >> t;
     //int count = 1;
     while(t--) 
     { 
         //cout<<"Case #" << count++ << ": ";
         solve(); 
-        cout<<"\n";    
+        //cout<<"\n";    
     }
     cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
     return 0; 
 } 
 void solve() 
 {
+    ll n, m;
+    while(cin >> n >> m){
+        if(n==0 && m==0) return;
+        cout << n << " things taken " << m << " at a time is " << C[n][m]<< " exactly."<< endl;
+    }
+
 
 }
+

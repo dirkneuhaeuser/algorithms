@@ -44,18 +44,37 @@ int main()
     #endif 
     
     int t=1; 
-    cin >> t;
+    //cin >> t;
     //int count = 1;
     while(t--) 
     { 
         //cout<<"Case #" << count++ << ": ";
         solve(); 
-        cout<<"\n";    
+        //cout<<"\n";    
     }
     cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
     return 0; 
 } 
 void solve() 
 {
+    // idea: long divison by hand and check the rest
+    string num;
+    while(cin >> num){
+        if(num == "0") break;
+        ll cur = 0;
+        ll ret= 0;
+        for(int i=0; i<num.size(); ++i){
+            cur = cur*10 + (num[i] - '0');
+            ll times = cur/11;
+            cur = cur - times * 11;
+            ret = ret*10 + times;
+        }
+        if(cur == 0){
+            cout << num << " is a multiple of 11." << endl;
+        }else{
+            cout << num << " is not a multiple of 11." << endl;
+        }
+    }
 
 }
+

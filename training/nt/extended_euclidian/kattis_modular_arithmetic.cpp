@@ -44,13 +44,13 @@ int main()
     #endif 
     
     int t=1; 
-    cin >> t;
+    //cin >> t;
     //int count = 1;
     while(t--) 
     { 
         //cout<<"Case #" << count++ << ": ";
         solve(); 
-        cout<<"\n";    
+        //cout<<"\n";    
     }
     cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
     return 0; 
@@ -58,4 +58,58 @@ int main()
 void solve() 
 {
 
+    ull mod, t; 
+    while(cin >> mod >> t &&(mod != 0 || t != 0)){
+        while(t--){
+            ull a, b; 
+            char op;
+            cin >> a >> op >> b;
+            if(op == '/' || op == '*'){
+                if(op == '/'){
+                    if(b==0 || __gcd(b,mod) != 1){
+                        cout << -1 << endl;
+                        continue;
+                    }
+                    b = invEea(b,mod);
+                    //dbg(b);
+                }
+                ull ret = 1;
+                //dbg(a); dbg(b);
+                for(ull i = 2; i*i<=a; ++i){
+                    while(a%i==0){
+                        a/=i;
+                        ret*=i;
+                        ret%=mod;
+                    }
+                }
+                ret*=a;
+                ret%=mod;
+                for(ull i = 2; i*i<=b; ++i){
+                    while(b%i==0){
+                        b/=i;
+                        ret*=i;
+                        ret%=mod;
+                    }
+                }
+                ret*=b;
+                ret%=mod;
+                cout << ret << endl;
+            }else{
+                if(op=='-'){
+                    b = smod(-1*b, mod);
+                }
+                bool add = false;
+                if(b&1) add = true;
+                b/=2;
+                a+=b;
+                a%=mod;
+                a+=(b + add);
+                a%=mod;
+                cout << a << endl;
+
+            }
+        }
+    }
+
 }
+

@@ -57,5 +57,27 @@ int main()
 } 
 void solve() 
 {
-
+    string m; cin >> m;
+    int n; cin>>n;
+    vector<int> nums;
+    FOR(i,n){
+        int num; cin >> num;
+        nums.push_back(num);
+    }
+    //dbg(nums);
+    FOR(i,n){
+        int cur=0;
+        for(int j =0; j<m.size(); ++j){
+            cur*=10;
+            cur+=(m[j] - '0');
+            cur = cur%nums[i];
+        }
+        if(cur != 0){
+            cout << m << " - Simple.";
+            return;
+        }
+    }
+    cout << m << " - Wonderful.";
+    return;
 }
+

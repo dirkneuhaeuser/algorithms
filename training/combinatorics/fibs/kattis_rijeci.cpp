@@ -44,18 +44,26 @@ int main()
     #endif 
     
     int t=1; 
-    cin >> t;
+    //cin >> t;
     //int count = 1;
     while(t--) 
     { 
         //cout<<"Case #" << count++ << ": ";
         solve(); 
-        cout<<"\n";    
+        //cout<<"\n";    
     }
     cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
     return 0; 
 } 
 void solve() 
 {
+    int n; cin >>n;
+    vector<ull> fibs = {0,1};
+    for(int i=2;i<n+1; ++i){
+        fibs.push_back(fibs[i-1] + fibs[i-2]);
+    }
+    cout <<  fibs[n-1] <<  " " << use RegcomplianceTestfibs[n] ;
+    
 
 }
+

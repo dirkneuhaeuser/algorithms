@@ -31,7 +31,6 @@ ll eea(ll a, ll n, ll &s, ll &t){ll xx = t = 0; ll yy = s = 1;while(n){ll q = a/
 ll invEea(ll b, ll m){ll s, t; ll d = eea(b, m, s, t); if(d!=1) return -1; return smod(s,m);}
 const int MOD = 1000000007;
 
-
 void solve(); 
 int main() 
 {
@@ -44,18 +43,52 @@ int main()
     #endif 
     
     int t=1; 
-    cin >> t;
+    //cin >> t;
     //int count = 1;
     while(t--) 
     { 
         //cout<<"Case #" << count++ << ": ";
         solve(); 
-        cout<<"\n";    
+        //cout<<"\n";    
     }
     cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
     return 0; 
 } 
 void solve() 
 {
+    int n;
+    while(cin >> n && n){
+        ll l=0, u = 1ll << 62, lcmV=1;
+        for(int i =0;i<n;++i){
+            string w1, w2;
+            ll v;
+            cin >> w1 >> w2 >> v;
+            if(w1 == "greater"){
+                l = max(l, v);
+            }else if(w1 == "less"){
+                u = min(u, v-1);
+            }else{
+                lcmV = lcm(lcmV, v);
+            }
+        }
+        if(u == (1ll<<62)){
+            cout << "infinite" << endl;
+            continue;
+        }
+        ll start = (l/lcmV + 1) * lcmV;
+
+        bool check = true;
+        while(start <= u){
+            if(!check) cout << " ";
+            cout << start;
+            check = false;
+            start += lcmV;
+        }
+        if(check) cout << "none";
+        cout << endl;
+
+    }
+
 
 }
+

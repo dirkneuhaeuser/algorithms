@@ -44,18 +44,61 @@ int main()
     #endif 
     
     int t=1; 
-    cin >> t;
+    //cin >> t;
     //int count = 1;
     while(t--) 
     { 
         //cout<<"Case #" << count++ << ": ";
         solve(); 
-        cout<<"\n";    
+        //cout<<"\n";    
     }
     cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
     return 0; 
 } 
+
+void process(string &sum, int idx){
+    if(idx == -2) return;
+    if(idx == -1) idx = 0;
+    int l =sum.size();
+    if(idx >= l){
+        sum = "0"+sum;
+        l++;
+    }
+    if(sum[l-1-idx] == '1'){
+        sum[l-1-idx] = '0';
+        process(sum, idx+1);
+        process(sum, idx-2);
+    }else{
+        if(idx>0 && sum[l-1-idx + 1] == '1'){
+            sum[l-1-idx + 1] = '0';
+            process(sum, idx+1);
+        }else if(idx < l-1 && sum[l-1-idx - 1] == '1'){
+            sum[l-1-idx - 1] = '0';
+            process(sum, idx+2);
+        }else{
+            sum[l-1-idx] = '1';
+        }
+    }
+}
+
+
 void solve() 
 {
+    string a, b;
+    bool start = true;
+    while(cin >> a >> b){
+        if(!start) cout << endl;start = false;
+        if(a.size()< b.size()) swap(a, b);
+        int l = b.size();
+        for(int i = 0;i<b.size(); ++i){
+            if(b[l-1-i] == '1'){
+                process(a, i);
+            }
+        }
+        cout << a << endl;
+
+    }
+    
 
 }
+

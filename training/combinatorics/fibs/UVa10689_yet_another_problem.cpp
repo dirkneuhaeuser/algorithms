@@ -31,6 +31,29 @@ ll eea(ll a, ll n, ll &s, ll &t){ll xx = t = 0; ll yy = s = 1;while(n){ll q = a/
 ll invEea(ll b, ll m){ll s, t; ll d = eea(b, m, s, t); if(d!=1) return -1; return smod(s,m);}
 const int MOD = 1000000007;
 
+int pisanoPeriod(int mod){
+    int fib1 = 0, fib2=1;
+    int period = 0;
+    while(true){ // assume, that there is indead a pisano period
+        // by pigoen hole principle there is at least on tuple fib_i fib_i+1 which whill be equal to another one after n**2
+        // doesnt have to be start though
+        period++;
+        int newFib = (fib1+fib2) % mod;
+        fib1 = fib2;
+        fib2 = newFib;
+        if(fib1==0 && fib2==1){
+            return period;
+        }
+    }
+}
+
+//int pp = pisanoPeriod(10000); 15000
+//int pp = pisanoPeriod(1000); 1500
+//int pp = pisanoPeriod(100); 300
+//int pp = pisanoPeriod(10); 60
+vector<int> pisano = {60, 300, 1500, 15000};
+
+
 
 void solve(); 
 int main() 
@@ -42,7 +65,8 @@ int main()
     freopen("/Users/dirk/development/algorithms/competitve/error.txt", "w", stderr); 
     freopen("/Users/dirk/development/algorithms/competitve/output.txt", "w", stdout); 
     #endif 
-    
+
+
     int t=1; 
     cin >> t;
     //int count = 1;
@@ -57,5 +81,20 @@ int main()
 } 
 void solve() 
 {
+    int a, b, m;
+    ll n;
+    cin >> a >> b >> n >> m;
+    int mod = pow(10, m); // mod for numbers
+    a = a%mod;
+    b = b%mod;
+    int pp = pisano[m-1]; // mod for fib lenght (recuded to circle)
+
+    vector<int> fibsMod = {a, b};
+    n = n%pp; // as we have a circle we only need the element in the cicle;
+    for(int i =2; i<n+1; ++i){
+        fibsMod.push_back((fibsMod[i-1] + fibsMod[i-2]) % (mod));
+    }
+    cout << fibsMod[n];
 
 }
+

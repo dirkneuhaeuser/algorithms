@@ -57,5 +57,37 @@ int main()
 } 
 void solve() 
 {
+    int stud; cin >> stud;
+    vector<vector<int>> skillsOfUni(stud, vector<int>());
+    vector<int> uni;
+    FOR(i, stud){
+        int u;
+        cin >> u;
+        u--;
+        uni.push_back(u);
+    }
+    FOR(i, stud){
+        int s;
+        cin >> s;
+        skillsOfUni[uni[i]].push_back(s);
+    }
+    vector<ll> ret(stud, 0ll);
+    for(int i=0; i<stud; ++i){
+        sort(skillsOfUni[i].begin(), skillsOfUni[i].end(), ::greater<>());
+        vector<ll> pfs;
+        for(int s: skillsOfUni[i]){
+            pfs.push_back((pfs.size()?pfs.back():0ll) + s);
+        }
+        for(int k=1; k<=stud; k++){
+            int times = pfs.size()/k;
+            if(times==0) break;
+            ret[k-1] += pfs[times*k-1];
+        }
 
+
+    }
+    FOR(i, stud){
+        cout << ret[i] << " ";
+    }
 }
+

@@ -57,5 +57,27 @@ int main()
 } 
 void solve() 
 {
+    
+    ll r, b, d;
+    cin >> r >> b >> d;
+    if(d==0){
+        if(r==b){
+            cout << "YES";
+            return;
+        }else{
+            cout << "NO";
+            return;
+        }
+    }
+    ll diff = abs(r-b);
+    bool extra = diff%d;
+    ll toFillB = diff/d + extra;
+    if(r >= toFillB && b >= toFillB){
+        cout << "YES";
+    }else{
+        cout << "NO";
+    }
+
 
 }
+

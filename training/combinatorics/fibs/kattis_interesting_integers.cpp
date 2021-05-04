@@ -31,6 +31,9 @@ ll eea(ll a, ll n, ll &s, ll &t){ll xx = t = 0; ll yy = s = 1;while(n){ll q = a/
 ll invEea(ll b, ll m){ll s, t; ll d = eea(b, m, s, t); if(d!=1) return -1; return smod(s,m);}
 const int MOD = 1000000007;
 
+const int s = 1000000000;
+
+vector<int> fibs = {0, 1};
 
 void solve(); 
 int main() 
@@ -42,6 +45,11 @@ int main()
     freopen("/Users/dirk/development/algorithms/competitve/error.txt", "w", stderr); 
     freopen("/Users/dirk/development/algorithms/competitve/output.txt", "w", stdout); 
     #endif 
+    int i =2;
+    while(fibs.back()<s){
+        fibs.push_back(fibs[i-1] + fibs[i-2]);
+        i++;
+    }
     
     int t=1; 
     cin >> t;
@@ -57,5 +65,50 @@ int main()
 } 
 void solve() 
 {
+    int n; cin >>n;
+    int fibn = fibs.size()-2;
+    int bmin = 1<<30;
+    int amin = 1<<30;
+    for(int i = 2; i<fibs.size()-1; ++i){
+        ll a = fibs[i-1], b=fibs[i], s, t;
+        ll d = eea(a, b, s, t);
+        if (n%d){
+            continue;
+        }
+
+        s*=(n/d);
+        t*=(n/d);
+
+        ll left = fibs[i]/d;
+        ll right = fibs[i-1]/d;
+
+
+
+        int times = (s-t)/(left + right);
+        s -= times*left;
+        t += times*right;
+        if (s>t){
+            t += right;
+            s -= left;
+        }
+
+        if(s<=0 || t<=0){
+            continue;
+        }
+
+        if(s<=t && t<bmin && s<amin){
+            bmin = t;
+            amin = s;
+        }
+    }
+    while(bmin-amin>0 && bmin - amin <= amin){
+        int aminNew = bmin - amin;
+        bmin = amin;
+        amin = aminNew;
+    }
+    cout << amin << " " << bmin;
+
+
 
 }
+

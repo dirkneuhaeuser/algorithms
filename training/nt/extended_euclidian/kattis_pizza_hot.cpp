@@ -44,18 +44,71 @@ int main()
     #endif 
     
     int t=1; 
-    cin >> t;
+    //cin >> t;
     //int count = 1;
     while(t--) 
     { 
         //cout<<"Case #" << count++ << ": ";
         solve(); 
-        cout<<"\n";    
+        //cout<<"\n";    
     }
     cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
     return 0; 
 } 
 void solve() 
 {
+    string tot, x, y;
+    cin >> tot  >> x >> y;
+    tot.erase(remove(tot.begin(), tot.end(), '.'), tot.end());
+    x.erase(remove(x.begin(), x.end(), '.'), x.end());
+    y.erase(remove(y.begin(), y.end(), '.'), y.end());
+    ll ti, xi, yi;
+    ti = stoll(tot);
+    xi = stoll(x);
+    yi = stoll(y);
+
+    ll s, t;
+    ll g = eea(xi,yi, s, t);
+
+    if(ti%g){
+        cout << "none";
+        return;
+    }
+
+    s*=(ti/g);
+    t*=(ti/g);
+    ll left = yi/g;
+    ll right = xi/g;
+
+
+    if(s<0){
+        bool isRem = s%left;
+        ll times = abs(s)/left + isRem;
+        s += times*left;
+        t -= times*right;
+    }
+    if(s>0){
+        ll times = s/left;
+        s -= times*left;
+        t += times*right;
+    }
+    if(t<0){
+        cout << "none";
+        return;
+    }
+
+    bool first = true;
+    while(t>=0){
+        if(!first) cout << endl;
+        first = false;
+
+        cout << s << " "  << t;
+        s += left;
+        t -= right;
+    }
+
+
+
 
 }
+
