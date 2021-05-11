@@ -149,6 +149,10 @@ int main(){
   	//low=std::lower_bound (v.begin(), v.end(), 20); // 
     cout << "test";
 
+
+    // finding elements in vector: normally x.find(3). with vectors:
+    find(v.begin(), v.end(), 4);
+
     // ordered map/dictt -> O(log(n)) 
     std::map<char, int> fst;
     fst['a'] = 10;

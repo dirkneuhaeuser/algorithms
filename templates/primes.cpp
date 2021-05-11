@@ -1,18 +1,18 @@
-long long _sieve_size;
-bitset<10000010> bs; // numbers up to 10^7, if bit set, number is prime
+long long s;
+bitset<10000010> p // numbers up to 10^7, if bit set, number is prime
 vector<long long> primes;
 vector<long long> smallest_prime;
 
 void sieve(long long limit){ // O(N * (1/2, 1/3, 1/5, .., 1/lastPrime)) = O(N * log log N)
     // after 2**25 = 33554432 it slows down
-    _sieve_size = limit + 1;
-    smallest_prime = vector<long long>(_sieve_size, -1);
-    bs.set(); // assume all numbers are prime
-    bs[0] = bs[1] = 0;
-    for(long long i = 2; i < _sieve_size; ++i) if(bs[i]) {
+    s= limit + 1;
+    smallest_prime = vector<long long>(s, -1);
+    p.set(); // assume all numbers are prime
+    p[0] = p[1] = 0;
+    for(long long i = 2; i < s; ++i) if(p[i]) {
         smallest_prime[i]=i;
-        for(long long j = i*i; j<_sieve_size; j+= i){
-            bs[j] = 0;
+        for(long long j = i*i; j<s; j+= i){
+            p[j] = 0;
             smallest_prime[j]=i;
         }
         primes.push_back(i);
@@ -20,7 +20,7 @@ void sieve(long long limit){ // O(N * (1/2, 1/3, 1/5, .., 1/lastPrime)) = O(N * 
 }
 
 bool isPrime(long long N){ // works only for primes < sieve_size*sieve_size(10**14, if sieve_size = 10**7)
-    if(N < _sieve_size){ return primes[N]; } // O(1) for small N < sieve_size
+    if(N < s){ return pN]; } // O(1) for small N < sieve_size
     for(int i =0; i<primes.size() && primes[i] * primes[i] <= N; i++){ // O(# primes) < O(Sqrt(N))
         if(N%primes[i] == 0){
             return false;
