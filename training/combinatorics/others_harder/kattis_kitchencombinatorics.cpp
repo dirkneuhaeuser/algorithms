@@ -23,7 +23,7 @@ typedef pair<int, int> pii;
 // int up to  2*10^9 (2^31-1)           // 16! = 20,922,789,888,000
 // ll up to   9*10^18 (2^63 -1)         // 18! = 6,402,373,705,728,000
 // ull up to 18*10^18 (2^64-1)/         // 20! = 2,432,902,008,176,640,000                                                                    
-// ld up to  10*10^307
+//
 ll smod(ll a, ll m){return((a%m) +m) %m;}
 ll modPow(ll b, ll p, ll m){if(p == 0){return 1;}ll a=modPow(b,p/2,m);a=smod(a*a,m);if(p&1)a=smod(a*b,m);return a;}
 ll invFerm(ll a, ll m){ return modPow(a, m-2,m);}
@@ -44,18 +44,106 @@ int main()
     #endif 
     
     int t=1; 
-    cin >> t;
+    //cin >> t;
     //int count = 1;
     while(t--) 
     { 
         //cout<<"Case #" << count++ << ": ";
         solve(); 
-        cout<<"\n";    
+        //cout<<"\n";    
     }
     cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
     return 0; 
 } 
+
+bool checkNotForbidden(int i, int j, int k,int s, int m, set<pii> &f){
+    j+=s; 
+    k+=s+m; 
+    if(f.find({i,j}) != f.end()){
+        return false;
+    }
+    if(f.find({i,k}) != f.end()){
+        return false;
+    }
+    if(f.find({j,k}) != f.end()){
+        return false;
+    }
+    return true;
+}
+
 void solve() 
 {
+    ll r, s,m,d,n; cin >> r >> s >> m >> d >> n;
+    vector<ll> brands(r+1, 0);
+    FOR(i, r){
+        ll num; cin >> num;
+        brands[i+1] = num;
+    }
+    vector<vector<int>> rs, rm, rd;
+    FOR(i, s){
+        int k; cin >> k;
+        vector<int> ingredients;
+        FOR(i, k){
+            int num; cin >> num;
+            ingredients.push_back(num);
+        }
+        rs.push_back(ingredients);
+    }
+    FOR(i, m){
+        int k; cin >> k;
+        vector<int> ingredients;
+        FOR(i, k){
+            int num; cin >> num;
+            ingredients.push_back(num);
+        }
+        rm.push_back(ingredients);
+    }
+    FOR(i, d){
+        int k; cin >> k;
+        vector<int> ingredients;
+        FOR(i, k){
+            int num; cin >> num;
+            ingredients.push_back(num);
+        }
+        rd.push_back(ingredients);
+    }
+    set<pii> forbidden;
+    FOR(i, n){
+        int num1, num2; cin >> num1 >> num2;
+        num1--; num2--;
+        if(num1>num2) swap(num1, num2);
+        forbidden.insert({num1, num2});
+    }
+
+
+    ll ret = 0;
+    ld retd = 0;
+    FOR(i, s){
+        FOR(j, m){
+            FOR(k, d){
+                if(checkNotForbidden(i, j, k, s, m, forbidden)){ // to check if not possible
+                    //cout << " dwdw";
+                    set<int> ing;
+                    ing.insert(rs[i].begin(), rs[i].end());
+                    ing.insert(rm[j].begin(), rm[j].end());
+                    ing.insert(rd[k].begin(), rd[k].end());
+                    ll tmp = 1;
+                    ld tmpd = 1;
+                    for (int w : ing){
+                      tmp *= brands[w];
+                      tmpd *= brands[w];
+                    }
+                    ret += tmp;
+                    retd += tmpd;
+                }
+            }
+        }
+    }
+    if(retd > 1'000'000'000'000'000'000ll || ret>1'000'000'000'000'000'000ll){
+        cout << "too many";
+    }else{
+        cout << ret; //todo sanitiy check
+    }
 
 }
+

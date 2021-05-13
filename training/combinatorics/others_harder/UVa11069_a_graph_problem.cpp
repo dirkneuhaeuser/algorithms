@@ -23,7 +23,7 @@ typedef pair<int, int> pii;
 // int up to  2*10^9 (2^31-1)           // 16! = 20,922,789,888,000
 // ll up to   9*10^18 (2^63 -1)         // 18! = 6,402,373,705,728,000
 // ull up to 18*10^18 (2^64-1)/         // 20! = 2,432,902,008,176,640,000                                                                    
-// ld up to  10*10^307
+//
 ll smod(ll a, ll m){return((a%m) +m) %m;}
 ll modPow(ll b, ll p, ll m){if(p == 0){return 1;}ll a=modPow(b,p/2,m);a=smod(a*a,m);if(p&1)a=smod(a*b,m);return a;}
 ll invFerm(ll a, ll m){ return modPow(a, m-2,m);}
@@ -31,6 +31,7 @@ ll eea(ll a, ll n, ll &s, ll &t){ll xx = t = 0; ll yy = s = 1;while(n){ll q = a/
 ll invEea(ll b, ll m){ll s, t; ll d = eea(b, m, s, t); if(d!=1) return -1; return smod(s,m);}
 const int MOD = 1000000007;
 
+vector<ll> dp = {1, 1, 1};
 
 void solve(); 
 int main() 
@@ -42,20 +43,34 @@ int main()
     freopen("/Users/dirk/development/algorithms/competitve/error.txt", "w", stderr); 
     freopen("/Users/dirk/development/algorithms/competitve/output.txt", "w", stdout); 
     #endif 
+    for(int i=3;i<76; ++i){
+        dp.push_back(dp[i-2] + dp[i-3]);
+    }
     
     int t=1; 
-    cin >> t;
+    //cin >> t;
     //int count = 1;
     while(t--) 
     { 
         //cout<<"Case #" << count++ << ": ";
         solve(); 
-        cout<<"\n";    
+        //cout<<"\n";    
     }
     cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
     return 0; 
 } 
 void solve() 
 {
+    int n;
+    while(cin>>n){
+        ll ret;
+        if(n>1)
+            ret = dp[n-1] + dp[n-2];
+        else
+            ret = dp[n-1];
+        cout << ret << endl;
+
+    }
 
 }
+

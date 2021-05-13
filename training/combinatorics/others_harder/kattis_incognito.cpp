@@ -23,7 +23,7 @@ typedef pair<int, int> pii;
 // int up to  2*10^9 (2^31-1)           // 16! = 20,922,789,888,000
 // ll up to   9*10^18 (2^63 -1)         // 18! = 6,402,373,705,728,000
 // ull up to 18*10^18 (2^64-1)/         // 20! = 2,432,902,008,176,640,000                                                                    
-// ld up to  10*10^307
+//
 ll smod(ll a, ll m){return((a%m) +m) %m;}
 ll modPow(ll b, ll p, ll m){if(p == 0){return 1;}ll a=modPow(b,p/2,m);a=smod(a*a,m);if(p&1)a=smod(a*b,m);return a;}
 ll invFerm(ll a, ll m){ return modPow(a, m-2,m);}
@@ -57,5 +57,19 @@ int main()
 } 
 void solve() 
 {
+    int n; cin >> n;
+    unordered_map<string, int> f;
+    FOR(i,n){
+        string a; cin >> a;
+        string key; cin >> key;
+        f[key]++;
+    }
+
+    ll ret = 1;
+    for(auto kv: f){
+        ret *= (1+kv.second);
+    }
+    cout << ret -1;
 
 }
+
