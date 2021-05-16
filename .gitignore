@@ -1,6 +1,4 @@
 *.out
 .DS_Store
-input.txt
-output.txt
-error.txt
+*.txt
 *.dSYM
