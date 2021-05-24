@@ -1,4 +1,4 @@
-*.out
+**.out
 .DS_Store
-*.txt
-*.dSYM
+**.txt
+**.dSYM

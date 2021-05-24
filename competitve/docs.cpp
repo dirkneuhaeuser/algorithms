@@ -345,6 +345,31 @@ int main(){
     cout << teststr.back();
 
 
+    //sortable c++ container are permutated lexicographically (already adjusted for same elements)  via
+    //true if the function could rearrange the object as a lexicographicaly smaller permutation.
+    // vice versa for next_permutation
+    string bitmask(K, '1'); // K leading 1's
+    bitmask.resize(N, '0'); // N-K trailing 0's
+
+    do {
+        cout << bitmask << endl;
+        vector<int> cur;
+        for (int i = 0; i < N; ++i) // [0..N-1] integers
+        {
+            //if (bitmask[i]) std::cout << " " << i;
+            if (bitmask[i]) cur.push_back(all[i]);
+        }
+        //rets.push_back(cur);
+    } while (prev_permutation(bitmask.begin(), bitmask.end()));
+
+
+    //permutations:
+    std::vector<int> v = {1,2,3};
+    // vector should be sorted at the beginning.
+    do {
+        print(v);
+
+    } while (std::next_permutation(v.begin(), v.end()));
 
 
 

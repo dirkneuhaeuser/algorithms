@@ -24,6 +24,14 @@ int main(){
     cout << stringTest << endl;
 
 
+    //permutations:
+    std::vector<int> v = {1,2,3};
+    // vector should be sorted at the beginning.
+    do {
+        print(v);
+    } while (std::next_permutation(v.begin(), v.end()));
+
+
 
     // vectors
     int n = 10;
@@ -33,8 +41,6 @@ int main(){
     // concat of vectors
     vector<int> vec1(10, 0), vec2(10, 1);
     vec1.insert(vec1.end(), vec2.begin(), vec2.end());
-
-
 
     // ways of iterating throug containers
     for (std::vector<int>::iterator it = vectorTest.begin(); it != vectorTest.end(); ++it){
