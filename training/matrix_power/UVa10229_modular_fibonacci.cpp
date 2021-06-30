@@ -25,11 +25,45 @@ typedef pair<int, int> pii;
 // ull up to 18*10^18 (2^64-1)/         // 20! = 2,432,902,008,176,640,000                                                                    
 // ld up to  10*10^307
 ll smod(ll a, ll m){return((a%m) +m) %m;}
-ll modPow(ll b, ll p, ll m){if(p == 0){return 1;}ll a=modPow(b,p/2,m);a=smod(a*a,m);if(p&1)a=smod(a*smod(b, m),m);return a;}
+ll modPow(ll b, ll p, ll m){if(p == 0){return 1;}ll a=modPow(b,p/2,m);a=smod(a*a,m);if(p&1)a=smod(a*b,m);return a;}
 ll invFerm(ll a, ll m){ return modPow(a, m-2,m);}
 ll eea(ll a, ll n, ll &s, ll &t){ll xx = t = 0; ll yy = s = 1;while(n){ll q = a/n;ll u = n; n =a%n; a=u; u = xx; xx = s-q*xx; s = u;u = yy; yy = t-q*yy; t = u;}return a;}
 ll invEea(ll b, ll m){ll s, t; ll d = eea(b, m, s, t); if(d!=1) return -1; return smod(s,m);}
-const int MOD = 1000000007;
+int MOD;
+
+const int mat_n = 2;
+struct Matrix {
+    ll mat[mat_n][mat_n];
+};
+
+Matrix matMul(Matrix a, Matrix b){
+    Matrix ret;
+    memset(ret.mat, 0, sizeof ret.mat);
+    for(int i=0; i<mat_n; ++i){
+        for(int k=0; k<mat_n; ++k){
+            if(a.mat[i][k]==0) continue;
+            for(int j = 0; j<mat_n; ++j){
+                ret.mat[i][j] += smod(a.mat[i][k], MOD) * smod(b.mat[k][j], MOD);
+                ret.mat[i][j] = smod(ret.mat[i][j], MOD);
+            }
+        }
+    }
+    return ret;
+}
+
+Matrix modPowMat(Matrix base,  ll pot){ // O(log p) iterative version 
+    Matrix ret;
+    memset(ret.mat, 0, sizeof ret.mat);
+    for(int i=0; i<mat_n; ++i){
+        ret.mat[i][i] = 1;
+    }
+    while(pot){
+        if(pot&1) ret = matMul(ret, base);
+        base = matMul(base, base);
+        pot >>= 1;
+    }
+    return ret;
+}
 
 
 void solve(); 
@@ -44,18 +78,36 @@ int main()
     #endif 
     
     int t=1; 
-    cin >> t;
+    //cin >> t;
     //int count = 1;
     while(t--) 
     { 
         //cout<<"Case #" << count++ << ": ";
         solve(); 
-        cout<<"\n";    
+        //cout<<"\n";    
     }
     cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
     return 0; 
 } 
 void solve() 
 {
+    ll n, m;
+    while(cin >> n>> m){
+        MOD = 1<<m;
+        
+        Matrix base;
+        base.mat[0][0] = 1;
+        base.mat[0][1] = 1;
+        base.mat[1][0] = 1;
+        base.mat[1][1] = 0;
+
+        Matrix ret = modPowMat(base, n);
+        cout << ret.mat[0][1] << endl;
+    }
+
+
+
+
 
 }
+

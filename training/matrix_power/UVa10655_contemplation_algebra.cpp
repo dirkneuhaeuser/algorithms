@@ -25,11 +25,65 @@ typedef pair<int, int> pii;
 // ull up to 18*10^18 (2^64-1)/         // 20! = 2,432,902,008,176,640,000                                                                    
 // ld up to  10*10^307
 ll smod(ll a, ll m){return((a%m) +m) %m;}
-ll modPow(ll b, ll p, ll m){if(p == 0){return 1;}ll a=modPow(b,p/2,m);a=smod(a*a,m);if(p&1)a=smod(a*smod(b, m),m);return a;}
+ll modPow(ll b, ll p, ll m){if(p == 0){return 1;}ll a=modPow(b,p/2,m);a=smod(a*a,m);if(p&1)a=smod(a*b,m);return a;}
 ll invFerm(ll a, ll m){ return modPow(a, m-2,m);}
 ll eea(ll a, ll n, ll &s, ll &t){ll xx = t = 0; ll yy = s = 1;while(n){ll q = a/n;ll u = n; n =a%n; a=u; u = xx; xx = s-q*xx; s = u;u = yy; yy = t-q*yy; t = u;}return a;}
 ll invEea(ll b, ll m){ll s, t; ll d = eea(b, m, s, t); if(d!=1) return -1; return smod(s,m);}
-const int MOD = 1000000007;
+const ll MOD = 1ll<<62; // todo maybe not correct
+
+
+const int mat_n = 2;
+struct Matrix {
+    ll mat[mat_n][mat_n];
+};
+
+Matrix matMul(Matrix a, Matrix b){
+    Matrix ret;
+    memset(ret.mat, 0, sizeof ret.mat);
+    for(int i=0; i<mat_n; ++i){
+        for(int k=0; k<mat_n; ++k){
+            if(a.mat[i][k]==0) continue;
+            for(int j = 0; j<mat_n; ++j){
+                ret.mat[i][j] += a.mat[i][k] * b.mat[k][j];
+            }
+        }
+    }
+    return ret;
+}
+
+Matrix modPowMat(Matrix base,  ll pot){ // O(log p) iterative version 
+    Matrix ret;
+    memset(ret.mat, 0, sizeof ret.mat);
+    for(int i=0; i<mat_n; ++i){
+        ret.mat[i][i] = 1;
+    }
+    while(pot){
+        if(pot&1) ret = matMul(ret, base);
+        base = matMul(base, base);
+        pot >>= 1;
+    }
+    return ret;
+}
+
+
+
+// DP speed up with matrix multiplication
+// fibonacci in O(2*log(i)), where i is the ith fib number:
+// fib(n+1) + fib(n) = fib(n+2)
+// fib(n+1) = fib(n+1)
+// [1, 1][1, 0] * [fib(n+1), fib(n)] = [fib(n+2), fib(n+1)]
+// [1, 1][1, 0]**i * [1, 0] = [fib(i+1), fib(i)]
+        
+//Matrix base;
+//base.mat[0][0] = 1;
+//base.mat[0][1] = 1;
+//base.mat[1][0] = 1;
+//base.mat[1][1] = 0;
+//
+//the n-th fib number, modulo MOD in O(log n)
+//Matrix ret = modPowMat(base, n);
+//cout << ret.mat[0][1] << endl;
+
 
 
 void solve(); 
@@ -44,18 +98,51 @@ int main()
     #endif 
     
     int t=1; 
-    cin >> t;
+    //cin >> t;
     //int count = 1;
     while(t--) 
     { 
         //cout<<"Case #" << count++ << ": ";
         solve(); 
-        cout<<"\n";    
+        //cout<<"\n";    
     }
     cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
     return 0; 
 } 
 void solve() 
 {
+    ll p, q, n;
+
+    // a + b := p
+    // a * b := q
+    //
+    // a^n + b^n := x_n
+    //
+    // xn = p * x_{n-1} - q * x_{n-2}
+    //
+    // Ax = b
+    // [[p, -q],[1, 0]]  *  [x_{n-1}, x_{n-2}] =  [x_n, x_{n-1}]
+    // IMPORTANT: 
+    // Vector x needs to be exactly one iteration before b
+
+
+    while(cin >> p >> q >> n){
+        if(n==0){
+            cout << 2 << endl;
+            continue;
+        }
+
+        Matrix base;
+        base.mat[0][0] = p;
+        base.mat[0][1] = -q;
+        base.mat[1][0] = 1;
+        base.mat[1][1] = 0;
+        
+        Matrix ret = modPowMat(base, n-1);
+        ll ans = ret.mat[0][0] * p + ret.mat[0][1] * 2;
+        cout << ans << endl;
+
+    }
 
 }
+

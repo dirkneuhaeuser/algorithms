@@ -29,7 +29,91 @@ ll modPow(ll b, ll p, ll m){if(p == 0){return 1;}ll a=modPow(b,p/2,m);a=smod(a*a
 ll invFerm(ll a, ll m){ return modPow(a, m-2,m);}
 ll eea(ll a, ll n, ll &s, ll &t){ll xx = t = 0; ll yy = s = 1;while(n){ll q = a/n;ll u = n; n =a%n; a=u; u = xx; xx = s-q*xx; s = u;u = yy; yy = t-q*yy; t = u;}return a;}
 ll invEea(ll b, ll m){ll s, t; ll d = eea(b, m, s, t); if(d!=1) return -1; return smod(s,m);}
-const int MOD = 1000000007;
+const int MOD = 1000000000;
+
+
+//int mat_n = 2;
+
+struct Matrix {
+    vector<vector<ll>> mat;
+    int mat_n;
+    //ll mat[mat_n][mat_n];
+    Matrix(int s):mat(s, vector<ll>(s,0)), mat_n(s){};
+};
+
+// DP speed up with matrix multiplication
+Matrix matMul(Matrix a, Matrix b){
+    int mat_n = a.mat_n;
+    Matrix ret(mat_n);
+    //memset(ret.mat, 0, sizeof ret.mat);
+    for(int i=0; i<mat_n; ++i){
+        for(int k=0; k<mat_n; ++k){
+            if(a.mat[i][k]==0) continue;
+            for(int j = 0; j<mat_n; ++j){
+                ret.mat[i][j] += smod(a.mat[i][k], MOD) * smod(b.mat[k][j], MOD);
+                ret.mat[i][j] = smod(ret.mat[i][j], MOD);
+            }
+        }
+    }
+    return ret;
+}
+
+Matrix modPowMat(Matrix base, ll pot){ // O(log p) iterative version 
+    int mat_n = base.mat_n;
+    Matrix ret(mat_n);
+    //memset(ret.mat, 0, sizeof ret.mat);
+    for(int i=0; i<mat_n; ++i){
+        ret.mat[i][i] = 1;
+    }
+    while(pot){
+        if(pot&1) ret = matMul(ret, base);
+        base = matMul(base, base);
+        pot >>= 1;
+    }
+    return ret;
+}
+
+
+// 1. EXAMPLE
+// (MOD)-fibonacci in O(2*log(i)), where i is the ith fib number:
+// [1, 1][1, 0] * [fib(n+1), fib(n)] = [fib(n+2), fib(n+1)]
+        
+//Matrix base(2);
+//base.mat[0][0] = 1;
+//base.mat[0][1] = 1;
+//base.mat[1][0] = 1;
+//base.mat[1][1] = 0;
+//
+//the n-th fib number, modulo MOD in O(log n)
+//Matrix ret = modPowMat(base, n);
+//cout << ret.mat[0][1] << endl;
+
+
+// 2. EXAMPLE
+// The number of ways from a to b in an undirected graph of Length L
+//
+// matrix[i][j] number of ways to get from j to i (IMPORTANT: COL 2 ROW)
+// Matrix trans(ships);
+// TODO implement by given graph
+//
+// Matrix ret = modPowMat(trans, L);
+// cout << ret.mat[end][start] << endl;
+//
+
+
+// 3. EXAMPLE
+// Calculate a^n + b^n from 
+// p := a + b
+// q := a * b
+//
+// x_n := a^n + b^n 
+// => playing around:
+// xn = p * x_{n-1} - q * x_{n-2}
+//
+// Ax = b
+// [[p, -q],[1, 0]]  *  [x_{n-1}, x_{n-2}] =  [x_n, x_{n-1}]
+// IMPORTANT: 
+// Vector x needs to be exactly one iteration before b
 
 
 void solve(); 
@@ -57,5 +141,19 @@ int main()
 } 
 void solve() 
 {
+    int c; cin >> c;
+    ll y; cin >> y;
+
+    Matrix base(2);
+    base.mat[0][0] = 1;
+    base.mat[0][1] = 1;
+    base.mat[1][0] = 1;
+    base.mat[1][1] = 0;
+    
+    //the n-th fib number, modulo MOD in O(log n)
+    Matrix ret = modPowMat(base, y);
+    cout << c << " " << ret.mat[0][1];
+
 
 }
+

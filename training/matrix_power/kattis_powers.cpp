@@ -31,6 +31,15 @@ ll eea(ll a, ll n, ll &s, ll &t){ll xx = t = 0; ll yy = s = 1;while(n){ll q = a/
 ll invEea(ll b, ll m){ll s, t; ll d = eea(b, m, s, t); if(d!=1) return -1; return smod(s,m);}
 const int MOD = 1000000007;
 
+ll pow_real(ll base, ll p){
+    if(p==0) return 1;
+    ll ans = pow_real(base, p>>1);
+    ans = ans*ans;
+    if(p&1){
+        ans = ans*base;
+    }
+    return ans;
+}
 
 void solve(); 
 int main() 
@@ -44,18 +53,34 @@ int main()
     #endif 
     
     int t=1; 
-    cin >> t;
+    //cin >> t;
     //int count = 1;
     while(t--) 
     { 
         //cout<<"Case #" << count++ << ": ";
         solve(); 
-        cout<<"\n";    
+        //cout<<"\n";    
     }
     cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
     return 0; 
 } 
 void solve() 
 {
+    ll a, b; cin >> a >> b;
+    // more mathematicel-ad-hoc problem, then cs problem
+    // b is odd => (x)^b and (a-x)^b = (-x)^b (mod a) cancel each other out
+    // leaving: 
+    //  (a/2)^b IF a even
+    //  0 IF a dd
+    //
+    if(a&1){
+        cout << 0 << endl;
+    }else{
+        cout << modPow(a>>1, b, a) << endl;
+    }
+
+
+
 
 }
+

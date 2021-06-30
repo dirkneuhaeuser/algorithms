@@ -17,6 +17,15 @@ vector<string> tokenize(string s, string del = " "){
     return ret;
 }    
 
+// template function creates function on the fly whenever its called with a certain type
+template<typename T>
+void print(T a){
+    cout << a;
+}
+
+print<int>(3);
+print(3); // this is also ok, the compile will figure it out
+
 
 int main(){
 
