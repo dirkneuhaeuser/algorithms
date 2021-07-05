@@ -152,8 +152,10 @@ void solve()
     
     //the n-th fib number, modulo MOD in O(log n)
     Matrix ret = modPowMat(base, y);
+    vector<int> test(5, 1);
+    int bla[10][10]; 
+    memset(bla, -1, sizeof bla);
+    int k = 3;
     cout << c << " " << ret.mat[0][1];
-
-
 }
 

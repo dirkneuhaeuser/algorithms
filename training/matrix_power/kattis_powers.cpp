@@ -72,15 +72,12 @@ void solve()
     // leaving: 
     //  (a/2)^b IF a even
     //  0 IF a dd
-    //
+
     if(a&1){
         cout << 0 << endl;
     }else{
         cout << modPow(a>>1, b, a) << endl;
     }
-
-
-
 
 }
 

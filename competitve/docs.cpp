@@ -319,8 +319,8 @@ int main(){
     sort(arr, arr+10);
     sort(vr.begin(), vr.end());
     // a sort with lambda:
-    vector<string> a{"test  jas","dkajk aksjdk"};
-    sort(a.begin(), a.end(), [](string s, string t) {
+    vector<string> a{"test  jas","dkajk aksjdk"}; 
+    sort(a.begin(), a.end(), [](string s, string t) { // [] means no local variable accesssbile in lambda, [=] l.v. are accessible
         return s.substr(s.find(" ")) < t.substr(t.find(" ")); // only sort for the substring after first space
     });
     // stable sort preserves the order of elements which are equal:
