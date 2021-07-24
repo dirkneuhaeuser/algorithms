@@ -1,6 +1,0 @@
-to compile a program:
-  g++-10 -o NAME source.cpp
-
-
-compile with debug:
-g++-10 -std=c++17 -Wshadow -Wall -g -fsanitize=address -fsanitize=undefined -D_GLIBCXX_DEBUG c.cpp
