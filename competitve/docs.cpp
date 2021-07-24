@@ -156,6 +156,9 @@ int main(){
     vector<int> v{1, 4, 16, 19, 21, 73, 299, 1993};
 	std::vector<int>::iterator low;
   	//low=std::lower_bound (v.begin(), v.end(), 20); // 
+
+    //auto t = lower_bound(graph[cur].begin(), graph[cur].end(), cur, 
+    //    [=](int left, int right){return get<0>(edges[left]) < right; }); // NOTE: the lmabda comparator takes 2 arguments: first dereverenced of the vector, and second has to be T, the target
     cout << "test";
 
 
@@ -318,6 +321,10 @@ int main(){
     }
     sort(arr, arr+10);
     sort(vr.begin(), vr.end());
+
+    // sort reverse (rbegin, rend);
+    sort(vr.rbegin(), vr.rend());
+
     // a sort with lambda:
     vector<string> a{"test  jas","dkajk aksjdk"}; 
     sort(a.begin(), a.end(), [](string s, string t) { // [] means no local variable accesssbile in lambda, [=] l.v. are accessible
