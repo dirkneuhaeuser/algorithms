@@ -1,17 +1,17 @@
 # Fibonacci Numbers
 The sequence 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, ... is called fibonaccie sequence
 
-Code (wachstum ca <img src="https://render.githubusercontent.com/render/math?math=2^n">, thus, use bigint for n>64?) for <img src="https://render.githubusercontent.com/render/math?math=O(n)"> runtime: 
+Code (Growth ca <img src="https://render.githubusercontent.com/render/math?math=2^n">; long long will **overflow for n>64**) for <img src="https://render.githubusercontent.com/render/math?math=O(n)"> runtime: 
 ```
 vector<int>fibs={0,1};
-for(int i =2; i<5001; i++){
+for(int i =2; i<65; i++){
     fibs.push_back(fibs[i-1] + fibs[i-2]);
 }
 ```
 
 ## Pisano Period
 
-If calculating the Fibonaccis modulo m, eventually there will be a circle. Let the circle be of length l, then assume that <img src="https://render.githubusercontent.com/render/math?math=F(k \cdot l) \equiv 0 (\mod m)"> it will be on 0:
+If calculating the Fibonaccis modulo m, eventually there will be a **circle**. Let the circle be of length l, then assume that <img src="https://render.githubusercontent.com/render/math?math=F(k \cdot l) \equiv 0 (\mod m)"> it will be on 0:
 
 ```
 int pisanoPeriod(int mod){ // O(n^2)
