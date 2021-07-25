@@ -31,6 +31,7 @@ for(int i=1; i<=max_n; ++i){
 * Number of ways an expression with **binary operations** can be **bracketet**
 * Number of ways a **polygon** with n+2 sides can be **triangled**
 * Number of ways you can pass from (0, 0) to (n, n) in a **grid without passing/touching the diagonal** (being only in the lower half)
+* More complex examples: [Totorial by Dardy](https://codeforces.com/blog/entry/87585)
 
 
 # Suber-Catalan 
