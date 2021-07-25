@@ -1,7 +1,7 @@
 # Floyds Cycle Detection
 
 Usually it is better to just use a dictionary, however when you need to save memory: For example when dealing with huge strings/vectors:
-Floyds Cycle Detection might be favourable
+Floyds Cycle Detection might be favourable.
 
 Implementation:
 Let <img src="https://render.githubusercontent.com/render/math?math=\mu"> denote the **start of cycle**, 
