@@ -41,9 +41,16 @@ Note:
 * Growth for fixed m, approx: <img src="https://render.githubusercontent.com/render/math?math=O(n^m)">
 * <img src="https://render.githubusercontent.com/render/math?math=\binom{n}{p}"> is even iff you can find in the binary representation of n a zero where in p is a 1 at the same position.
 * To find odd Coeficients: print pascals-triangle
+* Difference to Permutations: Order doesn't matter, thus there are fewer combinations than permutations.
+
+
+## When to use
+* combinations of n elements taken r: <img src="https://render.githubusercontent.com/render/math?math=\binom{n}{r}">
 * Binomial Theorem <img src="https://render.githubusercontent.com/render/math?math=(a %2B b)^k = x_0 a^k %2B x_1 a^{k-1}b^1 %2B \ldots %2B x_{k}b^k">, where <img src="https://render.githubusercontent.com/render/math?math=x_i = \binom{k}{i}">.
-
-
+* To get all subsets of size k from a set of size n (<img src="https://render.githubusercontent.com/render/math?math=\binom{n}{k}"> many), use backtracking: 
+[comb1 and comb2
+](https://github.com/dirkneuhaeuser/algorithms/blob/master/templates/combinatorics.cpp)
+* **Combinations to put r elements in k bins**: <img src="https://render.githubusercontent.com/render/math?math=\binom{r %2B k-1}{r}">. To see that, create bijection: separate bins with k-1 stripes | (here k=4) and now calculate how many possibiliters there are, to put dots: <img width="126" alt="Screenshot 2021-05-04 at 03 10 23" src="https://user-images.githubusercontent.com/44442845/126899072-42140c0b-4880-4b5b-bcdb-2934fd517969.png">
 
 # Multinomial Coefficient
 
@@ -54,5 +61,35 @@ Let <img src="https://render.githubusercontent.com/render/math?math=n = b_1 %2B 
 
 ## Interpretations:
 1. Number of ways to put n interchangeable objets into k boxes, s.t. in box i are <img src="https://render.githubusercontent.com/render/math?math=b_i"> elements
-2. Number of unique permutations of a word with n letters and k distinct letters, s.t. i-th letter occurs <img src="https://render.githubusercontent.com/render/math?math=b_i"> times
+2. Number of **unique permutations** of a word with n letters and k distinct letters, s.t. i-th letter occurs <img src="https://render.githubusercontent.com/render/math?math=b_i"> times
 
+# Permutations
+Difference to Binomial-Coefficients: Now the Order matters. Total Permutations of sequence of length n: <img src="https://render.githubusercontent.com/render/math?math=n!">. 
+
+
+Implementation via backtracking. In c++, sortable container can be permutated lexicographically (already adjusted for same elements) via in-build
+`prev_permutation` and `next_permutation`:
+```
+vector<int> test = {1,2,3};
+while (next_permutation(test.begin(), test.end())){
+    // do sth
+}
+```
+## When to use
+* permutations of n elements **taken only r**: <img src="https://render.githubusercontent.com/render/math?math=\frac{n!}{(n-r)!}">, meaning the permutatins of the remaining (n-r) are not included
+* **Derangement count**: Count all permutations in which all elements are at different positions (from their initial position). Formula: `derange(n) = (n - 1) * [derange(n - 1) + derange(n - 2)]`
+
+Recusive Forumula (long long overflows for n>21):
+```
+long long derange[22];
+derange[1] = 0;
+derange[2] = 1;
+for(int i =3; i<22; ++i){
+    derange[i] = (i-1) * (derange[i-1] + derange[i-2]);
+    cout << derange[i] <<endl;
+}
+```
+*Proof Derangement*: Let's consider a random permuation (e.g., [1, 2, 3, 4, 5])
+Then, for the first element you have (n-1) options. Lets assume it goes to i. Now there are two possible options:
+case1: You have a perfect swap (i and 1) -> derange(i-2)
+case2: You don’t have a perfect swap. Then, the i-th element can choose all elements apart of 1 and i, the remaining j can choose all apart of j and i. Thus, all remaining (n-1) have (n-2) Possibilities -> derange(i-1)
