@@ -62,7 +62,7 @@ void solve()
     for(int i=2;i<n+1; ++i){
         fibs.push_back(fibs[i-1] + fibs[i-2]);
     }
-    cout <<  fibs[n-1] <<  " " << use RegcomplianceTestfibs[n] ;
+    cout <<  fibs[n-1] <<  " " << fibs[n] ;
     
 
 }
