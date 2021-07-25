@@ -47,7 +47,14 @@ The complete list:
 |[kattis - Character](https://open.kattis.com/problems/character)|Simple Combinatorics |[c++](https://github.com/dirkneuhaeuser/algorithms/blob/master/training/combinatorics/others_simple/kattis_character.cpp) | Calculate binomical Coefficients with pascals' formula. |
 |[kattis - honey](https://open.kattis.com/problems/honey)|Simple Combinatorics |[c++](https://github.com/dirkneuhaeuser/algorithms/blob/master/training/combinatorics/others_simple/kattis_honey.cpp) | DP Problem; The difficulty is to get from the Honeycomb to a matrix |
 |[kattis - Integer Division](https://open.kattis.com/problems/integerdivision)|Simple Combinatorics |[c++](https://github.com/dirkneuhaeuser/algorithms/blob/master/training/combinatorics/others_simple/kattis_integer_division.cpp) | Basic Combinatorics |
-
+|[UVa00350 - Pseudo Random Numbers](https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=16&page=show_problem&problem=1977)| Cycle-Finding |[c++](https://github.com/dirkneuhaeuser/algorithms/blob/master/training/cycle_finding/UVa00350_pseudo_random_numbers.cpp) | Floyd's Cycle-Finding |
+|[UVa11036 - Eventually Periodic Sequence](https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=16&page=show_problem&problem=1977)| Cycle-Finding |[c++](https://github.com/dirkneuhaeuser/algorithms/blob/master/training/cycle_finding/UVa11036_eventually_periodic_sequence.cpp) | String processing + Floyd's Cycle-Finding |
+|[UVa11053 - Flavius Josephus Reload](https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=16&page=show_problem&problem=1994)| Cycle-Finding |[c++](https://github.com/dirkneuhaeuser/algorithms/blob/master/training/cycle_finding/UVa11053_flavius_josephus_reload.cpp) | Floyd's Cycle-Finding |
+|[UVa11511 - Freeze Patterns](https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=16&page=show_problem&problem=2506)| Cycle-Finding |[c++](https://github.com/dirkneuhaeuser/algorithms/blob/master/training/cycle_finding/UVa11511_freeze_patterns.cpp) | freeze pattern will repeat very quickly -> do floyd's cycle detection on vectors |
+|[kattis - Fibonacci Cycles](https://open.kattis.com/problems/fibonaccicycles)| Cycle-Finding |[c++](https://github.com/dirkneuhaeuser/algorithms/blob/master/training/cycle_finding/kattis_fibonacci_cycles.cpp) | Floyd's Cycle Finding on the fibonacci numbers with mod; Or simply use Pisano-Period |
+|[kattis - Happy Primes](https://open.kattis.com/problems/happyprime)| Cycle-Finding |[c++](https://github.com/dirkneuhaeuser/algorithms/blob/master/training/cycle_finding/kattis_happy_primes.cpp) |Floyd's Cycle-Finding |
+|[kattis - Party Game](https://open.kattis.com/problems/partygame)| Cycle-Finding |[c++](https://github.com/dirkneuhaeuser/algorithms/blob/master/training/cycle_finding/kattis_party_game.cpp) | simulate problem |
+|[kattis - Rats](https://open.kattis.com/problems/rats)| Cycle-Finding |[c++](https://github.com/dirkneuhaeuser/algorithms/blob/master/training/cycle_finding/kattis_rats.cpp) | string processing |
 
 
 
