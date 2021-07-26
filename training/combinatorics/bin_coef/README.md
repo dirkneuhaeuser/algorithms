@@ -90,6 +90,6 @@ for(int i =3; i<22; ++i){
 }
 ```
 *Proof Derangement*: Let's consider a random permuation (e.g., [1, 2, 3, 4, 5])
-Then, for the first element you have (n-1) options. Lets assume it goes to i. Now there are two possible options:
-case1: You have a perfect swap (i and 1) -> derange(i-2)
-case2: You don’t have a perfect swap. Then, the i-th element can choose all elements apart of 1 and i, the remaining j can choose all apart of j and i. Thus, all remaining (n-1) have (n-2) Possibilities -> derange(i-1)
+Then, for the first element you have (n-1) options. Lets assume it goes to i. Now there are two possible options: <br />
+**Case 1**: You have a perfect swap (i and 1) -> derange(i-2) <br />
+**Case 2**: You don’t have a perfect swap. Then, the i-th element can choose all elements apart of 1 and i, the remaining j can choose all apart of j and i. Thus, all remaining (n-1) have (n-2) Possibilities -> derange(i-1)
