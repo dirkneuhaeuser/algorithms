@@ -65,6 +65,9 @@ int main()
 } 
 void solve() 
 {
+    // idea: let x and y be the g0 and g1, then the sequence woulde be:
+    // x, y, x+y, x+2y, 2x+3y, 3x+5y, 5x+8y,... the coefficients are again fibonacci. For two consecutve fibonacci, find the coefficients s*fib[i-1] + t*fib[i] = n.
+    // This again is a linear diophantine equation
     int n; cin >>n;
     int fibn = fibs.size()-2;
     int bmin = 1<<30;

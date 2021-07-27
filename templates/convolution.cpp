@@ -119,8 +119,8 @@ void IFFT(vector<cd> &Y){
     for(auto &p:Y)p /= Y.size();
 }
 
-// Fast point-value multiplication: FOR FREQUENCIES AND INTEGER POLYNOMIAL CONVOLUTION
-vector<ll> multiply(vector<ll> p1, vector<ll> p2){ // O(n*log(n))
+// Fast point-value multiplication: for FREQUENCIES (All Possible Sums), DOT PRODUCTS (you need to reverse B), any CONVOLUTION
+vector<ll> multiply(vector<ll> &p1, vector<ll> &p2){ // O(n*log(n))
     // pi = 3 + 4x^1 + 2x^2 -> [3, 4, 2]
     // in order to specify a degree m polynom, we need m+1 different data observations
     // new degree d = p1.size() + p2.size()- 1
@@ -147,13 +147,8 @@ vector<ll> multiply(vector<ll> p1, vector<ll> p2){ // O(n*log(n))
     ret.resize(p1.size() + p2.size() -1);
     return ret;
 }
-//vector<int> a{1,2,3}; // 1 + 2x + 3x^2
-//vector<int> b{1,2,3}; // 1 + 2x + 3x^2
-//vector<int> ret = multiply(a, b); // 1 + 4x + 10x^2 + 12x^3 + 9x^4
 
-
-
-vector<ll> stringMatchingMultiply(vector<cd> p1, vector<cd> p2){
+vector<ll> stringMatchingMultiply(vector<cd> &p1, vector<cd> &p2){
     // VERY SLIGHT MODIFCATION: Changes in the way we round the real values and different arguments
     int n = 1;
     while(n < p1.size() + p2.size() -1) n <<=1;
@@ -205,8 +200,23 @@ vector<ll> stringMatching(string a, string query){
     return stringMatchingMultiply(aTransformed, queryTransformed);
 }
 
+//// polynomial multiplication or all possible sums(frequencies)
+//vector<ll> a{1, 2, 3}; // 1 + 2x + 3x^2
+//vector<ll> b{1, 2, 3}; // 1 + 2x + 3x^2
+//vector<ll> ret = multiply(a, b); // 1 + 4x + 10x^2 + 12x^3 + 9x^4
+//
+//// all dot products
+//vector<ll> a1{5, 7, 2, 1, 3, 6}; 
+//vector<ll> b1{2, 1, 3, 4}; 
+//reverse(b1.begin(), b1.end());
+//vector<ll> ret1 = multiply(a1, b1); // [20, 43, 34, 27, 31, 38, 23, 12, 12]
+//
+//// string matching
 //string str = "abcdefghijk";
 //string pattern = "efg";
 //vector<ll> matching = stringMatching(str, pattern); // [0, 0, 1, 2, 2, 2, 3, 2, 2, 2, 1, 0, 0] at position 6 str[6] = g the "efg" is matched
+//
+//// string matching with wildcard
 //string pattern2 = "e?g";
-//vector<ll> matching = stringMatching(str, pattern2); // [0, 0, 1, 1, 1, 1, 2, 1, 1, 1, 1, 0, 0] at position 6 str[6] = g the "e?g" is matched
+//vector<ll> matching2 = stringMatching(str, pattern2); // [0, 0, 1, 1, 1, 1, 2, 1, 1, 1, 1, 0, 0] at position 6 str[6] = g the "e?g" is matched
+

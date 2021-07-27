@@ -188,7 +188,8 @@ void solve()
 {
 
     // idea: The area A of a parallogram, which endpoints are all laying on the edges of a reactangle, can be coumputed by A=ac+bd
-    // This can be seen as A = k + (A-k). Now for all k=1,...A-1 we have num_divs(k)*num_divs(A-k) possibilities. This is a normal convoltion formula-> calculate it once for all and then for through array to check for the answer;
+    // This can be seen as A = k + (A-k). Now for all k=1,...A-1 we have num_divs(k)*num_divs(A-k) possibilities. 
+    // This is a normal convoltion formula-> calculate it once for all and then for through array to check for the answer;
     int lp, hp;
     cin >> lp >> hp;
 

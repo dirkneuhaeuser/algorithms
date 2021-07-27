@@ -147,7 +147,8 @@ void solve()
 {
 
     // idea: for all a < n, calculate a^2(mod n) and add this to the frequency array. Afther this, do FFT-convultion 1 time and
-    // check if result itself is square (if it is in origin freq-array). Also you need to take a<=b inta account: handle a==b separately and for the rest just divide by 2
+    // check if result itself is square (if it is in origin freq-array). 
+    // Also, you need to take a<=b inta account: handle a==b separately and for the rest just divide by 2
     ll n; cin >> n;
     vector<ll> freq(n+1, 0), a, b, c, ret;
     for(ll i =1ll; i<(ll)n;++i){
