@@ -80,3 +80,50 @@ void IFFT(vector<cd> &Y){
 ```
 
 ## When to use
+Convolution are often hidden, and do not need to come in the form of polynomial-multiplication. In the following we denote * as convolution and thus the sth element is defined as <img src="https://render.githubusercontent.com/render/math?math=(f*g)_s = \sum_{j+k=s} f_j \cdot g_k">.
+* **All Possible Sums** <br/>
+Given two arrays of non-negative integers A and B. How many ways are there to get a sum <img src="https://render.githubusercontent.com/render/math?math=y = A_j %2B B_k"> for all possible y? <br/>
+Example: <br/>
+<img src="https://render.githubusercontent.com/render/math?math=A = \{1, 1, 1, 3, 3, 4\}"> and
+<img src="https://render.githubusercontent.com/render/math?math=B = \{1, 1, 2, 3, 3\}">. <br/>
+Transform them to frequency array: <br/>
+<img src="https://render.githubusercontent.com/render/math?math=f_A = [0, 3, 0, 2, 1]"> and
+<img src="https://render.githubusercontent.com/render/math?math=f_B = [0, 2, 1, 2]">. <br/>
+Then the convolution <img src="https://render.githubusercontent.com/render/math?math=f_A * f_B = [0, 0, 6, 3, 10, 4, 5, 2] "> gives the possibilities a sum (the index is the sum) can be calculated. <br/> 
+ <img src="https://render.githubusercontent.com/render/math?math=\:\:\:\:\:\:\:\:f_A = [\color{red} 0\color{black}, 3, 0, 2, 1] \:\:\: f_A = [\color{red} 0\color{black}, \color{blue} 3\color{black}, 0, 2, 1] \:\:\: f_A = [\color{red} 0\color{black}, \color{blue} 3\color{black}, \color{green} 0\color{black}, 2, 1] \:\:\: f_A = [\color{red} 0\color{black}, \color{blue} 3\color{black}, \color{green} 0\color{black}, \color{purple} 2\color{black}, 1] \:\:  \ldots">
+ <img src="https://render.githubusercontent.com/render/math?math=\:\:\:\:\:\:\:\:f_B = [\color{red}0\color{black}, 2, 1, 2] \:\:\:\:\:\:\:\: f_B = [\color{blue}0\color{black}, \color{red}2\color{black}, 1, 2] \:\:\:\:\:\:\:\: f_B = [\color{green}0\color{black}, \color{blue}2\color{black}, \color{red}1\color{black}, 2] \:\:\:\:\:\:\:\: f_B = [\color{purple}0\color{black}, \color{green}2\color{black}, \color{blue}1\color{black}, \color{red}2\color{black}] \:\: \ldots">
+ 
+* **All Dot Products** <br/>
+Given two arrays of integers A and B. Determine the dot product of B with all possible contiguous subsequences of A. <br/>
+As here the multiplication is not athwart, we need to reverse B, then normal convolution. <br/>
+Example: <br/>
+Let <img src="https://render.githubusercontent.com/render/math?math=f = [5, 7, 2, 2, 3, 6]"> and
+<img src="https://render.githubusercontent.com/render/math?math=g = [2, 1, 3, 4]"> and <img src="https://render.githubusercontent.com/render/math?math=\bar{g} = [4, 3, 1, 2]"> the reversed of g.<br/>
+Then, <img src="https://render.githubusercontent.com/render/math?math=f*\bar{g} = [20, 43, 34, \textbf{27, 31, 38,} 23, 12, 12]">.
+* **Bitstring Alignments** <br/>
+Let A and B be bitstrings with <img src="https://render.githubusercontent.com/render/math?math=|A| \ge |B|"> . How many substrings A' of A of length B are there, such that, if <img src="https://render.githubusercontent.com/render/math?math=B_k = 1 \rightarrow A_k^' =1">? <br/>
+Reverse B and convolution will give you the alignment score at each index. Add up all 1's in B and if you can find this number in <img src="https://render.githubusercontent.com/render/math?math=f*\bar{g}"> you have a perfect alignment. <br/>
+Example: <br/>
+Let <img src="https://render.githubusercontent.com/render/math?math=f = [1, 1, 0, 1, 1, 1, 1, 0]"> and
+<img src="https://render.githubusercontent.com/render/math?math=g = [1, 1, 0, 1]"> and <img src="https://render.githubusercontent.com/render/math?math=\bar{g} = [1, 0, 1, 1]"> the reversed of g.<br/>
+Then, <img src="https://render.githubusercontent.com/render/math?math=f*\bar{g} = [1, 1, 1, \textbf{3, 2, 2, 3, 2}, 2, 1, 0]">.
+
+* **Bitstring Matching** <br/>
+Same as Bitstring Alignments, but we need to align both 0 and 1. <br/>
+Run Alignments <img src="https://render.githubusercontent.com/render/math?math=p=f*\bar{g}"> and then flip both vectors and calculate it again, lets name it q. The alignment score at each index k is given by  <img src="https://render.githubusercontent.com/render/math?math=(p%2Bq)[k]">
+
+* **String Matching** <br/>
+More general version of Bitstring Matching. Let A and B be strings, how many times does B appear in A as substring? <br/>
+Compute array f: Translate each element from A to a value <img src="https://render.githubusercontent.com/render/math?math=e^{i2\pi k/n}"> with k as encoding of the character <img src="https://render.githubusercontent.com/render/math?math=(a \rightarrow 0, b\rightarrow 1, \ldots, z \rightarrow 25)"> and <img src="https://render.githubusercontent.com/render/math?math=n=25">.
+Vice versa calcualte g from B, but use <img src="https://render.githubusercontent.com/render/math?math=e^{-i2\pi k/n}">. As this is again is alignment, reverse g. <br/>
+Then, only when two characters are matching, the multiplcation is 1, and else less than 1.
+Thus if there is a match, you will find the `B.size()` in <img src="https://render.githubusercontent.com/render/math?math=f*\bar{g}">. Note that other string processing methods like KMP or Rabin-Karp are better, performance-wise.
+* **String Matching with Wildcards** <br/>
+You can search with wildcards, therefore set the specific value in g to 0 and do not look for the `B.size()` in the convultion, but for `B.size() - numsWildcards`.
+
+* **All Distances** <br/>
+Let A be a bitstring, how many ways are to choose i and j, such that, <img src="https://render.githubusercontent.com/render/math?math=A_i = A_j = 1"> and  <img src="https://render.githubusercontent.com/render/math?math=j-i = k">? <br/>
+The dot-product of A with itself solves this problem for all possible k, namely:  <img src="https://render.githubusercontent.com/render/math?math=\ldots, -2, -1, 0, 1, 2, \ldots ">. Note the center is then for k=0 and left and right sides are symmetric<br/>
+Example: <br/>
+Let <img src="https://render.githubusercontent.com/render/math?math=A = [1, 0, 1, 1, 1]">
+Then, <img src="https://render.githubusercontent.com/render/math?math=A*\bar{A} = [1, 1, 2, 2, 4, 2, 2, 1, 1]">. So there are 4 possible ways to choose p and q, such that the difference is 0, and both are 1.
