@@ -15,7 +15,7 @@ for(int j=0; j<=n; ++j){
 
 **Better Idea** in <img src="https://render.githubusercontent.com/render/math?math=O(n \log (n))">:
 1. Convert polynoms to point-value (degree n polynom needs n+1 distrinct points) representation  <img src="https://render.githubusercontent.com/render/math?math=O(n \log (n))">) by FFT)
-2. Do polynomial multiplication in point-value representation (<img src="https://render.githubusercontent.com/render/math?math=O(n^2)">)
+2. Do polynomial multiplication in point-value representation (<img src="https://render.githubusercontent.com/render/math?math=O(n)">)
 3. Convert back to coefficient representation. (<img src="https://render.githubusercontent.com/render/math?math=O(n \log (n))"> by inversed FFT)
 
 
