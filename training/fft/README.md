@@ -1,7 +1,7 @@
 # Convolution
 
 Let A and B be polynomials of degree n.
-With Fast-Fourir-Transformation (FFT), the multiplication of A and B can be solved in O(n * log n) instead of O(n^2).
+With Fast-Fourir-Transformation (FFT), the **multiplication of polynomials** A and B can be solved in <img src="https://render.githubusercontent.com/render/math?math=O(n \log (n))"> instead of <img src="https://render.githubusercontent.com/render/math?math=O(n^2)">.
 
 
 **Naive Code** in <img src="https://render.githubusercontent.com/render/math?math=O(n^2)">:
@@ -16,18 +16,18 @@ for(int j=0; j<=n; ++j){
 **Better Idea** in <img src="https://render.githubusercontent.com/render/math?math=O(n \log (n))">:
 1. Convert polynoms to point-value (degree n polynom needs n+1 distrinct points) representation  <img src="https://render.githubusercontent.com/render/math?math=O(n \log (n))">) by FFT)
 2. Do polynomial multiplication in point-value representation (<img src="https://render.githubusercontent.com/render/math?math=O(n^2)">)
-3. Convert back to coefficient representation. (<img src="https://render.githubusercontent.com/render/math?math=O(n \log (n))"> by reversed FFT)
+3. Convert back to coefficient representation. (<img src="https://render.githubusercontent.com/render/math?math=O(n \log (n))"> by inversed FFT)
 
 
 
-**FFT-Intuition**:
+### FFT-Intuition
 
-Given A, a vector of coefficents, FFT will evaluate the polynomial at n + 1 (`A.size() + 1`) different positions in place.
+Given A, a vector of coefficents, FFT will evaluate the polynomial at n + 1 (`A.size()`) different positions in place.
 
 To evaluate the Ploynom at the position x, use D&C:
 <img src="https://render.githubusercontent.com/render/math?math=A(x) = A_0(x^2) %2B x \cdot A_1(x^2)"> ,where
 <img src="https://render.githubusercontent.com/render/math?math=A_0"> is the polynom of all the even indicies of A,
-and <img src="https://render.githubusercontent.com/render/math?math=A_1"> all the odds:
+and <img src="https://render.githubusercontent.com/render/math?math=A_1"> all the odds. Note, you need bit-reversal order for iterating through <img src="https://render.githubusercontent.com/render/math?math=A_0"> first and then <img src="https://render.githubusercontent.com/render/math?math=A_1">.
 
 <img src="https://render.githubusercontent.com/render/math?math=A(x) = (a_0, a_1,a_2, \ldots, a_n) = a_0 %2B a_1x^1 %2B a_2x^2 %2B \ldots %2B a_nx^n"> <br/>
 <img src="https://render.githubusercontent.com/render/math?math=A_0(x) = (a_0, a_2, a_4 \ldots) = a_0 %2B a_2x^1 %2B a_4x^2 %2B \ldots"> <br/>
@@ -45,7 +45,7 @@ In a nutshell, we calculate y in <img src="https://render.githubusercontent.com/
 where W is a nxn matrix, with <img src="https://render.githubusercontent.com/render/math?math=w_{k,j} = e^{i2\pi k/n \cdot j} \:\:  \forall k,j \in \{0, 1, \ldots, n-1\} "> all elements
 from the n-th root and their exponentials. The collapsing-property can now be written as <img src="https://render.githubusercontent.com/render/math?math=w_{2k, n} = w_{k, n/2}">.
 
-Putting things togther:<br/>
+**Putting things togther**:<br/>
 Suppose, we have already the subproblems <img src="https://render.githubusercontent.com/render/math?math=Y_0[k] = A_0(w_{k, n/2})">
 and <img src="https://render.githubusercontent.com/render/math?math=Y_1[k] = A_1(w_{k, n/2}), k \in \{ 0, \ldots ,\frac{n}{2}-1 \}">,
 both vectors of length n/2. We have to combine them, to calculate Y.
@@ -58,7 +58,7 @@ Second half for all <img src="https://render.githubusercontent.com/render/math?m
 <img src="https://render.githubusercontent.com/render/math?math=Y[k] = Aw_{k,n} = A_0 w_{2k, n} - w_{k,n} \cdot A_1 w_{2k, n} "> <br/>
 <img src="https://render.githubusercontent.com/render/math?math=\:\:\:\:\:\:\:\:\:\:\:\:\:\:\:\:\:\:\:\:\:\:\:\:\:\:= Y_0[k] - w_{k,n} \cdot Y_1[k]">
 
-**Reverse FFT**:
+### Inverse FFT
 
 FFT calcualted n+1 different points, <img src="https://render.githubusercontent.com/render/math?math=WA = y">,
 now reverse and calcualte <img src="https://render.githubusercontent.com/render/math?math=W^{-1}Y = A"> for given <img src="https://render.githubusercontent.com/render/math?math=W^{-1}">
@@ -70,4 +70,13 @@ and conjugation <img src="https://render.githubusercontent.com/render/math?math=
 
 Thus,
 <img src="https://render.githubusercontent.com/render/math?math=y_j \cdot e^{-i \Theta} = \overline{\overline{y_j} \cdot e^{i \Theta}}">
+```
+void IFFT(vector<cd> &Y){
+    for(auto &p:Y)p=conj(p);
+    FFT(Y);
+    for(auto &p:Y)p = conj(p); // conjugate here acutally not neccessary, as we only need real units in our problems
+    for(auto &p:Y)p /= Y.size();
+}
+```
 
+## When to use
