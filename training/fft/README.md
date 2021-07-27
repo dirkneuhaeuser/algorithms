@@ -93,6 +93,30 @@ Then the convolution <img src="https://render.githubusercontent.com/render/math?
  <img src="https://render.githubusercontent.com/render/math?math=\:\:\:\:\:\:\:\:f_A = [\color{red} 0\color{black}, 3, 0, 2, 1] \:\:\: f_A = [\color{red} 0\color{black}, \color{blue} 3\color{black}, 0, 2, 1] \:\:\: f_A = [\color{red} 0\color{black}, \color{blue} 3\color{black}, \color{green} 0\color{black}, 2, 1] \:\:\: f_A = [\color{red} 0\color{black}, \color{blue} 3\color{black}, \color{green} 0\color{black}, \color{purple} 2\color{black}, 1] \:\:  \ldots">
  <img src="https://render.githubusercontent.com/render/math?math=\:\:\:\:\:\:\:\:f_B = [\color{red}0\color{black}, 2, 1, 2] \:\:\:\:\:\:\:\: f_B = [\color{blue}0\color{black}, \color{red}2\color{black}, 1, 2] \:\:\:\:\:\:\:\: f_B = [\color{green}0\color{black}, \color{blue}2\color{black}, \color{red}1\color{black}, 2] \:\:\:\:\:\:\:\: f_B = [\color{purple}0\color{black}, \color{green}2\color{black}, \color{blue}1\color{black}, \color{red}2\color{black}] \:\: \ldots">
  
+```
+vector<ll> multiply(vector<ll> &p1, vector<ll> &p2){ // O(n*log(n))
+    int n = 1;
+    while(n < p1.size() + p2.size() -1) n <<=1;
+    vector<cd> A(p1.begin(), p1.end());
+    vector<cd> B(p2.begin(), p2.end());
+    A.resize(n);
+    B.resize(n);
+    FFT(A);
+    FFT(B);
+    vector<cd> mult(n);
+    for(int i=0; i<n; ++i){
+        mult[i] = A[i]*B[i];
+    }
+    IFFT(mult);
+    vector<ll>ret;
+    for(cd a: mult){
+        ret.push_back(round(a.real()));  // rounding might be changed. When dealing with frequencies/integer-values this sould be ok!
+    }
+    ret.resize(p1.size() + p2.size() -1);
+    return ret;
+}
+```
+
 * **All Dot Products** <br/>
 Given two arrays of integers A and B. Determine the dot product of B with all possible contiguous subsequences of A. <br/>
 As here the multiplication is not athwart, we need to reverse B, then normal convolution. <br/>
@@ -100,6 +124,7 @@ Example: <br/>
 Let <img src="https://render.githubusercontent.com/render/math?math=f = [5, 7, 2, 2, 3, 6]"> and
 <img src="https://render.githubusercontent.com/render/math?math=g = [2, 1, 3, 4]"> and <img src="https://render.githubusercontent.com/render/math?math=\bar{g} = [4, 3, 1, 2]"> the reversed of g.<br/>
 Then, <img src="https://render.githubusercontent.com/render/math?math=f*\bar{g} = [20, 43, 34, \textbf{27, 31, 38,} 23, 12, 12]">.
+
 * **Bitstring Alignments** <br/>
 Let A and B be bitstrings with <img src="https://render.githubusercontent.com/render/math?math=|A| \ge |B|"> . How many substrings A' of A of length B are there, such that, if <img src="https://render.githubusercontent.com/render/math?math=B_k = 1 \rightarrow A_k^' =1">? <br/>
 Reverse B and convolution will give you the alignment score at each index. Add up all 1's in B and if you can find this number in <img src="https://render.githubusercontent.com/render/math?math=f*\bar{g}"> you have a perfect alignment. <br/>
