@@ -120,7 +120,7 @@ void IFFT(vector<cd> &Y){
 }
 
 // Fast point-value multiplication: for FREQUENCIES (All Possible Sums), DOT PRODUCTS (you need to reverse B), any CONVOLUTION
-vector<ll> multiply(vector<ll> p1, vector<ll> p2){ // O(n*log(n))
+vector<ll> multiply(vector<ll> &p1, vector<ll> &p2){ // O(n*log(n))
     // pi = 3 + 4x^1 + 2x^2 -> [3, 4, 2]
     // in order to specify a degree m polynom, we need m+1 different data observations
     // new degree d = p1.size() + p2.size()- 1
@@ -148,7 +148,7 @@ vector<ll> multiply(vector<ll> p1, vector<ll> p2){ // O(n*log(n))
     return ret;
 }
 
-vector<ll> stringMatchingMultiply(vector<cd> p1, vector<cd> p2){
+vector<ll> stringMatchingMultiply(vector<cd> &p1, vector<cd> &p2){
     // VERY SLIGHT MODIFCATION: Changes in the way we round the real values and different arguments
     int n = 1;
     while(n < p1.size() + p2.size() -1) n <<=1;
