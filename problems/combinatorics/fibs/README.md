@@ -37,7 +37,7 @@ It can be shown that two 1 are never together, as for example, 2 and 3 would for
 
 ## Fibonacci Number in Logarithmic Time with fast Matrix Power
 With divide and conquer, the power p of a quadratic matrix can be computed in <img src="https://render.githubusercontent.com/render/math?math=O(\log(n))"> runtime. Note that here the dimension d of the matrix is small,
-and the matrix-multiplication of <img src="https://render.githubusercontent.com/render/math?math=O(d^3)"> is neglectable. For implementation see |[matrix power](https://github.com/dirkneuhaeuser/algorithms/blob/master/templates/mod_pow_mat.cpp)
+and the matrix-multiplication of <img src="https://render.githubusercontent.com/render/math?math=O(d^3)"> is neglectable. For implementation see [matrix power](https://github.com/dirkneuhaeuser/algorithms/blob/master/templates/mod_pow_mat.cpp).
 
 Recursive Formula:
 
