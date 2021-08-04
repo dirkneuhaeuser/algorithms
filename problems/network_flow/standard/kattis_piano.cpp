@@ -171,9 +171,9 @@ int main()
 } 
 void solve() 
 {
-    // idea: either do heap or max_flow as it it acutally an assignment problem (pianos to days)
+    // idea: either do heap or max_flow as it it acutally an assignment problem (pianos to days).
     // takeaway: MaxFlow problem becomes NP-hard if you need to add condition on edge to either use it to full capacity or not at all. E.g. piano needs to be delivered by two workers. However, these workes are not allowed to work on different days.
-    // If this is the case: try to model the problem differently.
+    // If this is the case: try to model the problem differently. Here, we just use a weight of 1 instead of 2 and therfore the capacities of a single day by 2.
     //
     int m, p;
     cin >> m >> p;
