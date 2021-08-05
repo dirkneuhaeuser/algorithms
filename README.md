@@ -20,9 +20,10 @@ The explainations are by no means complete and also very consise. Mainly, it con
     5. [Fast Matrix Power](#mp)
     6. [Cycle Detetection](#cd)
 2. [Graphs](#graphs) 
-3. [Dynammic Programming](#dp) 
-4. [String Processing](#string)
-5. [Else](#else)
+    1. [Maxflow and Mincut](#maxflow)  
+4. [Dynammic Programming](#dp) 
+5. [String Processing](#string)
+6. [Else](#else)
     1. [Convolution](#convolution)  
 
 <a name="maths"/>
@@ -388,6 +389,8 @@ while(t != h){ // determining cycle length
 <a name="graphs"/>
 
 # 2 Graphs
+
+<a name="maxflow"/>
 
 ## 2.1 Maxflow and Mincut
 
