@@ -5,9 +5,10 @@ The explainations are by no means complete and also are very consise; if you thi
 Further, to study the algorithms and to feel comfortable using them, one has to solve a couple problems, which require these techniques.
 We mostly follow the recommondations by [[1]](#2). For a list of all solved problems, containing also hints and solutions, go [here](https://github.com/dirkneuhaeuser/algorithms/tree/master/problems).
 
-## Table of Contents  
-[Number Theory](#Number-Theory)  
-[Combinatorics](#Combinatorics)  
+##### Table of Contents  
+[Headers](#number-theory)  
+[combinatorics](#combinatorics) 
+
 
 ## Number Theory
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla laoreet diam egestas libero luctus, id malesuada ex ultrices. Suspendisse vestibulum hendrerit mi, rhoncus imperdiet nisl sodales in. Morbi sit amet lobortis tellus. Duis cursus nunc et velit rhoncus porta. Pellentesque felis orci, viverra et porttitor eget, dignissim sed mi. Donec ac sagittis est. Donec at nibh sem. Suspendisse at pulvinar ligula, ut mollis mauris. Cras ultricies maximus viverra. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
@@ -20,7 +21,7 @@ Cras iaculis viverra purus non pellentesque. Donec quis interdum nunc. Donec ege
 
 Duis condimentum elit nec ipsum accumsan, nec cursus nisl pretium. Sed viverra finibus lacus, in vulputate lectus eleifend nec. Donec et massa arcu. Curabitur mollis efficitur tellus ac rutrum. Praesent condimentum ex nulla, in scelerisque tortor cursus pharetra. Fusce sodales velit ut ligula eleifend, vitae volutpat risus posuere. Proin tincidunt ultrices lorem a finibus.
 
-## Combinatorics
+# Combinatorics
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla laoreet diam egestas libero luctus, id malesuada ex ultrices. Suspendisse vestibulum hendrerit mi, rhoncus imperdiet nisl sodales in. Morbi sit amet lobortis tellus. Duis cursus nunc et velit rhoncus porta. Pellentesque felis orci, viverra et porttitor eget, dignissim sed mi. Donec ac sagittis est. Donec at nibh sem. Suspendisse at pulvinar ligula, ut mollis mauris. Cras ultricies maximus viverra. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
 
 Etiam suscipit odio sodales gravida sollicitudin. Aliquam metus arcu, pretium semper ex non, blandit maximus eros. Pellentesque scelerisque ipsum et tortor faucibus, nec sodales nunc aliquam. Praesent a pulvinar ipsum, nec laoreet dolor. Praesent consequat sapien nec velit rhoncus, at faucibus magna lacinia. Aliquam erat volutpat. Ut consequat dui felis, sit amet mattis purus mattis a. Nunc faucibus vulputate risus, eu lobortis nisl sodales sit amet. Proin nisl dui, hendrerit sit amet ultrices eget, feugiat faucibus magna. Nam et purus eu elit mattis condimentum. Quisque mauris leo, sagittis ut venenatis vitae, laoreet eu magna.
