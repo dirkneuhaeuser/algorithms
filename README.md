@@ -3,10 +3,9 @@
 ![patrick-tomasso-Oaqk7qqNh_c-unsplash](https://user-images.githubusercontent.com/44442845/128397574-cb38d50c-08ef-4fe3-9b5e-1ca613c6af65.jpg)
 
 For the love of competetive programming, this repository contains an introduction to common algorithms in competitive programming.
-The explainations are by no means complete and also very consise. In particular, I concentrate on the implementation side. If you think something is missing in a specific section or have a question, please reach out to me!
+The explainations are by no means complete and also very consise. It is meant as a look up, and therefore, we concentrate on the implementation side. If you find something is missing in a specific section or have a question, please reach out to me!
 
-Further, to study the algorithms and to feel comfortable using them, one has to solve a couple problems, which require these techniques.
-We mostly follow the recommondations by [[1]](#2). For a list of all solved problems, containing also hints and solutions, go [here](https://github.com/dirkneuhaeuser/algorithms/tree/master/problems).
+To practice the algorithms, we mostly follow the recommondations by [[1]](#2). For a list of all solved problems, containing also hints and solutions, go [here](https://github.com/dirkneuhaeuser/algorithms/tree/master/problems).
 
 
 # Table of Contents  
@@ -508,8 +507,8 @@ void IFFT(vector<cd> &Y){
 }
 ```
 
-###![patrick-tomasso-Oaqk7qqNh_c-unsplash](https://user-images.githubusercontent.com/44442845/128397523-aa34f6c7-5827-42bf-bb01-cf3b3374ea23.jpg)
- When to use
+### When to use
+
 Convolution are often hidden, and do not need to come in the form of polynomial-multiplication. In the following we denote * as convolution and thus the sth element is defined as <img src="https://render.githubusercontent.com/render/math?math=(f*g)_s = \sum_{j+k=s} f_j \cdot g_k">.
 * **Frequency Convolution (All Possible Sums)** <br/>
 Given two arrays of non-negative integers A and B. How many ways are there to get a sum <img src="https://render.githubusercontent.com/render/math?math=y = A_j %2B B_k"> for all possible y? <br/>
