@@ -3,9 +3,7 @@
 ![patrick-tomasso-Oaqk7qqNh_c-unsplash](https://user-images.githubusercontent.com/44442845/128397574-cb38d50c-08ef-4fe3-9b5e-1ca613c6af65.jpg)
 
 For the love of competetive programming, this repository contains an introduction to common algorithms in competitive programming.
-The explainations are by no means complete and also very consise. It is meant as a look up, and therefore, we concentrate on the implementation side. If you find something is missing in a specific section or have a question, please reach out to me!
-
-To practice the algorithms, we mostly follow the recommondations by [[1]](#2). For a list of all solved problems, containing also hints and solutions, go [here](https://github.com/dirkneuhaeuser/algorithms/tree/master/problems).
+The explainations are by no means complete and also very consise. Mainly, we concentrate on the implementation side, to use as a quick look-up. If you find something is missing in a specific section or have a question, please reach out to me!
 
 
 # Table of Contents  
