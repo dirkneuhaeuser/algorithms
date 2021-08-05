@@ -1,8 +1,7 @@
-# Competetive-Programming Excersices
-This folder contains problems I solved on online-judge and kattis.
-I sorted them according to their classification by Competetive-Programming 4.
+# Algorithm Excersices
+This folder contains solutions for problems on online-judge and kattis.
+They are mainly categorised according to their classification by Competetive-Programming 4.
 
-The complete list:
 
 
 
