@@ -4,6 +4,7 @@
 
 This repository contains my notes on common algorithms in competitive programming.
 The explainations are by no means complete and also very consise. Mainly, it concentrates on the implementation side, to use as a quick look-up. If you find something is missing in a specific section or have a question, please reach out to me!
+**Note this readme is work in progress.**
 
 
 # Table of Contents  
