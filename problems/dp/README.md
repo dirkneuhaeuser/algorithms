@@ -43,7 +43,7 @@ int dp(int state1, state2){
   }
   ```
     
-  3. **2D-Sum or ND-Sum** 1D-Sum can be expanded to 2D-Sum or even further. To do so, calculate prefix sum for all dimensions but the last.
+  2. **2D-Sum or ND-Sum** 1D-Sum can be expanded to 2D-Sum or even further. To do so, calculate prefix sum for all dimensions but the last.
      Now, for all possible field sizes of the first n-1 dimensions, calculate a separate Kadane within the last dimension.
      For example, for the 2D-Sum, precalculate the prefixsum for each row and then Kadane for each colum combination over the rows.
      For 2D you get the **maximal sum of a submatrix** in O(n^3). This submatrix is of **variable size**.
