@@ -276,7 +276,7 @@ int main(){
 
 
     // priority queue
-    // better alternative(wrapper) to heap
+    // better alternative(wrapper) to heap MAX -HEAP
     std::priority_queue<int> q;
     q.emplace(2);
     q.emplace(1);
@@ -294,7 +294,7 @@ int main(){
     //priority_queue<pi, vector<pi>, greater<pi> > pq;  // to make max heap
     priority_queue<pair<int, int> > pq; 
     pq.push(make_pair(10, 200)); 
-    pq.push(make_pair(20, 100)); 
+    pq.push(make_pair(20, 100)); ``
     pq.push(make_pair(15, 400)); 
     pair<int, int> topE = pq.top(); 
 

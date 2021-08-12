@@ -12,15 +12,15 @@ def dijkstra(start):
     alr = set()
     dis = [float('inf') for _ in range(n)]
     dis[start] = 0
-    heap = [(0,start)]
-    while heap:
-        _, cur = heapq.heappop(heap)
+    heap = [(0,start)] # you save nodes with their distance into the heap
+    while heap: 
+        _, cur = heapq.heappop(heap) # overall O(V * log(v))
         alr.add(cur)
-        for x, w in graph[cur].items():
+        for x, w in graph[cur].items(): # Overall: O(E * Log(V))
             if x not in alr:
                 dis[x] = min(dis[x], dis[cur] + w)
                 heapq.heappush(heap, (dis[x],x))
         
-        while heap and heap[0][1] in alr:
+        while heap and heap[0][1] in alr: # Overall O(E * log(v))
             heapq.heappop(heap)
     return dis
