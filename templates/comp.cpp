@@ -7,7 +7,7 @@ typedef pair<long, long> pll;
 typedef pair<int, int> pii;
 #define FOR(i, n) for(int i=0; i<n; i++)
 #ifdef DIRK
-#include "/Users/dirk/development/algorithms/templates/debug.h"
+#include "/Users/dirk/development/algorithms/algorithms/templates/debug.h"
 #endif
 // 2**6 =  64                           // 4!  = 24                       
 // 2**8 =  256                          // 5!  = 120                      
@@ -37,9 +37,9 @@ int main()
     ios_base::sync_with_stdio(false);cin.tie(NULL); 
 
     #ifdef DIRK 
-    freopen("/Users/dirk/development/algorithms/competitve/input.txt", "r", stdin); 
-    freopen("/Users/dirk/development/algorithms/competitve/error.txt", "w", stderr); 
-    freopen("/Users/dirk/development/algorithms/competitve/output.txt", "w", stdout); 
+    freopen("/Users/dirk/development/algorithms/input.txt", "r", stdin); 
+    freopen("/Users/dirk/development/algorithms/error.txt", "w", stderr); 
+    freopen("/Users/dirk/development/algorithms/output.txt", "w", stdout); 
     #endif 
     
     int t=1; 
