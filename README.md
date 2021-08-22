@@ -675,6 +675,12 @@ Then, <img src="https://render.githubusercontent.com/render/math?math=A*\bar{A} 
   }
   ```
   E.g. For 6, which is 110 in binary, it will return 010, which is 2.
+  
+- **Count trailing zeros**:
+  ```
+  __builtin_ctz(num);
+  ```
+  E.g., 8 is 1000, thus `__builtin_ctz(8) = 3`.
 
 # References
 
