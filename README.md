@@ -25,7 +25,8 @@ The explainations are by no means complete and also very consise. Mainly, it con
 4. [Dynammic Programming](#dp) 
 5. [String Processing](#string)
 6. [Else](#else)
-    1. [Convolution](#convolution)  
+    1. [Convolution](#convolution)
+    1. [Bit Manipulation](#bit)
 
 <a name="maths"/>
 
@@ -654,6 +655,26 @@ Example: <br/>
 Let <img src="https://render.githubusercontent.com/render/math?math=A = [1, 0, 1, 1, 1]">
 Then, <img src="https://render.githubusercontent.com/render/math?math=A*\bar{A} = [1, 1, 2, 2, 4, 2, 2, 1, 1]">. So there are 4 possible ways to choose p and q, such that the difference is 0, and both are 1.
 
+</br>
+</br>
+</br>
+</br>
+</br>
+
+<a name="bit"/>
+
+## 5.2 Bit Manipulation
+
+- Bitwise **not** `~x`: <br/>
+  E.g. For 6, which is 110 in binary, ~6 will be 11...11001, which is -5.	
+  
+- Gettint the **least significant bit** `x&-x` or `x&(~x + 1)`:
+  ```
+  int LSOne(int num){
+      return num & -num;
+  }
+  ```
+  E.g. For 6, which is 110 in binary, it will return 010, which is 2.
 
 # References
 
