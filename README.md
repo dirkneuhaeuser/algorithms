@@ -1,4 +1,4 @@
-# Towards Algorithms and Competetive Programming
+# Towards Algorithms and Competitive Programming
 
 ![patrick-tomasso-Oaqk7qqNh_c-unsplash](https://user-images.githubusercontent.com/44442845/128397574-cb38d50c-08ef-4fe3-9b5e-1ca613c6af65.jpg)
 
