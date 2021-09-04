@@ -394,9 +394,40 @@ while(t != h){ // determining cycle length
 
 # 2 Graphs
 
+
+
+<a name="master"/>
+
+## 2.1 Master-Theorem
+
+The **Master-Theorem** provides a runtime analysis for **divide and conquer** algorithms and therefore is often found when travesing throug graphs.
+
+<img src="https://render.githubusercontent.com/render/math?math=n /:/:/:"> is the input-size <br/>
+<img src="https://render.githubusercontent.com/render/math?math=t(n)"> is the effor in the inner node (time to create subproblems, time to merge results of subproblems) <br/>
+<img src="https://render.githubusercontent.com/render/math?math=a /:/:/:"> is the number of subproblems in the recursion <br/> 
+<img src="https://render.githubusercontent.com/render/math?math=b /:/:/:"> is the factor by which the subproblem size is reduced in each recursive call 
+
+
+<img src="https://render.githubusercontent.com/render/math?math=T(N) = aT(\frac{n}{b}) %2B t(n)">
+
+There are three  possibilities: <br/>
+    1. Subproblems **dominate** the splitting and merging):  
+    <img src="https://render.githubusercontent.com/render/math?math=t(n) = O(n^{\log_b(a)}) \rightarrow T(n) = Theta(n^{\log_b(a)})>
+    
+    t(n) = 0(n**log_b(a) - E) -> T(n) = Theta(n**log_b(a))
+    2. Subproblems are **comparabel** to splitting and merging): t(n) = Theta(n**log_b(a) ) -> T(n) = Theta(n**log_b(a)  * log_b(n))
+    3. Subproblems are **dominated** by spitting and merging: t(n) = Omega(n**log_b(a) + E) -> T(n) = t(n)
+
+
+</br>
+</br>
+</br>
+</br>
+</br>
+
 <a name="maxflow"/>
 
-## 2.1 Maxflow and Mincut
+## 2.2 Maxflow and Mincut
 
 Given a weighted directed graph as pipeline network, then </br>
 **Edges**: Pipe with given capacity</br>
