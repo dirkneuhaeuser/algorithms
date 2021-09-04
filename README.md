@@ -24,7 +24,9 @@ The explainations are by no means complete and also very consise. Mainly, it con
     1. [Maxflow and Mincut](#maxflow)  
 4. [Dynammic Programming](#dp) 
 5. [String Processing](#string)
-6. [Else](#else)
+    1. [KMP](#kmp)
+    2. [Suffix-Trie](#trie)
+7. [Else](#else)
     1. [Convolution](#convolution)
     1. [Bit Manipulation](#bit)
 
@@ -485,6 +487,196 @@ long long flow = maxFlow.dinic(0, sink);
 <a name="string"/>
 
 # 4 String Processing
+
+Find **all positions** of a substring a string:
+```
+vector<int> indices;
+int pos = 0;
+pos = result.find("love", 0); // O(n*m) where n is length of result and m length of query(here: "love")
+while(pos != string::npos){
+    indices.push_back(pos);
+    pos = result.find("love", pos+1);
+}
+```
+
+**Standard** string processing functions:
+```
+str[i] = tolower(str[i]); // or toupper
+bool checkDigit = isdigit(result[i]);
+bool checkAlpha = isalpha(result[i]);
+
+bool isVowel(char x){
+    char vowel[6]="aeiou";
+    for(int i=0; i<6; ++i){
+        if(x == vowel[i])return true;
+    }
+    return false;
+}
+```
+**Tokenize** a String with a given delimiter with `str.find_first_of(delimiters, start)`:
+```
+int current, next = -1;
+vector<string> separatedWords;
+string delimiters = ", ";
+do
+{
+    current = next + 1;
+    next = result.find_first_of( delimiters, current );
+    string token =  result.substr( current, next - current );
+    if(token != ""){
+        separatedWords.push_back(token);
+        cout << token << endl;
+    }
+}while (next != string::npos);
+```
+
+</br>
+</br>
+</br>
+</br>
+</br>
+
+
+<a name="kmp"/>
+
+## 4.1 KMP
+
+**Substring-Matching**: When searching for a substring p in text t, the naive way would take <img src="https://render.githubusercontent.com/render/math?math=O(nm)">, where n is the length of the text and m the length of t. A faster way offers the KMP algorithm in <img src="https://render.githubusercontent.com/render/math?math=O(n %2B m)">.
+
+Whenever there is a mismatch, it uses pre-gathered information on whether the last characters are also a prefix to try to continue on that prefix.
+```
+vector<int> preProcess(string pattern){
+    vector<int> prefixSuffixMatches(pattern.size()+1, 0);
+    prefixSuffixMatches[0] = -1;
+    int i=0,j=-1;
+    while(i<pattern.size()){
+        while((j>=0) && pattern[i] != pattern[j]) j = prefixSuffixMatches[j]; // no match -> reset suffix counter
+        ++i; ++j;
+        prefixSuffixMatches[i]=j;
+    }
+    return prefixSuffixMatches;
+}
+
+
+void search(string text, string pattern, vector<int>&prefixSuffixMatches){
+    // j is counting matched characters
+    int i=0,j=0;
+    while(i<text.size()){
+        while((j>=0) && text[i] != pattern[j]) j = prefixSuffixMatches[j]; // no match -> reset
+        ++i; ++j;
+        if(j==pattern.size()){
+            cout << "Found pattern in text at " << i-j<< "." <<endl;
+            j = prefixSuffixMatches[j]; // -> the prefix of the match might be used for the next match
+        }
+    }
+}
+//string text = "I love computer science because there is nothing else to love";
+//string pattern = "love";
+//vector<int> prefixSuffixMatches = preProcess(pattern);
+//search(text, pattern, prefixSuffixMatches);
+```
+
+</br>
+</br>
+</br>
+</br>
+</br>
+
+
+<a name="trie"/>
+
+## 4.2 Suffix-Trie
+
+**Substring-Matching**: With a suffix-Trie you can match subsrings in <img src="https://render.githubusercontent.com/render/math?math=O(m)">, after the prepocessing of <img src="https://render.githubusercontent.com/render/math?math=O(n^2)">, in which we insert all suffixes of the word into the trie.
+
+A more sophisticated version would be the **suffix-tree**, which compresses paths if they do not branch.
+
+**Longes Common Repeated Substring** in O(vertices): <br/>
+In suffix-tree: The deepest inner vertix is the answer (the path towards it) <br/>
+In suffix-trie: The deepest inner vertix is the answer, with more than one branche (when using an aditional terminal symbol)<br/>
+
+
+**Longes Common Substring** in O(Vertices)<br/>
+Insert two words (all its suffixes) and add different terminal symbol, then dfs and mark all inner nodes which have both terminal symbols in their respective subtree
+
+
+```
+struct Vertex{
+    char character;
+    vector<Vertex*> children;
+    bool end;
+    Vertex(char character){
+        character=character;
+        end=false;
+        children.assign(26, nullptr);
+    }
+};
+
+class Trie{
+private:
+    Vertex* root;
+public:
+    Trie(){root = new Vertex('!');}
+
+    void insert(string word){
+        Vertex* head = root;
+        for(int i=0; i<word.size(); ++i){
+            int idx = word[i]-'a';
+            if(head->children[idx] == nullptr){
+                head->children[idx] = new Vertex(word[i]);
+            }
+            head=head->children[idx];
+        }
+        head->end=true;
+    }
+
+    bool exist(string word){
+        Vertex* head = root;
+        for(int i=0; i<word.size(); ++i){
+            int idx = word[i]-'a';
+            if(head->children[idx] == nullptr){
+                return false;
+            }
+            head=head->children[idx];
+        }
+        return head->end;
+    }
+
+    bool startWith(string prefix){
+        // to check in all suffixes if there is this prefix -> substring check in O(m), where m is the length of the prefix, after O(n*n) creating of the suffixtree
+        // naive find() would require O(n*m)
+        // KMP would need O(n+m);
+        Vertex* head = root;
+        for(int i=0; i<prefix.size(); ++i){
+            int idx = prefix[i]-'a';
+            if(head->children[idx] == nullptr){
+                return false;
+            }
+            head=head->children[idx];
+        }
+        return true;
+    }
+
+};
+
+// 1. normal trie -> prefix checks in O(m)
+// Trie root = Trie();
+//root.insert("hallo"); // create in O(n);
+//cout << root.exist("hallb");
+//cout << root.exist("hallo");
+
+// STRING MATCHING
+// 2. suffix-trie: add all suffixes O(n*n)
+//string toInsert = "hellolover";
+//for(int i=0; i<toInsert.size(); ++i){
+//    root.insert(toInsert.substr(i));
+//}
+//// substring check in O(m)
+//cout << root.startWith("ello"); // true
+//cout << root.startWith("allo"); // true
+```
+
+
 
 </br>
 </br>
