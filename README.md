@@ -20,8 +20,9 @@ The explainations are by no means complete and also very consise. Mainly, it con
     4. [Game Theory](#gt)
     5. [Fast Matrix Power](#mp)
     6. [Cycle Detetection](#cd)
-2. [Graphs](#graphs) 
-    1. [Maxflow and Mincut](#maxflow)  
+2. [Graphs](#graphs)
+    1. [Master-Theorem](#master)  
+    2. [Maxflow and Mincut](#maxflow)  
 4. [Dynammic Programming](#dp) 
 5. [String Processing](#string)
     1. [KMP](#kmp)
@@ -395,35 +396,47 @@ while(t != h){ // determining cycle length
 # 2 Graphs
 
 
-
 <a name="master"/>
 
 ## 2.1 Master-Theorem
 
 The **Master-Theorem** provides a runtime analysis for **divide and conquer** algorithms and therefore is often found when travesing throug graphs.
 
-<img src="https://render.githubusercontent.com/render/math?math=n /:/:/:"> is the input-size <br/>
+<img src="https://render.githubusercontent.com/render/math?math=n \:\:\:\:\: "> is the input-size <br/>
 <img src="https://render.githubusercontent.com/render/math?math=t(n)"> is the effor in the inner node (time to create subproblems, time to merge results of subproblems) <br/>
-<img src="https://render.githubusercontent.com/render/math?math=a /:/:/:"> is the number of subproblems in the recursion <br/> 
-<img src="https://render.githubusercontent.com/render/math?math=b /:/:/:"> is the factor by which the subproblem size is reduced in each recursive call 
+<img src="https://render.githubusercontent.com/render/math?math=a  \:\:\:\:\:"> is the number of subproblems in the recursion <br/> 
+<img src="https://render.githubusercontent.com/render/math?math=b  \:\:\:\:\:"> is the factor by which the subproblem size is reduced in each recursive call 
 
 
 <img src="https://render.githubusercontent.com/render/math?math=T(N) = aT(\frac{n}{b}) %2B t(n)">
 
-There are three  possibilities: <br/>
-    1. Subproblems **dominate** the splitting and merging):  
-    <img src="https://render.githubusercontent.com/render/math?math=t(n) = O(n^{\log_b(a)}) \rightarrow T(n) = Theta(n^{\log_b(a)})>
-    
-    t(n) = 0(n**log_b(a) - E) -> T(n) = Theta(n**log_b(a))
-    2. Subproblems are **comparabel** to splitting and merging): t(n) = Theta(n**log_b(a) ) -> T(n) = Theta(n**log_b(a)  * log_b(n))
-    3. Subproblems are **dominated** by spitting and merging: t(n) = Omega(n**log_b(a) + E) -> T(n) = t(n)
+
+The criterium is the **complexity of the subproblems** is now:  <img src="https://render.githubusercontent.com/render/math?math=\text{crit} = O(aT(\frac{n}{b})) = O(n^{\log_b(a)})"> <br/>
+
+**Proof**: As The depth of the tree is given by <img src="https://render.githubusercontent.com/render/math?math=\log_b(n)"> and at depth i
+there are <img src="https://render.githubusercontent.com/render/math?math=a^i"> subproblems. 
+This means, there are <img src="https://render.githubusercontent.com/render/math?math=a^{\log_b(n)} = n^{\log_b(a)}"> leaves (log-law).
+So, the overall complexit of the tree <img src="https://render.githubusercontent.com/render/math?math=O(n^{\log_b(a)})">.
 
 
+There are three  possibilities:
+
+1. Subproblems **dominate** the splitting and merging: <br/> 
+    <img src="https://render.githubusercontent.com/render/math?math=t(n) = O(n^{\log_b(a)}) \rightarrow T(n) = O(n^{\log_b(a)})">
+      
+2. Subproblems are **comparabel** to splitting and merging, thus at each level, we add the complexity for<img src="https://render.githubusercontent.com/render/math?math=t(n)">:<br/> 
+   <img src="https://render.githubusercontent.com/render/math?math=t(n) = \theta(n^{\log_b(a)}) \rightarrow T(n) = \theta(n^{\log_b(a)} \log_b(n))"> <br/>
+   
+3. Subproblems are **dominated** by spitting and merging: <br/>
+   <img src="https://render.githubusercontent.com/render/math?math=t(n) = \omega(n^{\log_b(a)}) \rightarrow T(n) = \theta(t(n))"> <br/>
+   
+
 </br>
 </br>
 </br>
 </br>
 </br>
+
 
 <a name="maxflow"/>
 
