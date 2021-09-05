@@ -125,7 +125,9 @@ Let <img src="https://render.githubusercontent.com/render/math?math=n = b_1 %2B 
 
 ### Interpretations:
 1. Number of ways to put n interchangeable objets into k boxes, s.t. in box i are <img src="https://render.githubusercontent.com/render/math?math=b_i"> elements
-2. Number of **unique permutations** of a word with n letters and k distinct letters, s.t. i-th letter occurs <img src="https://render.githubusercontent.com/render/math?math=b_i"> times
+2. Number of **unique permutations** of a word with n letters and k distinct letters, s.t. i-th letter occurs <img src="https://render.githubusercontent.com/render/math?math=b_i"> times.
+   E.g. permutating a mask vector `[1, 1, 1, 1, 0, 0, 0]`, leads to  <img src="https://render.githubusercontent.com/render/math?math=\frac{7!}{4! 3!}">.
+
 
 </br>
 
