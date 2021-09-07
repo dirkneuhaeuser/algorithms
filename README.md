@@ -472,10 +472,10 @@ then the forward edge has +flow, and its corresponding residual edge -flow</br>
 
 ### Maxflow Algorithms
 
-1. Ford-Fulerson Method O(Maxflow * E): A potential bottleneck with capacity of 1 is used all the time (back and forth with forward and residual graph)
-2. Edmonds-Karp Algorithm O(V * E^2)
-3. **Dinic’s Algorithm** O(V^2 * E)
-4. Push-Relabel Algorithm O(V^3), on dense graphs theoretically faster than Dinic, but Dinic is good enough for all Network problems.
+1. Ford-Fulerson Method <img src="https://render.githubusercontent.com/render/math?math=O(\text{Maxflow} E)">: A potential bottleneck with capacity of 1 is used all the time (back and forth with forward and residual graph)
+2. Edmonds-Karp Algorithm <img src="https://render.githubusercontent.com/render/math?math=O(V E^2)">
+3. **Dinic’s Algorithm** <img src="https://render.githubusercontent.com/render/math?math=O(V^2 E)">
+4. Push-Relabel Algorithm <img src="https://render.githubusercontent.com/render/math?math=O(V^3)">, on dense graphs theoretically faster than Dinic, but Dinic is good enough for all Network problems.
 
 
 Algorithm Edmonds-Karp and Dinic
