@@ -1,14 +1,16 @@
 vector<string> tokenize(string s, string del = " "){
-    int start = 0;
-    int end = s.find(del);
-    vector<string> ret;
-    while (end != -1) {
-        ret.push_back(s.substr(start, end - start));
-        start = end + del.size();
-        end = s.find(del, start);
-    }
-    if(s.substr(start, end - start).size()>0){
-        ret.push_back(s.substr(start, end - start));
-    }
-    return ret;
-}    
+    int current, next = -1;
+    vector<string> separatedWords;
+    string delimiters = ", ";
+    do
+    {
+        current = next + 1;
+        next = s.find_first_of( delimiters, current );
+        string token =  s.substr( current, next - current );
+        if(token != ""){
+            separatedWords.push_back(token);
+        }
+    }while (next != string::npos);
+    return separatedWords;
+}
+

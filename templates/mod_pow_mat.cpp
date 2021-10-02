@@ -73,7 +73,7 @@ Matrix modPowMat(Matrix base, ll pot){ // O(log p) iterative version
 
 // 3. EXAMPLE (# Paths of Length L)
 // The number of ways from a to b in an undirected graph of Length L
-// trans[i][j]:= number of ways to get from j to i (IMPORTANT: COL 2 ROW)
+// trans[i][j]:= number of ways to get from j to i (IMPORTANT: COL 2 ROW) of length 1
 // Matrix ret = modPowMat(trans, L);
 // cout << ret.mat[end][start] << endl;
 
