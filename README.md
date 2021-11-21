@@ -22,7 +22,8 @@ The explainations are by no means complete and also very consise. Mainly, it con
     6. [Cycle Detetection](#cd)
 2. [Graphs](#graphs)
     1. [Master-Theorem](#master)  
-    2. [Maxflow and Mincut](#maxflow)  
+    2. [Maxflow and Mincut](#maxflow)
+    3. [Basic Augmenting](#augmenting)
 4. [Dynammic Programming](#dp) 
 5. [String Processing](#string)
     1. [KMP](#kmp)
@@ -489,7 +490,9 @@ Often Problem are disguised and the difficulty is to see the max-flow behind it 
 
 ### When to use
 1. Normal **MaxFlow** problems (check max bandwith)
-2. Unweighted Maximum Cardinality Bipartite Matching (**MCBM**, The easiest kind of matching)
+2. Unweighted Maximum Cardinality Bipartite Matching (**UMCBM**, The easiest kind of matching)
+   1. It can be shown that on bipartite Graphs, the algorithm has only <img src="https://render.githubusercontent.com/render/math?math=O(\sqrt{V})"> phases,
+      thus comes with a complexity <img src="https://render.githubusercontent.com/render/math?math=O(\sqrt{V} E)">
 3. **Assignment Problem** </br>
    Example: Emeis are thirsty between a and b, but at time x only 2 emeis can drink at a lake. Assign emeis to the lake.
 4. **Min-cut** </br>
@@ -529,7 +532,42 @@ long long flow = maxFlow.dinic(0, sink);
 </br>
 </br>
 
+<a name="augmenting"/>
 
+## 2.3 Basic Augmenting
+
+For Basic **Unweighted Maximum Cardinality Bipartite Matching** (UMCBM) a basic augmenting algorithm in <img src="https://render.githubusercontent.com/render/math?math=O(VE)"> often is also ok instead of the dinic in <img src="https://render.githubusercontent.com/render/math?math=O(\sqrt{V} E)">.
+```
+vector<int> matchR, visitedL;
+bool aum(int LEFT, vector<vector<int>> &al){
+    if(visitedL[LEFT]) return false;
+    visitedL[LEFT] = 1;
+    for(int RIGHT: al[LEFT]){
+        if(matchR[RIGHT] == -1  || aum(matchR[RIGHT], al)){
+            matchR[RIGHT] = LEFT;
+            return true; //current can be matched
+        }
+    }
+    return false; // current cannot be matched
+}
+```
+
+And in main:
+```
+matchR.assign(m, -1);
+int ret = 0;
+FOR(i, n){
+    visitedL.assign(n, 0);
+    ret+=aum(i, al);
+}
+
+```
+
+</br>
+</br>
+</br>
+</br>
+</br>
 <a name="dp"/>
 
 # 3 Dynammic Programming
