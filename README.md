@@ -745,8 +745,8 @@ void retrieve(int cur, int last, int toGo, vector<int> &rest, vector<int>& idx){
   
   Note: 
     - You can often **reduce the first dimension**. 
-      However, if you need to **reconstruct the actual solution**, then, you need it, as you have to backtrack throught the table.
-      Recap, that you then need, to go from right to left, in order to not double count.
+      However, if you need to **reconstruct the actual solution**, then, you need it, as you have to backtrack throught the table. Or use **Parent**-Array.
+      Recap, that you then need, to go from right to left, in order to not double count. 
     - **Infinit Knapsack**. When each element can be used infinite times, than just for each item, go from left to right `dp[j] = max(dp[j], dp[j-w]+v)`.
     - Restricted Usage. If you can only use m<=n items, add an additonal state
 
