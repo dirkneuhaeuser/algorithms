@@ -115,11 +115,6 @@ Proof with Pascal's Formula: </br>
 Number of Subsets with even number of elements:
 <img src="https://render.githubusercontent.com/render/math?math=\sum_{k=0}^{n/2}\binom{n}{2k} = \sum_{k=0}^{n/2} (\binom{n-1}{2k-1} %2B \binom{n-1}{2k}) = \sum_{k=0}^{n-1} (\binom{n-1}{k}">. </br>
 You get the same result when only considering subsets with odd elements. Thus they divide perfectly.
-* **The number of subsets with only even elements** of a set with k elements is <img src="https://render.githubusercontent.com/render/math?math=2^{k-1}">. Intuition: Half of the subsets have eben number of elements, the other half odds number of elements. </br>
-Proof with Pascal's Formula: </br>
-Number of Subsets with even number of elements:
-<img src="https://render.githubusercontent.com/render/math?math=\sum_{k=0}^{n/2}\binom{n}{2k} = \sum_{k=0}^{n/2} (\binom{n-1}{2k-1} %2B \binom{n-1}{2k}) = \sum_{k=0}^{n-1} (\binom{n-1}{k}">. </br>
-You get the same result when only considering subsets with odd elements. Thus they divide perfectly.
 * The **sum of XOR of all possible subsets of a set with n elemnts**:</br>
 Lets consider only **the ith bit**, and how the ith bit will contribute to the total sum. Therefore, lets define **k as the number of numbers, with the ith bit** set.</br>
 **Case 1 k>0**:</br> Then we need to take an even number of these. From the set of this k numbers, the number of subsets with an even amount is <img src="https://render.githubusercontent.com/render/math?math=2^{k-1}">, like described above. Now, the amount of other subsequences without ith bit set is <img src="https://render.githubusercontent.com/render/math?math=2^{n-k}">. Multiplied together is the total amount of subsequences with even number of numbers with ith bit set, thus <img src="https://render.githubusercontent.com/render/math?math=2^{n-1}">. Therefore, the total contribution of the ith bit is <img src="https://render.githubusercontent.com/render/math?math=2^{n-1 %2B i}">. Note this does not depend on k, but rather if the bit is set or not in any of these given numbers.</br>
