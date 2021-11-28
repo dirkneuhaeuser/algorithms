@@ -593,7 +593,7 @@ FOR(i, n){
 1. **Top-Down**:
     - Pro: natural way of thinking (like Backtracking)
     - Pro: A subproblem will only be computed when needed
-    - Pro: When there is no structered order, in which you can propagate through the subproblems (dfs like)
+    - Pro: When a DAG is given (difficult to find a proper travser order with bottom-up)
     - Con: Slower than Bottom-up when we need all subproblems
 2. **Bottom-Up**:
     - Pro: Faster when all subproblems are needed
