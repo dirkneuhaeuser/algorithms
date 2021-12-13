@@ -26,12 +26,19 @@ The explainations are by no means complete and also very consise. Mainly, it con
     3. [Topological Sort](#topo)
     4. [Eulerian Paths](#euler)
     5. [Tree Graphs](#trees)
-    6. [Minimum Spanning Tree](#mst)
-    7. [Shortest Paths](#shortestpaths)
-    8. [Strongly Connected Components](#ssc)
-    9. [Articulation Points/Bridges](#articulation)
-    10. [Maxflow and Mincut](#maxflow)
-    11. [Basic Augmenting](#augmenting)
+    	1. [Master-Theorem](#master)
+    	2. [Diameter/Radius/Center](#diameter)
+    	3. [LCA and Binary Lifting](#LCA)
+    7. [Minimum Spanning Tree](#mst)
+    8. [Shortest Paths](#shortestpaths)
+    	1. [Unweighted SSSP - BFS](#bfsssp)
+    	2. [Weigthed SSSP - Dijkstra](#dijkstrassp)
+    	3. [Weigthed SSSP with negative Cycle - Bellmann-Ford](#bellmannsssp)
+    	4. [APSP - Floyd-Warshall](#floydapsp)
+    10. [Strongly Connected Components](#ssc)
+    11. [Articulation Points/Bridges](#articulation)
+    12. [Maxflow and Mincut](#maxflow)
+    13. [Basic Augmenting](#augmenting)
 4. [Dynammic Programming](#dp) 
 5. [String Processing](#string)
     1. [KMP](#kmp)
@@ -598,6 +605,7 @@ vector<int> hierholzer(int s, vector<vector<int>> &AL){
 
 A tree-graph of `n` nodes has `n-1` edges and each node is directly or indirectly connected to any other node. 
 
+<a name="master"/>
 
 ### Master-Theorem
 
@@ -642,6 +650,7 @@ Thus, the second case: <img src="https://render.githubusercontent.com/render/mat
 Trees have some interesting properties:
 
 
+<a name="diameter"/>
 
 ### Diameter/Radius/Center
 The **Diameter** of a (weighted) tree, is the **longest shortest path between any two nodes**. While the computation of longest shortest path in normal graph can be obtained
@@ -649,6 +658,8 @@ via Floyd-Warshall in <img src="https://render.githubusercontent.com/render/math
 that to find the furthest node `snd` from `fst`. The distance between `fst` and `snd` is the longest distance.
 
 The diameter has either one **center node**, or the center lies on an edge. Either way, the center is defined to be on the half of the diameter (**radius**). 
+
+<a name="LCA"/>
 
 ### LCA and Binary Lifting
 Given two nodes `u` and `v`, the **Least Common Ancestor** (LCA) is the first node, that lie on both paths to the root, from `u` and also from `v`.
@@ -814,6 +825,8 @@ Singe Source Single Destinaion Shortest Path (SSSDSP) </br>
 Multiple Sources Shortest Pahts (MSSP) </br>
 .. Other vairations, I will commonly use SSSP.
 
+<a name="bfsssp"/>
+
 ### Unweighted SSSP - BFS
 
 The normal **BFS** provides us with the shortest distance to all nodes in <img src="https://render.githubusercontent.com/render/math?math=O(V %2B E)">.
@@ -840,6 +853,7 @@ Note:
 - Similarly, A graph with only **0/1 Weights** can be handeld by a **deque** (very similar to Dijkstra). If we have a 0 Edge we will push it to the front, else to the back. Dijkstra would works just as fine, but this way we save us from using an expensive priority-queue.
 - **Shortest Cycle**: Shortest Path on undirected Graphs: Bfs from i to j and if you have seen j already -> Cycle. 
 
+<a name="dijkstrassp"/>
 
 ### Weigthed SSSP (no negative cycles) - Dijkstra
 
@@ -881,6 +895,9 @@ Notes:
 2. To know wheter an **edge/node is part of any possible shortest path**: Apply weighted/unweighted from begining and again from end (reversed AL).
 A node is part of a shortest path if `dist[node] + distRev[node] == dist[endNode]`, analogously an edge is part of a shortest path if both connected nodes are part of the shortest path + the difference in between both `dist` values is the weight of the edge `w`.
 3. When there are some further monoton restrictions, apply them during the for-loop inside Dijkstra.
+
+
+<a name="bellmannsssp"/>
 
 ### Weigthed SSSP with negative Cycle - Bellmann-Ford
 When there are **negative cycles** then Dijkstra would run forever without stopping. **Bellmann-Ford** alleviates this issue by running the **exact amount** of **iterations** needed to calculate the shortest path from the rooot to any other node, assuming there are no negative cycles. To check if there is a negative cycle, another single iteration can be made. If any weight improves, then there is a negative cycle. The algorithm runs in <img src="https://render.githubusercontent.com/render/math?math=O(V^3)"> and therfore requires a `V <= 450`.
@@ -947,6 +964,8 @@ vector<bool> getNegativeCycleStarts(int start, vector<int> &dist, vector<vector<
 Note: 
 - Sometimes the task is about positive cycles, than **changing the sign** might do the trick.
 - Bellmann-Ford sometimes come also with further **restrictions**, which then need to be incorporated into the <img src="https://render.githubusercontent.com/render/math?math=O(V^3)"> loop.
+
+<a name="floydapsp"/>
 
 ### APSP - Floyd-Warshall
 Instead of computing the shortest path from a single source node, sometimes it is required to have the **shortest distance between all pairs of nodes**.
