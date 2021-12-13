@@ -21,18 +21,17 @@ The explainations are by no means complete and also very consise. Mainly, it con
     5. [Fast Matrix Power](#mp)
     6. [Cycle Detetection](#cd)
 2. [Graphs](#graphs)
-    1. [Master-Theorem](#master)  
-    2. [Bicoloring](#bicolering)
-    3. [Cycle-Check on Directed Graphs](#cyclecheck)
-    4. [Topological Sort](#topo)
-    5. [Eulerian Paths](#euler)
-    6. [Tree Graphs](#trees)
-    7. [Minimum Spanning Tree](#mst)
-    8. [Shortest Paths](#shortestpaths)
-    9. [Strongly Connected Components](#ssc)
-    10. [Articulation Points/Bridges](#articulation)
-    11. [Maxflow and Mincut](#maxflow)
-    12. [Basic Augmenting](#augmenting)
+    1. [Bicoloring](#bicolering)
+    2. [Cycle-Check on Directed Graphs](#cyclecheck)
+    3. [Topological Sort](#topo)
+    4. [Eulerian Paths](#euler)
+    5. [Tree Graphs](#trees)
+    6. [Minimum Spanning Tree](#mst)
+    7. [Shortest Paths](#shortestpaths)
+    8. [Strongly Connected Components](#ssc)
+    9. [Articulation Points/Bridges](#articulation)
+    10. [Maxflow and Mincut](#maxflow)
+    11. [Basic Augmenting](#augmenting)
 4. [Dynammic Programming](#dp) 
 5. [String Processing](#string)
     1. [KMP](#kmp)
@@ -424,59 +423,10 @@ while(t != h){ // determining cycle length
 # 2 Graphs
 
 
-<a name="master"/>
-
-
-## 2.1 Master-Theorem
-
-The **Master-Theorem** provides a runtime analysis for **divide and conquer** algorithms and therefore is often found when travesing throug graphs.
-
-<img src="https://render.githubusercontent.com/render/math?math=n \:\:\:\:\: "> is the input-size <br/>
-<img src="https://render.githubusercontent.com/render/math?math=t(n)"> is the effor in the inner node (time to create subproblems, time to merge results of subproblems) <br/>
-<img src="https://render.githubusercontent.com/render/math?math=a  \:\:\:\:\:"> is the number of subproblems in the recursion <br/> 
-<img src="https://render.githubusercontent.com/render/math?math=b  \:\:\:\:\:"> is the factor by which the subproblem size is reduced in each recursive call 
-
-
-<img src="https://render.githubusercontent.com/render/math?math=T(N) = aT(\frac{n}{b}) %2B t(n)">
-
-
-The criterium is the **complexity of the subproblems** is now:  <img src="https://render.githubusercontent.com/render/math?math=\text{crit} = O(aT(\frac{n}{b})) = O(n^{\log_b(a)})"> <br/>
-
-**Proof**: As The depth of the tree is given by <img src="https://render.githubusercontent.com/render/math?math=\log_b(n)"> and at depth i
-there are <img src="https://render.githubusercontent.com/render/math?math=a^i"> subproblems. 
-This means, there are <img src="https://render.githubusercontent.com/render/math?math=a^{\log_b(n)} = n^{\log_b(a)}"> leaves (log-law).
-So, the overall complexit of the tree <img src="https://render.githubusercontent.com/render/math?math=O(n^{\log_b(a)})">.
-
-
-There are three  possibilities:
-
-1. Subproblems **dominate** the splitting and merging: <br/> 
-    <img src="https://render.githubusercontent.com/render/math?math=t(n) = O(n^{\log_b(a)}) \rightarrow T(n) = O(n^{\log_b(a)})">
-      
-2. Subproblems are **comparabel** to splitting and merging, thus at each level, we add the complexity for<img src="https://render.githubusercontent.com/render/math?math=t(n)">:<br/> 
-   <img src="https://render.githubusercontent.com/render/math?math=t(n) = \theta(n^{\log_b(a)}) \rightarrow T(n) = \theta(n^{\log_b(a)} \log_b(n))"> <br/>
-   
-3. Subproblems are **dominated** by spitting and merging: <br/>
-   <img src="https://render.githubusercontent.com/render/math?math=t(n) = \omega(n^{\log_b(a)}) \rightarrow T(n) = \theta(t(n))"> <br/>
-   
- 
-### Example
-
-Let <img src="https://render.githubusercontent.com/render/math?math=T(N) = 2T(\frac{n}{2}) %2B n/2">, then <br/>
-<img src="https://render.githubusercontent.com/render/math?math=\text{crit} = O(n^{\log_2(2)}) = O(n)"> and <br/> 
-<img src="https://render.githubusercontent.com/render/math?math=O(t(n)) = n/2 = O(n)"> <br/>
-Thus, the second case: <img src="https://render.githubusercontent.com/render/math?math=O(T(n)) =  O(n \log(n))"> <br/>
-
-
-</br>
-</br>
-</br>
-</br>
-</br>
 
 <a name="bicolering"/>
 
-## 2.2 Bicoloring
+## 2.1 Bicoloring
 
 To check if a graph is **bipartite**, we can bi-color it with a dfs
 ```
@@ -506,7 +456,7 @@ for(int i=0; i<n; ++i){
 
 <a name="cyclecheck"/>
 
-## 2.3 Cycle-Check on Directed Graphs
+## 2.2 Cycle-Check on Directed Graphs
 
 Cycles on undirected graphs exist per defintion. On directed graphs, they can be found via **backward-edges**.
 ```
@@ -537,7 +487,7 @@ for(int i=0; i<n; ++i){
 
 <a name="topo"/>
 
-## 2.4 Topological Sort
+## 2.3 Topological Sort
 
 **Topological sort** allows for sorting a list according to its dependencies (dependencies first). This only works on **DAG**'s.
 We need an adjacency-list `AL[v] = [..u..]` which means that `v` comes before all elments `u` in the topological order.
@@ -594,7 +544,7 @@ Here the `order` vector only needs to be **reversed** to contain the correct top
 
 <a name="euler"/>
 
-## 2.5 Eulerian Paths
+## 2.4 Eulerian Paths
 
 A graph has an **Euler Path**, if it is possible to start at an arbitrary node and then **traverse through each edge exactly once**.
 Analoguousely, an Euler tour needs to start and end at the same vertex.
@@ -644,9 +594,51 @@ vector<int> hierholzer(int s, vector<vector<int>> &AL){
 
 <a name="trees"/>
 
-## 2.6 Tree Graphs
+## 2.5 Tree Graphs
 
 A tree-graph of `n` nodes has `n-1` edges and each node is directly or indirectly connected to any other node. 
+
+
+### Master-Theorem
+
+The **Master-Theorem** provides a runtime analysis for **divide and conquer** algorithms and therefore is often found when travesing through trees.
+
+<img src="https://render.githubusercontent.com/render/math?math=n \:\:\:\:\: "> is the input-size <br/>
+<img src="https://render.githubusercontent.com/render/math?math=t(n)"> is the effor in the inner node (time to create subproblems, time to merge results of subproblems) <br/>
+<img src="https://render.githubusercontent.com/render/math?math=a  \:\:\:\:\:"> is the number of subproblems in the recursion <br/> 
+<img src="https://render.githubusercontent.com/render/math?math=b  \:\:\:\:\:"> is the factor by which the subproblem size is reduced in each recursive call 
+
+
+<img src="https://render.githubusercontent.com/render/math?math=T(N) = aT(\frac{n}{b}) %2B t(n)">
+
+
+The criterium is the **complexity of the subproblems** is now:  <img src="https://render.githubusercontent.com/render/math?math=\text{crit} = O(aT(\frac{n}{b})) = O(n^{\log_b(a)})"> <br/>
+
+**Proof**: As The depth of the tree is given by <img src="https://render.githubusercontent.com/render/math?math=\log_b(n)"> and at depth i
+there are <img src="https://render.githubusercontent.com/render/math?math=a^i"> subproblems. 
+This means, there are <img src="https://render.githubusercontent.com/render/math?math=a^{\log_b(n)} = n^{\log_b(a)}"> leaves (log-law).
+So, the overall complexit of the tree <img src="https://render.githubusercontent.com/render/math?math=O(n^{\log_b(a)})">.
+
+
+There are three  possibilities:
+
+1. Subproblems **dominate** the splitting and merging: <br/> 
+    <img src="https://render.githubusercontent.com/render/math?math=t(n) = O(n^{\log_b(a)}) \rightarrow T(n) = O(n^{\log_b(a)})">
+      
+2. Subproblems are **comparabel** to splitting and merging, thus at each level, we add the complexity for<img src="https://render.githubusercontent.com/render/math?math=t(n)">:<br/> 
+   <img src="https://render.githubusercontent.com/render/math?math=t(n) = \theta(n^{\log_b(a)}) \rightarrow T(n) = \theta(n^{\log_b(a)} \log_b(n))"> <br/>
+   
+3. Subproblems are **dominated** by spitting and merging: <br/>
+   <img src="https://render.githubusercontent.com/render/math?math=t(n) = \omega(n^{\log_b(a)}) \rightarrow T(n) = \theta(t(n))"> <br/>
+   
+ 
+### Example
+
+Let <img src="https://render.githubusercontent.com/render/math?math=T(N) = 2T(\frac{n}{2}) %2B n/2">, then <br/>
+<img src="https://render.githubusercontent.com/render/math?math=\text{crit} = O(n^{\log_2(2)}) = O(n)"> and <br/> 
+<img src="https://render.githubusercontent.com/render/math?math=O(t(n)) = n/2 = O(n)"> <br/>
+Thus, the second case: <img src="https://render.githubusercontent.com/render/math?math=O(T(n)) =  O(n \log(n))"> <br/>
+
 Trees have some interesting properties:
 
 
@@ -715,7 +707,7 @@ int getLCA(int a, int b){
 
 <a name="mst"/>
 
-## 2.7 Minimum Spanning Tree (MST)
+## 2.6 Minimum Spanning Tree (MST)
 
 There are two well known algorithms for the MST, **Krusal**, which uses the **disjoint-set datastructure**, and **prim's** algorithm, which works similarly to
 dijkstra's SSSP. 
@@ -809,7 +801,7 @@ Per default use DJS
 
 <a name="shortestpaths"/>
 
-## 2.8 Shortest Paths
+## 2.7 Shortest Paths
 
 When the edges are not weighter we can use a **BFS** for the shortes paths, othrweise **Dijkstra**'s algorithm.
 Dijkstra uses the same idea of a BFS, but instead of a normal queue, it uses a **priority queue to favour nodes with a smaller distance**.
@@ -1005,7 +997,7 @@ Note / Applications:
 
 <a name="ssc"/>
 
-## 2.9 Strongly Connected Components
+## 2.8 Strongly Connected Components
 
 On an undirected graph, the connected components can be found with an easy DFS. When the graph is **directed** however, we call a **strongly connected component** (SSC)
 a subset of the vertexes in the graph, within each vertex can reach each of the other vertex in the same SSC. **Tarjan's algorithm** runs in <img src="https://render.githubusercontent.com/render/math?math=O(V %2B E)"> and assigns each node to its **SSC-root**; the same root marks the same SSC.
@@ -1074,7 +1066,7 @@ afterwards check for some critera (e.g. count all `in_degree == 0` nodes). Quest
 
 <a name="articulation"/>
 
-## 2.10 Articulation Points/Bridges
+## 2.9 Articulation Points/Bridges
 
 An Articulation Point is a vertix whose removal **disconnects the undirected graph**. Thus it can't be a leaf, but only intermediate vertixes.
 Similarly Ariculation Bridges disconnects the graph, when the edge (or bridge) is removed.
@@ -1136,7 +1128,7 @@ if(root_children>1){
 
 <a name="maxflow"/>
 
-## 2.11 Maxflow and Mincut
+## 2.10 Maxflow and Mincut
 
 Given a weighted directed graph as pipeline network, then </br>
 **Edges**: Pipe with given capacity</br>
@@ -1216,7 +1208,7 @@ long long flow = maxFlow.dinic(0, sink);
 
 <a name="augmenting"/>
 
-## 2.12 Basic Augmenting
+## 2.11 Basic Augmenting
 
 For Basic **Unweighted Maximum Cardinality Bipartite Matching** (UMCBM) a basic augmenting algorithm in <img src="https://render.githubusercontent.com/render/math?math=O(VE)"> often is also ok instead of the dinic in <img src="https://render.githubusercontent.com/render/math?math=O(\sqrt{V} E)">.
 ```
