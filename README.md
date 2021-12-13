@@ -22,8 +22,17 @@ The explainations are by no means complete and also very consise. Mainly, it con
     6. [Cycle Detetection](#cd)
 2. [Graphs](#graphs)
     1. [Master-Theorem](#master)  
-    2. [Maxflow and Mincut](#maxflow)
-    3. [Basic Augmenting](#augmenting)
+    2. [Bicoloring](#bicolering)
+    3. [Cycle-Check on Directed Graphs](#cyclecheck)
+    4. [Topological Sort](#topo)
+    5. [Eulerian Paths](#euler)
+    6. [Tree Graphs](#trees)
+    7. [Minimum Spanning Tree](#mst)
+    8. [Shortest Paths](#shortestpaths)
+    9. [Strongly Connected Components](#ssc)
+    10. [Articulation Points/Bridges](#articulation)
+    11. [Maxflow and Mincut](#maxflow)
+    12. [Basic Augmenting](#augmenting)
 4. [Dynammic Programming](#dp) 
 5. [String Processing](#string)
     1. [KMP](#kmp)
@@ -459,6 +468,35 @@ Let <img src="https://render.githubusercontent.com/render/math?math=T(N) = 2T(\f
 Thus, the second case: <img src="https://render.githubusercontent.com/render/math?math=O(T(n)) =  O(n \log(n))"> <br/>
 
 
+</br>
+</br>
+</br>
+</br>
+</br>
+
+<a name="bicolering"/>
+
+## 2.2 Bicoloring
+
+To check if a graph is **bipartite**, we can bi-color it with a dfs
+```
+vector<int> colors;
+bool isBipartite(int idx, int col, vector<vector<int>> &AL){
+  colros[idx] = col;
+  for(int next: AL[cur]){
+    if(colors[next] == -1){
+      if(!isBipartite(next, col^1, AL)) return false;
+    }else if(colors[next] == col) return false;
+  }
+  return true;
+}
+# in main:
+colors.assign(n, -1);
+bool bipartite = true;
+for(int i=0; i<n; ++i){
+  if(colors[i] == -1) bipartite = bipartite && isBipartite(i, 0, AL);
+}
+```
 
 </br>
 </br>
@@ -466,11 +504,639 @@ Thus, the second case: <img src="https://render.githubusercontent.com/render/mat
 </br>
 </br>
 
+<a name="cyclecheck"/>
 
+## 2.3 Cycle-Check on Directed Graphs
+
+Cycles on undirected graphs exist per defintion. On directed graphs, they can be found via **backward-edges**.
+```
+enum {VISITED=-2, UNVISITED=-1, EXPLORED=-3};
+vector<int> visited;
+bool hasCycle(int idx, vector<vector<int>> &AL){
+  visited[idx] = EXPLORED;
+  for(int next: AL[idx]){
+    if(visited[next] == EXPLORED) return true;
+    if(visited[next] == UNVISITED && hasCycle(next, AL)) return true;
+  }
+  visited[idx] = VISITED;
+  return false;
+}
+# in main:
+visited.assign(n, UNVISITED);
+bool cycle = false;
+for(int i=0; i<n; ++i){
+  if(visited[i] == UNVISITED) cycle = cycle || hasCycle(i, AL);
+}
+```
+
+</br>
+</br>
+</br>
+</br>
+</br>
+
+<a name="topo"/>
+
+## 2.4 Topological Sort
+
+**Topological sort** allows for sorting a list according to its dependencies (dependencies first). This only works on **DAG**'s.
+We need an adjacency-list `AL[v] = [..u..]` which means that `v` comes before all elments `u` in the topological order.
+Both algorithm run in <img src="https://render.githubusercontent.com/render/math?math=O( V %2B E)">. When using the **more flexible Kahn **algorithm together with a priority queue the complexity will be <img src="https://render.githubusercontent.com/render/math?math=O(V \log V %2B E)">
+
+
+### Kahn Algorithm
+The Kahn algorithm looks at the **in-degree** of each node `v`. If it is zero then this means, that no element needs to be before `v` and we can go ahead with it.
+Note that Kahn algorithm is **more flexible**, as it allows us to change the order for all elemnts which have **in-degree = zero** at the same time (by using a priority queue). However, this would also let the complexity grow <img src="https://render.githubusercontent.com/render/math?math=O(V %2B E) \rightarrow O(V \log V %2B E)">.
+
+```
+priority_queue<int, vector<int>, ::greater<int>> pq; // maybe chose pair<int, int> for more flexible order
+for(int i=0; i<n; ++i){
+  if(in_degree[i] == 0){
+    pq.push(i); 
+  }
+}
+while(pq.size()){
+  int cur = pq.top(); pq.pop();
+  order.push_back(cur);
+  for(int next: AL[cur]){
+    if(--in_degree[next] == 0){
+      pq.push(next);
+    }
+  }
+}
+```
+
+### DFS Variant (post-order)
+```
+void topsort(int u, vector<int> &vis, vector<int> &order){
+  vis[u] = VISITED;
+  for(int next: AL[u]){
+    if(vis[next] == UNVISITED){
+      topsort(next, vis, order);
+    }
+  }
+  order.push_back(u);
+}
+// in main
+for(int i=0; i<n; ++i){
+  topsort(i, vis, order);
+}
+```
+Here the `order` vector only needs to be **reversed** to contain the correct topological-order.
+
+
+
+</br>
+</br>
+</br>
+</br>
+</br>
+
+<a name="euler"/>
+
+## 2.5 Eulerian Paths
+
+A graph has an **Euler Path**, if it is possible to start at an arbitrary node and then **traverse through each edge exactly once**.
+Analoguousely, an Euler tour needs to start and end at the same vertex.
+
+### Requirements Undirected Graph.
+1. Graph is **connected**
+2. Each vertex has an **even edge-degree** (tour). For a euler path two vertices may have an odd degree.
+
+### Requirements Directed Graph.
+1. Graph is **connected** (No need for strongly connection. Pretend the graph is undirected and check for connection, this is enough together with condition 2)
+2. For each vertex `i` holds `inDegree[i] == outDegree[i]`. For an euler path, the endnode may have `inDegree[i] +1 == outDegree[i]`, together with `inDegree[i] == outDegree[i]+1` for the start node.
+
+### Hierholzer Algorithm 
+After checking the above requirements, **Hierholzer-algorithm** finds a possible euler-path. It runs in  <img src="https://render.githubusercontent.com/render/math?math=O(E)"> and works in a post-order fashion.
+Therefore, the result needs to be **reversed** eventually. Note the gloabl `idx` array to memorise the progress for each node. 
+
+```
+vector<int> hierholzer(int s, vector<vector<int>> &AL){
+    // Finds the euler path within a graph in O(E).
+    // The algorithm passes through the graph rather arbitrarily. 
+    // Idea: If you start u and at some point come back to u, you either have each edge passed (save the progress in vi idx) or you can still have another detour starting from u.
+    // With the stack you have this kind of post-order (similar to topological sort) -> REVERSE the result
+    vector<int> ret, stack, idx(AL.size(), 0);
+    stack.push_back(s);
+    while(stack.size()){
+        int cur = stack.back();
+        if(idx[cur] < AL[cur].size()){
+            stack.push_back(AL[cur][idx[cur]]);
+            idx[cur]++;
+        }else{
+            int justFinishedCycle = stack.back(); stack.pop_back();
+            ret.push_back(justFinishedCycle);
+        }
+    }
+    return ret; // needs to be reversed.
+}
+
+```
+
+
+
+</br>
+</br>
+</br>
+</br>
+</br>
+
+<a name="trees"/>
+
+## 2.6 Tree Graphs
+
+A tree-graph of `n` nodes has `n-1` edges and each node is directly or indirectly connected to any other node. 
+Trees have some interesting properties:
+
+
+
+### Diameter/Radius/Center
+The **Diameter** of a (weighted) tree, is the **longest shortest path between any two nodes**. While the computation of longest shortest path in normal graph can be obtained
+via Floyd-Warshall in <img src="https://render.githubusercontent.com/render/math?math=O(n^3)">, in trees it can be done in <img src="https://render.githubusercontent.com/render/math?math=O(n)">. The idea is to pick any random node `r`, from there go the furthest node `fst` of `r` and repeat 
+that to find the furthest node `snd` from `fst`. The distance between `fst` and `snd` is the longest distance.
+
+The diameter has either one **center node**, or the center lies on an edge. Either way, the center is defined to be on the half of the diameter (**radius**). 
+
+### LCA and Binary Lifting
+Given two nodes `u` and `v`, the **Least Common Ancestor** (LCA) is the first node, that lie on both paths to the root, from `u` and also from `v`.
+The <img src="https://render.githubusercontent.com/render/math?math=O(n)"> idea would be to precalculate the depth for each node in <img src="https://render.githubusercontent.com/render/math?math=O(n)">
+and then to **bring** `u` and `v` to the **same depth** linearly. 
+From there always go up to the root linearly <img src="https://render.githubusercontent.com/render/math?math=O(n)">, until both nodes are equal. However, when there are many queries, 
+we can improve that to <img src="https://render.githubusercontent.com/render/math?math=O(\log(n))"> by utilising a <img src="https://render.githubusercontent.com/render/math?math=O(n \log(n))"> proprocessing, called **Binary Lifting**.
+Therefore we define `up[u][i]` to be that node, that is <img src="https://render.githubusercontent.com/render/math?math=2^i"> higher than node `u`, i.e. that `up[u][0]`(1 up) is the direct parent and `up[u][1]`(2 up) 
+is the grandparent. Next, `up[u][2]` would be 4 up and so on. By using this binary expansion, we can get to any arbitrary height.
+
+**Binary Lifting**:
+```
+int LOG = 20; // 2^LOG should be the max depth
+for(int j=1; j<=LOG; ++j){
+    for(int i=0; i<n; ++i){
+        up[i][j] = up[up[i][j-1]][j-1];
+    }
+}
+```
+
+With that, the idea of the LCA computation remains the same: First bring both nodes to the same level (via binary lifting) and then move both nodes up as 
+much as possible while such that both nodes are not even. At the end of this routine, **both nodes will be the direct children of the LCA**:
+```
+int getLCA(int a, int b){
+    if(depth[a] < depth[b]){
+        swap(a, b);
+    }
+    // a is deeper;
+    int dif = depth[a]-depth[b];
+    for(int i=0; i<LOG; ++i){
+        if(dif & (1 << i)){
+            a = up[a][i];
+        }
+    }
+    // edge-case:
+    if(a == b) return a;
+    // binary lifting to the predecessor of LCA
+    for(int i=LOG-1; i>=0; --i){ // very important here to go from LOG-1 -> 0, as otherwise we cannnot do all jumps
+        // for example the grand parent is two levels up. we cannot jump 1 and again 1...
+        if(up[a][i] == up[b][i]) continue;
+        a = up[a][i];
+        b = up[b][i];
+    }
+    // return LCA
+    return up[a][0];
+}
+```
+
+
+
+</br>
+</br>
+</br>
+</br>
+</br>
+
+<a name="mst"/>
+
+## 2.7 Minimum Spanning Tree (MST)
+
+There are two well known algorithms for the MST, **Krusal**, which uses the **disjoint-set datastructure**, and **prim's** algorithm, which works similarly to
+dijkstra's SSSP. 
+The difference is that dijsktra looks at nodes and minimises the distance from a given starting node to it,
+while prime just takes the next lowes edge which endpoint has not been seen yet. Both algorithm work in
+<img src="https://render.githubusercontent.com/render/math?math=O(E \log E)">.
+
+### Kruskal DJS
+```
+class DJS{ // O(E Log E)
+public:
+    vector<int> rank, par;
+    int forrests;
+    DJS(int n){
+        par = vector<int>(n, 0);
+        for(int i=0; i<n; ++i)par[i] = i;
+        forrests = n;
+        rank.assign(n, 1);
+    }
+    int getPar(int x){
+        if(par[x] == x) return x;
+        return par[x] = getPar(par[x]);
+    }
+    bool isSame(int x, int y){
+        return getPar(x) == getPar(y);
+    }
+    bool unionfy(int x, int y){
+        if(isSame(x, y)) return false;
+        forrests--;
+        int px = getPar(x), py = getPar(y);
+        if(rank[px] < rank[py]){
+            swap(px, py);
+        }
+        par[py] = px;
+        rank[px] += rank[py];
+        return true;
+    }
+};
+// in main;
+vector<tiii> edges; // add all edges
+sort(edges.begin(), edges.end());
+DJS djs(n);
+long long ret = 0;
+for(int j=0; j<edges.size(); ++j){
+  auto [cost, a, b] = edges[i];
+  if(djs.unionfy(a, b)){
+    ret += cost;
+  }
+}
+```
+
+To check whether a spanntree exist, check that `djs.forrests == 1`.
+
+### Prim
+```
+int startIdx = 0;
+priority_queue<pii, vector<pii>, greater<pii>> pq
+pq.push({0, startIdx});
+vector<bool> seen(n, false)
+long long ret = 0;
+while(pq.size()){
+  auto [tCost, tIdx] = pq.top(); pq.pop();
+  if(seen[tIdx]) continue;
+  ret += tCost;
+  for(auto [next, w]: AL[tIdx]){
+    if(seen[next] == false){
+      pq.push({w, next});
+    }
+  }
+}
+```
+### When to use:
+Per default use DJS
+- Minimum/Maximum Spanning Tree
+- Minimum Spanning **Subgraph** (part of the edges are already given)
+- **Minimum Spanning Forrest** (stop when `djs.forrests == k`)
+- **MiniMax** (Connect all nodes and try to minimise the maximum edge weight used for that). Vice verca for MaxiMin. The result is given just by the MST
+- **Second Best Spanning Tree**. (run normal MST, then you have n edges.
+  For each of theses edges run MST again and don't include it) O(sorting + MST + Second Best MST) = <img src="https://render.githubusercontent.com/render/math?math=O(E log E %2B E %2B VE)">.
+  Alternatively if E is huge, calculate the MST and get the minimal cost. Then for each v run a dfs and get the maximum distance between any two nodes in <img src="https://render.githubusercontent.com/render/math?math=O(V^2)">. 
+  Now just pass though all edges which are not part of the MST. Add its weight and subtract the maximum distance between these two nodes within the orginal MST (See kattis spider).
+- When there are **several starting points**, use **Prim**'s Algorithm (aksed for optimal forrests here)
+
+
+
+</br>
+</br>
+</br>
+</br>
+</br>
+
+<a name="shortestpaths"/>
+
+## 2.8 Shortest Paths
+
+When the edges are not weighter we can use a **BFS** for the shortes paths, othrweise **Dijkstra**'s algorithm.
+Dijkstra uses the same idea of a BFS, but instead of a normal queue, it uses a **priority queue to favour nodes with a smaller distance**.
+Often when a problem appears to be a **DP problem**, but are **not** defined on a **DAG**, then most certainly these are BFS problems.
+
+**Typic Examples**:
+
+Single Source Shortest Path (SSSP) </br>
+Singe Source Single Destinaion Shortest Path (SSSDSP) </br>
+Multiple Sources Shortest Pahts (MSSP) </br>
+.. Other vairations, I will commonly use SSSP.
+
+### Unweighted SSSP - BFS
+
+The normal **BFS** provides us with the shortest distance to all nodes in <img src="https://render.githubusercontent.com/render/math?math=O(V %2B E)">.
+
+Typical 2D Grid example:
+```
+queue<pii>q; 
+q.insert({startI, startJ})
+vector<pii> dir {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+while(q.size()){
+    auto [i, j] = q.front(); q.pop();
+    for(auto [di, dj]: dir){
+        int nextI = i + di;
+        int nextJ = j + dj;
+        if(nextI < 0 || nextJ < 0 || nextI > n-1 || nextJ >n-1) continue;
+        if(dis[nextI][nextJ] < INF) continue;
+        dis[nextI][nextJ] = dis[i][j] + 1;
+        q.push({nextI, nextJ});
+    }
+}
+```
+
+Note: 
+- Similarly, A graph with only **0/1 Weights** can be handeld by a **deque** (very similar to Dijkstra). If we have a 0 Edge we will push it to the front, else to the back. Dijkstra would works just as fine, but this way we save us from using an expensive priority-queue.
+- **Shortest Cycle**: Shortest Path on undirected Graphs: Bfs from i to j and if you have seen j already -> Cycle. 
+
+
+### Weigthed SSSP (no negative cycles) - Dijkstra
+
+If the edges are **weighted**, e.g. we want to minimise the time to go from a to b, we need to use a `priority_queue` instead of a normal `queue`, as the main idea is to always use the cell/node with the current lowest cost/time. This node cannot improved any further, but maybe can be used to improve others.
+Unfortunately, the `priority_queue` in c++ doesn't allowe to **update keys**, therefore we use `set` here. The complexity is <img src="https://render.githubusercontent.com/render/math?math=O((V %2B E) \log V)">.
+
+Note Dijkstra does not work, when there is a negative cycle.
+
+
+```
+vector<ll> dijkstra(ll start, vector<vector<pll>> &AL){ // O(E * log(V))
+    // Instead of PQ use a set to update nodes once you see a lower value. The complexity lower but in Big O still the same
+    // DOES NOT WORK WITH NEGATIVE WEIGHT CYCLES
+    ll n = AL.size();
+    vector<ll> dist(AL.size(), INF);
+    dist[start] = 0;
+    set<pll> pq;
+    pq.emplace(dist[start], start);
+    while(pq.size()){
+        auto [cost, cur] = *pq.begin(); // intotal O(V * log(V))
+        pq.erase(pq.begin());
+        for(auto [next, w]: AL[cur]){
+            if(dist[cur] + w >= dist[next]) continue;
+            auto it = pq.find({dist[next], next});
+            if(it != pq.end()){
+                pq.erase(it); // O(E * log(V));
+            }
+            dist[next] = dist[cur] + w;
+            pq.emplace(dist[next], next);
+
+        }
+    }
+    return dist;
+}
+```
+
+Notes:
+1. For **reconstruction** of a single shortest path use a **parent vector** and whenever you can update the next element, update also the parent (Works for bfs/dijkstra).
+2. To know wheter an **edge/node is part of any possible shortest path**: Apply weighted/unweighted from begining and again from end (reversed AL).
+A node is part of a shortest path if `dist[node] + distRev[node] == dist[endNode]`, analogously an edge is part of a shortest path if both connected nodes are part of the shortest path + the difference in between both `dist` values is the weight of the edge `w`.
+3. When there are some further monoton restrictions, apply them during the for-loop inside Dijkstra.
+
+### Weigthed SSSP with negative Cycle - Bellmann-Ford
+When there are **negative cycles** then Dijkstra would run forever without stopping. **Bellmann-Ford** alleviates this issue by running the **exact amount** of **iterations** needed to calculate the shortest path from the rooot to any other node, assuming there are no negative cycles. To check if there is a negative cycle, another single iteration can be made. If any weight improves, then there is a negative cycle. The algorithm runs in <img src="https://render.githubusercontent.com/render/math?math=O(V^3)"> and therfore requires a `V <= 450`.
+
+```
+vector<int> bellmann_ford(int start, vector<vector<pii>> &AL){ // O(V^3)
+    // Get the distance from start node to all other nodes and works with negative cycles (no infinite queue)
+    // Stops after n iterations, if afterwars still relaxations are possible -> negative cycle
+    // Limit ~ V<450
+    int n = AL.size();
+    vector<int> dist = vector<int>(n, INF);
+    dist[start] = 0;
+    for(int i=0; i<n; ++i){ // O(V^3)
+        for(int v=0; v<n; ++v){
+            if(dist[v] != INF){
+                for(auto [next, w]: AL[v]){
+                    dist[next] = min(dist[next], dist[v] + w);
+                }
+            }
+        }
+    }
+    return dist;
+}
+
+vector<bool> NINFS;
+void dfsGetNINF(int cur, vector<vector<pii>> &AL){
+    NINFS[cur] = true;
+    for(auto [next,w]: AL[cur]){
+        if(NINFS[next] == 0){
+            dfsGetNINF(next, AL);
+        }
+    }
+}
+
+vector<bool> getNegativeCycleStarts(int start, vector<int> &dist, vector<vector<pii>> &AL){
+    // Gets nodes which are part of a negtive cycle. BUT is does not return ALL nodes of this cycle. Do a dfs to get all nodes after this being detected.
+    int n = AL.size();
+    vector<bool> isNINF = vector<bool>(n, false);
+    for(int v=0; v<n; ++v){
+        if(dist[v] != INF){
+            for(auto [next, w]: AL[v]){
+                if(dist[next] > dist[v] + w){
+                    dist[next] = dist[v] + w;
+                    isNINF[next] = true;
+                    isNINF[v] = true;
+                }
+            }
+        }
+    }
+    return isNINF;
+}
+
+// vector<int> dist = bellmann_ford(0, AL);
+// vector<bool> starts = getNegativeCycleStarts(0, dist, AL);
+// NINFS.assign(n, false);
+// FOR(i, n){
+//     if(starts[i] && NINFS[i] == 0){
+//         dfsGetNINF(i, AL);
+//     }
+// }
+// // now if not NINFS[i] == true, dist[i] has the exact distance from 0 to i. Else we can say its negative INF.
+
+```
+Note: 
+- Sometimes the task is about positive cycles, than **changing the sign** might do the trick.
+- Bellmann-Ford sometimes come also with further **restrictions**, which then need to be incorporated into the <img src="https://render.githubusercontent.com/render/math?math=O(V^3)"> loop.
+
+### APSP - Floyd-Warshall
+Instead of computing the shortest path from a single source node, sometimes it is required to have the **shortest distance between all pairs of nodes**.
+Floyed-Warshall computes All-Pairs-Shortest-Paths in <img src="https://render.githubusercontent.com/render/math?math=O(V^3)"> in a dp-fashion by trying to find smaller detours from i to j over k:
+```
+
+// for reconstruction:
+for(int i=0; i<n; ++i){
+    for(int j=0; j<n; ++j){
+        par[i][j] = i;
+    }
+}
+for(int k=0; k<n; ++k){
+    for(int i=0; i<n; ++i){
+        for(int j=0; j<n; ++j){
+            if(AM[i][j] > AM[i][k] + AM[k][j]){
+                AM[i][j] = AM[i][k] + AM[k][j];
+                par[i][j] = par[k][j]; // alwyas points to the penultimate element in the path. For example par[k][j] points to x in  k a b c x j
+            }
+        }
+    }
+}
+// retrievel of solution from i to j
+int cur = j;
+while(true){
+    ans.push_back(cur);
+    if(i == cur){
+        break;
+    }
+    cur = par[i][cur];
+}
+```
+Note / Applications:
+- When we need to reconstruct a shortest path between i and j then we need a **2D reconstruction**.
+- In Floyed-Warshall the inital AM do not need all start-values as long these can be build by the **principe of transitivity** (can save a lot of time)
+- **Transitive closure problem**: Only check need: Is there a path from a to b. Everyhing can be Boolean. `AM[i][j] = AM[i][j] || (AM[i][k] && AM[k][j])`
+- For some compound problems, **optimal subpaths** in form of `AM[i][b] + AM[a][j] + roadLength` or `AM[a][i] + AM[i][b]` are often useful.
+- **Diameter** of a graph: The maximum shortest path between any pair nod nodes.
+- **Shortest Cycle**: On the diagonal `AM[i][i]` gives you the shortest cycle. If negative: We can go to -INF.
+
+
+
+</br>
+</br>
+</br>
+</br>
+</br>
+
+<a name="ssc"/>
+
+## 2.9 Strongly Connected Components
+
+On an undirected graph, the connected components can be found with an easy DFS. When the graph is **directed** however, we call a **strongly connected component** (SSC)
+a subset of the vertexes in the graph, within each vertex can reach each of the other vertex in the same SSC. **Tarjan's algorithm** runs in <img src="https://render.githubusercontent.com/render/math?math=O(V %2B E)"> and assigns each node to its **SSC-root**; the same root marks the same SSC.
+
+The main idea is that there is a single root node (start node) for each SSC. For this root holds that it coudn't make its `dfs_low` value smaller than `dfs_num`. 
+All the nodes afterwars are part of this SCC (unless have been put to a different SSC already - saved in `visited`).
+
+```
+vector<int> dfs_num, dfs_low, dfs_stack, visited, root;
+int dfs_idx;
+
+void tarjan(int cur, vector<vector<int>> &AL){ // O(V + E)
+    dfs_num[cur] = dfs_low[cur] = dfs_idx++;
+    dfs_stack.push_back(cur);
+    visited[cur] = 1;
+    for(int next: AL[cur]){
+        if(dfs_num[next] == UNVISITED){
+            tarjan(next, AL);
+        }
+        if(visited[next] == 1){ // not part of other SSC -> same SSC
+            dfs_low[cur] = min(dfs_low[next], dfs_low[cur]); // if it is not yet completed;
+        }
+    }
+    if(dfs_low[cur] == dfs_num[cur]){
+        // cur is start of a ssp;
+        while(true){
+            int last = dfs_stack.back(); dfs_stack.pop_back();
+            root[last] = cur;
+            visited[last] = 0;
+            if(last == cur) break;
+        }
+    }
+
+}
+// in main:
+dfs_num.assign(n, UNVISITED);
+dfs_low.assign(n, UNVISITED);
+visited.assign(n, false);
+root.assign(n, UNVISITED);
+dfs_stack.clear();
+dfs_idx=0;
+FOR(i, n){
+    if(dfs_num[i] == UNVISITED){
+        tarjan(i, AL);
+    }
+}
+```
+### When to use
+- Often, a task is to **reduce all SSC to single node **and
+afterwards check for some critera (e.g. count all `in_degree == 0` nodes). Questions like **how many dominos you need to push?**.
+- Given a directed Graph G, **how many edges do you need to add, to make it a SCC?**
+   1. Reduce all SSC in G to a single node -> G is now DAG
+   2. If this DAG consists only of one node, the answer is 0
+   3. Else: Count the number of in-degree == 0 nodes and also the out-degree=0 nodes. The max of both is the is the result. <br/>
+    
+   To see that this is a lower bound is easy. That its also a upper bound more complex. See [stack-overflow](https://stackoverflow.com/questions/14305236/minimal-addition-to-strongly-connected-graph), [codeforces](https://codeforces.com/blog/entry/15102).
+
+
+
+
+</br>
+</br>
+</br>
+</br>
+</br>
+
+<a name="articulation"/>
+
+## 2.10 Articulation Points/Bridges
+
+An Articulation Point is a vertix whose removal **disconnects the undirected graph**. Thus it can't be a leaf, but only intermediate vertixes.
+Similarly Ariculation Bridges disconnects the graph, when the edge (or bridge) is removed.
+Note some variants also come with directed graphs, but usually it applies only to **undirected** graphs. This algorithm runs in <img src="https://render.githubusercontent.com/render/math?math=O(V %2B E)">.
+
+Idea: Similar to tarjan-algorithm to get all SSC, we have a `dfs_low` array, and each children vertex, tries to minmise it using all adj-vertex, but its parent-vertex. When now this low value us lower than the `dfs_num` value of the parent we have found another way.
+```
+enum {UNVISITED=-1};
+vector<int> dfs_low, dfs_num, parent;
+vector<pii> bridges;
+vector<bool> is_articulation;
+int dfs_idx, root, root_children;
+
+void dfs(int cur, vector<vector<int>> &AL){ // O(V+E)
+    dfs_num[cur] = dfs_low[cur] = dfs_idx++;
+    for(int next: AL[cur]){
+        if(dfs_num[next] == UNVISITED){
+            parent[next] = cur;
+            if(root == cur) root_children++; // only need for articulation points
+            dfs(next, AL);
+            if(dfs_low[next] > dfs_num[cur]){ 
+                // bc of bridges here strictly greater
+                bridges.push_back({next, cur});
+            }
+            if(dfs_low[next] >= dfs_num[cur]){ 
+                // for points greater/equal
+                is_articulation[cur] = true;
+            }
+            
+            dfs_low[cur] = min(dfs_low[cur], dfs_low[next]);
+        }else{
+            if(parent[cur] != next){
+                dfs_low[cur] = min(dfs_low[cur], dfs_num[next]); // compare with dfs_num of next, otherwise it would set it too low
+            }
+        }
+    }
+}
+// in main
+int n = 100;
+dfs_low.assign(n, UNVISITED);
+dfs_num.assign(n, UNVISITED);
+parent.assign(n, UNVISITED);
+is_articulation.assign(n, false);
+dfs_idx = 0;
+root = 0; // or set to which is root
+root_children = 0;
+if(root_children>1){
+    is_artiuclation[root] = true;
+}
+```
+
+
+
+</br>
+</br>
+</br>
+</br>
+</br>
 
 <a name="maxflow"/>
 
-## 2.2 Maxflow and Mincut
+## 2.11 Maxflow and Mincut
 
 Given a weighted directed graph as pipeline network, then </br>
 **Edges**: Pipe with given capacity</br>
@@ -550,7 +1216,7 @@ long long flow = maxFlow.dinic(0, sink);
 
 <a name="augmenting"/>
 
-## 2.3 Basic Augmenting
+## 2.12 Basic Augmenting
 
 For Basic **Unweighted Maximum Cardinality Bipartite Matching** (UMCBM) a basic augmenting algorithm in <img src="https://render.githubusercontent.com/render/math?math=O(VE)"> often is also ok instead of the dinic in <img src="https://render.githubusercontent.com/render/math?math=O(\sqrt{V} E)">.
 ```
