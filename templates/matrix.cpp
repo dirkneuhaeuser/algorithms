@@ -1,3 +1,5 @@
+ll smod(ll a, ll m=MOD){return((a%m) +m) %m;}
+
 //int mat_n = 2;
 
 struct Matrix {

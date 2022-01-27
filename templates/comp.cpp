@@ -7,7 +7,7 @@ typedef long double ld;                         // ld up to  10*10^307
 typedef pair<long long, long long> pll;
 typedef pair<int, int> pii;
 typedef tuple<int, int, int> tiii;
-typedef vector<int> vi;
+typedef vector<ll> vi;
 #define FOR(i, n) for(int i=0; i<n; i++)
 #ifdef DIRK
 #include "/Users/dirk/development/algorithms/algorithms/templates/debug.h"

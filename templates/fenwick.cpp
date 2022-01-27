@@ -15,6 +15,9 @@ public:
     PURQ(int n) { // without leading 0
         ft.assign(n+1, 0); // idx 0 is bound, no value asigned to it
     }
+    PURQ(vi &vals){
+        build(vals);
+    }
     // builds in O(n), as oposed to O(n*logn)
     void build(vector<long long> vals){ // vals idx are keys of Fenwick-tree -> first in vector needs to be 0:
         int n = vals.size();
@@ -22,7 +25,7 @@ public:
         for(int i=0;i<n; i++){
             ft[i] += vals[i];
             if(i+LSOne(i)<n){
-                ft[i+LSOne(i)] += vals[i];
+                ft[i+LSOne(i)] += ft[i];
             }
         }
     }
@@ -46,6 +49,18 @@ public:
             ft[i]+=val;
             i += LSOne(i);
         }
+    }
+    int select(ll k){
+        int lp=1, hp=ft.size()-1;
+        while(lp < hp){
+            int mid = (lp+hp) /2;
+            if(range_query_from_left(mid) < k){
+                lp = mid+1;
+            }else{
+                hp = mid;
+            }
+        }
+        return lp;
     }
 };
 // Range-Update Point-Query
@@ -82,15 +97,16 @@ public:
     }
 };
 
-//vector<long long> test{0,1,23,325,34,5};
-//PURQ purq = PURQ(6);
-//purq.build(test);
+//vector<long long> test{0,1,1};
+//PURQ fw = PURQ(test); 
+//cout << fw.range_query(1, 2) << endl;
 
-//RUPQ rupq = RUPQ(6);
+
+//RUPQ rupq = RUPQ(6); //n+1 here
 //rupq.range_update(2, 3, 5);
 //cout << rupq.point_query(4) << endl;
 
-//RURQ rurq = RURQ(10);
+//RURQ rurq = RURQ(10); // n+1 here
 //rurq.range_update(1, 6, 5); // remember from 1 to 6 means from 0 to 5 in your arr
 //rurq.range_update(4, 8, 5);
 //cout << rurq.range_query(7, 10) << endl;
