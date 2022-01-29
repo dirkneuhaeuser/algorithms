@@ -1271,7 +1271,7 @@ FOR(i, n){
 
 Until now, we have mainly seen static problems, so for example given an array of numbers, we need a quick way to calculate the sum from the index `i` to index `j` (prefix sum). When dealing with dynammic data, i. e. data which is modified continuously, we want to avoid to linearly recalculate the array.
 
-
+<a name="fwt"/>
 
 ## 4.1 Binary-Index-Tree (BIT) or Fenwick-Tree
 <img align="right" width="640" alt="Fenwick-Tree(https://ioinformatics.org/journal/v9_2015_39_44.pdf)" src="https://user-images.githubusercontent.com/44442845/151425400-974740f4-9141-4f2f-9a8c-3eadbb20840a.png">
@@ -1341,7 +1341,12 @@ public:
 Also note, that this data-structure also supports, Range-Updates with Point-Queries (RUPQ) as well as Range-Updates with Range-Queries (RURQ). The implementation is [here](https://github.com/dirkneuhaeuser/algorithms/blob/master/templates/fenwick.cpp). Moreover, we can also implement a **2D Fenwick-Tree**, where we normally would use 2D Prefix-Sums or kadane; an implementation can be found [here]([here](https://github.com/dirkneuhaeuser/algorithms/blob/master/templates/fenwick2D.cpp))
 
 
-
+</br>
+</br>
+</br>
+</br>
+</br>
+<a name="ost"/>
 
 ## 4.2 Order Statistic Tree
 Order Statistic Tree (**OST**) is a balanced BST, which also saves the size of each subtree. 
@@ -1379,6 +1384,12 @@ When using it as a **multiset** (and allow the same value several times), we hav
 Instead of using an OST, we could also rely on the **BIT/Fenwick** to to order-related queries. If we have an elment `a`, we just add +1 to it and now, we can query, the sum to a specific answer, getting the number of elements before it. However, **often an OST is prefable**, as it is not restricted to low numbers (roughly 1M), but its tree can have anthing which is sortable (e.g. strings).
 
 
+</br>
+</br>
+</br>
+</br>
+</br>
+<a name="st"/>
 
 ## 4.3 Segment-Tree 
 
