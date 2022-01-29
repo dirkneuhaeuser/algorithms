@@ -39,11 +39,15 @@ The explainations are by no means complete and also very consise. Mainly, it con
     11. [Articulation Points/Bridges](#articulation)
     12. [Maxflow and Mincut](#maxflow)
     13. [Basic Augmenting](#augmenting)
+3. [Dynammic Data-Structures](#dds)
+    1. [Fenwick Tree or Binary Index Tree](#FWT)
+    2. [Order Statistic Tree](#OST)
+    3. [Segment Tree](#ST)
 4. [Dynammic Programming](#dp) 
 5. [String Processing](#string)
     1. [KMP](#kmp)
     2. [Suffix-Trie](#trie)
-7. [Else](#else)
+6. [Else](#else)
     1. [Convolution](#convolution)
     1. [Bit Manipulation](#bit)
 
@@ -1263,7 +1267,7 @@ FOR(i, n){
 </br>
 <a name="dp"/>
 
-# 3 Dynammic Programming
+# 4 Dynammic Programming
 
 
 ### Variants:
@@ -1516,7 +1520,7 @@ parameter: n nodes (current node) and bitmask over the next (n-1) to visit
 
 <a name="string"/>
 
-# 4 String Processing
+# 5 String Processing
 
 Find **all positions** of a substring a string:
 ```
@@ -1569,7 +1573,7 @@ do
 
 <a name="kmp"/>
 
-## 4.1 KMP
+## 5.1 KMP
 
 **Substring-Matching**: When searching for a substring p in text t, the naive way would take <img src="https://render.githubusercontent.com/render/math?math=O(nm)">, where n is the length of the text and m the length of t. A faster way offers the KMP algorithm in <img src="https://render.githubusercontent.com/render/math?math=O(n %2B m)">.
 
@@ -1615,7 +1619,7 @@ void search(string text, string pattern, vector<int>&prefixSuffixMatches){
 
 <a name="trie"/>
 
-## 4.2 Suffix-Trie
+## 5.2 Suffix-Trie
 
 **Substring-Matching**: With a suffix-Trie you can match subsrings in <img src="https://render.githubusercontent.com/render/math?math=O(m)">, after the prepocessing of <img src="https://render.githubusercontent.com/render/math?math=O(n^2)">, in which we insert all suffixes of the word into the trie.
 
@@ -1717,11 +1721,11 @@ public:
 
 <a name="else"/>
 
-# 5 Else
+# 6 Else
 
 <a name="convolution"/>
 
-## 5.1 Convolution
+## 6.1 Convolution
 
 Let A and B be polynomials of degree n.
 With Fast-Fourir-Transformation (FFT), the **multiplication of polynomials** A and B can be solved in <img src="https://render.githubusercontent.com/render/math?math=O(n \log (n))"> instead of <img src="https://render.githubusercontent.com/render/math?math=O(n^2)">.
@@ -1885,7 +1889,7 @@ Then, <img src="https://render.githubusercontent.com/render/math?math=A*\bar{A} 
 
 <a name="bit"/>
 
-## 5.2 Bit Manipulation
+## 6.2 Bit Manipulation
 
 - Bitwise **not** `~x`: <br/>
   E.g. For 6, which is 110 in binary, ~6 will be 11...11001, which is -5.	
