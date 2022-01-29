@@ -1273,10 +1273,10 @@ Until now, we have mainly seen static problems, so for example given an array of
 
 <a name="fwt"/>
 
-## 4.1 Binary-Index-Tree (BIT) or Fenwick-Tree
+## 4.1 Binary-Index-Tree or Fenwick-Tree
 <img align="right" width="640" alt="Fenwick-Tree(https://ioinformatics.org/journal/v9_2015_39_44.pdf)" src="https://user-images.githubusercontent.com/44442845/151425400-974740f4-9141-4f2f-9a8c-3eadbb20840a.png">
 
-A quick datastructure and in particular good for point update and range queries (PURQ). As a requirement, the operation needs to be inversable (sum): `range_query_from_left(j) - range_query_from_left(i-1);`. Given an array of length `n`, our datastructure has `n+1` nodes (0 is dummy variable) and each node `i` saves the result for the segment `[(i-LSOne(i) + 1),...,i]`. The building of the array needs <img src="https://render.githubusercontent.com/render/math?math=O(n \log n)">, and each update or sum query  <img src="https://render.githubusercontent.com/render/math?math=O(\log n)">.
+The Fenewick-Tree is a quick-to-type datastructure and in particular good for point update and range queries (PURQ). As a requirement, the operation needs to be inversable (sum): `range_query_from_left(j) - range_query_from_left(i-1);`. Given an array of length `n`, our datastructure has `n+1` nodes (0 is dummy variable) and each node `i` saves the result for the segment `[(i-LSOne(i) + 1),...,i]`. The building of the array needs <img src="https://render.githubusercontent.com/render/math?math=O(n \log n)">, and each update or sum query  <img src="https://render.githubusercontent.com/render/math?math=O(\log n)">.
 
 
 ```
@@ -1350,7 +1350,7 @@ Also note, that this data-structure also supports, Range-Updates with Point-Quer
 
 ## 4.2 Order Statistic Tree
 Order Statistic Tree (**OST**) is a balanced BST, which also saves the size of each subtree. 
-This datastructure can be used to answer order-related queries like "what it the k-th smallest elment?" on dynammic data in  <img src="https://render.githubusercontent.com/render/math?math=O(\log n)"> time (as we have to find the specific node first in <img src="https://render.githubusercontent.com/render/math?math=O(\log n)">).
+This datastructure can be used to answer order-related queries like "what it the k-th smallest elment?" on dynammic data in  <img src="https://render.githubusercontent.com/render/math?math=O(\log n)"> time (as we have to find the specific node first in <img src="https://render.githubusercontent.com/render/math?math=O(\log n)">). As we are dealing with an balanced BST we also need <img src="https://render.githubusercontent.com/render/math?math=O(\log n)"> for inserting. C++ users are lucky and have have this out of the box:
 
 ```
 #include <bits/stdc++.h>
